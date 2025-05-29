@@ -71,7 +71,7 @@
     }
 
     nav a {
-      margin: 0 1.5rem; /* Aumentado ligeramente el espacio */
+      margin: 0 1.5rem; 
       color: var(--text-secondary);  
       position: relative;
       text-decoration: none;
@@ -103,7 +103,7 @@
     }
     
     .container {
-      width: clamp(320px, 90%, 1100px); /* Aumentado max-width para menos compresión */
+      width: clamp(320px, 90%, 1100px); 
       margin: 0 auto;
       padding: 4rem 1rem;  
     }
@@ -192,10 +192,9 @@
     
     @media (min-width: 768px) {
         .grid.two-cols {
-            gap: 2.5rem; /* Un poco más de espacio en pantallas más grandes */
+            gap: 2.5rem; 
         }
     }
-
 
     .card {
       background: var(--bg-elevated);
@@ -264,7 +263,7 @@
     /* Estilos para la sección de Blog */
     .blog-post-list {
         display: grid;
-        gap: 2rem; /* Espacio entre las entradas del blog */
+        gap: 2rem; 
     }
 
     .blog-post-item {
@@ -285,8 +284,8 @@
         border-color: rgba(var(--accent-blue-rgb), 0.4);
     }
 
-    .blog-post-item h3 { /* Título del post */
-        font-size: 1.75rem; /* Ligeramente más grande para destacar */
+    .blog-post-item h3 { 
+        font-size: 1.75rem; 
         font-weight: 600;
         color: var(--text-primary);
         margin-bottom: 0.5rem;
@@ -309,7 +308,7 @@
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
-        flex-wrap: wrap; /* Para que las etiquetas se ajusten en móviles */
+        flex-wrap: wrap; 
     }
 
     .blog-post-meta .date {
@@ -321,11 +320,11 @@
         background-color: rgba(var(--accent-blue-rgb), 0.12);
         color: var(--accent-blue);
         padding: 0.25em 0.75em;
-        border-radius: 16px; /* Más redondeado, estilo "pill" */
+        border-radius: 16px; 
         font-weight: 500;
         font-size: 0.8rem;
         margin-right: 0.5rem;
-        margin-bottom: 0.25rem; /* Para espaciado si hay varias etiquetas */
+        margin-bottom: 0.25rem; 
     }
 
     .blog-post-excerpt {
@@ -336,11 +335,11 @@
     }
 
     .read-more-link {
-        display: inline-flex; /* Para alinear con ícono si se añade */
+        display: inline-flex; 
         align-items: center;
         color: var(--accent-blue);
         text-decoration: none;
-        font-weight: 600; /* Más destacado */
+        font-weight: 600; 
         font-size: 0.95rem;
         transition: opacity 0.2s, transform 0.2s;
     }
@@ -348,7 +347,7 @@
         opacity: 0.8;
         text-decoration: underline;
     }
-    .read-more-link::after { /* Flecha sutil */
+    .read-more-link::after { 
         content: ' →';
         margin-left: 0.25em;
         transition: transform 0.2s var(--ease-in-out-cubic);
@@ -356,7 +355,6 @@
     .read-more-link:hover::after {
         transform: translateX(3px);
     }
-
 
     .cta-button {
       display: inline-block;
@@ -390,7 +388,7 @@
       background-color: rgba(var(--accent-blue-rgb), 0.2);
       transform: translateY(-3px) scale(1.03);
       color: var(--accent-blue);
-      border-color: rgba(var(--accent-blue-rgb), 0.3); /* Sutil borde en hover */
+      border-color: rgba(var(--accent-blue-rgb), 0.3); 
     }
     
     .contact-links-container {
@@ -398,9 +396,37 @@
         margin-top: 2rem;
     }
 
+    .qr-code-container {
+        text-align: center;
+        margin-top: 3rem; /* Más espacio para separar de los botones */
+        padding: 1.5rem;
+        background-color: var(--bg-elevated); /* Fondo sutil para el contenedor del QR */
+        border-radius: 12px;
+        border: 1px solid var(--border-subtle);
+        max-width: 300px; /* Ancho máximo para el contenedor del QR */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .qr-code-container p {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .qr-code-container img {
+        width: 160px; /* Tamaño del QR */
+        height: 160px;
+        border-radius: 8px;
+        border: 2px solid var(--border-strong); /* Borde un poco más destacado para el QR */
+        background-color: white; /* Fondo blanco para el QR si es transparente */
+        padding: 5px; /* Pequeño padding si el QR no tiene borde blanco propio */
+    }
+
+
     footer {
       text-align: center;
-      padding: 3rem 1rem 2rem;  /* Ajustado padding superior */
+      padding: 3rem 1rem 2rem;  
       font-size: 0.95rem;
       color: var(--text-tertiary);  
       border-top: 1px solid var(--border-subtle);
@@ -408,12 +434,12 @@
     }
 
     .social-links {
-        margin-bottom: 1.5rem; /* Espacio antes del texto de copyright */
+        margin-bottom: 1.5rem; 
     }
 
     .social-links a {
         color: var(--text-secondary);
-        font-size: 1.5rem; /* Tamaño de los iconos */
+        font-size: 1.5rem; 
         margin: 0 0.75rem;
         transition: color 0.3s var(--ease-in-out-cubic), transform 0.3s var(--ease-in-out-cubic);
     }
@@ -445,7 +471,8 @@
     <a href="#contact">Contacto</a>
   </nav>
 
-  <header id="home" class="container animate-on-scroll"> <h1>Juan Fernández</h1>
+  <header id="home" class="container animate-on-scroll"> 
+    <h1>Juan Fernández</h1>
     <p>Liderazgo en Tecnología y Desarrollo de Soluciones con Inteligencia Artificial.</p>
   </header>
 
@@ -544,6 +571,10 @@
         <a href="mailto:juanfernandezvarela@lyft.com" class="cta-button">Iniciar Conversación</a>
         <a href="https://wa.me/525548869123" class="cta-button secondary" target="_blank" rel="noopener noreferrer">WhatsApp Directo</a>
       </div>
+
+      <div class="qr-code-container animate-on-scroll" style="transition-delay: 0.2s;"> <p>O escanea para contactarme directamente por WhatsApp:</p>
+        <img src="URL_A_TU_IMAGEN_QR.png" alt="Código QR para contactar a Juan Fernández por WhatsApp" >
+        </div>
     </section>
   </main>
 
@@ -552,13 +583,13 @@
         <a href="https://www.instagram.com/juan_carlos_fvg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Juan Fernández">
             <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://linkedin.com/in/TU_USUARIO_DE_LINKEDIN" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Juan Fernández">
+        <a href="https://www.linkedin.com/in/juan-carlos-fernández-varela-gómez-b4596a15b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Juan Fernández">
             <i class="fab fa-linkedin-in"></i>
         </a>
         <a href="https://github.com/TU_USUARIO_DE_GITHUB" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Juan Fernández">
             <i class="fab fa-github"></i>
         </a>
-        </div>
+    </div>
     &copy; 2025 Juan Fernández. Innovación con propósito.
   </footer>
 
@@ -571,39 +602,41 @@
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
-              // Descomenta la siguiente línea si quieres que la animación solo ocurra una vez
-              // obs.unobserve(entry.target);  
+              // obs.unobserve(entry.target); // Descomenta para animar solo una vez 
             } else {
-              // Descomenta la siguiente línea si quieres que la animación se revierta al salir de la vista
-              // entry.target.classList.remove('visible');  
+              // entry.target.classList.remove('visible'); // Descomenta para revertir animación al salir
             }
           });
         }, { threshold: 0.1 });  
         
         animatedElements.forEach(el => observer.observe(el));
       } else {
-        // Fallback para navegadores sin IntersectionObserver
         animatedElements.forEach(el => el.classList.add('visible'));
       }
 
       const sections = document.querySelectorAll('main section[id], header[id]'); 
       const navLinks = document.querySelectorAll('nav a');
       const navElement = document.querySelector('nav');
-      const navHeight = navElement ? navElement.offsetHeight : 70; // Fallback por si nav no está aún en el DOM
+      const navHeight = navElement ? navElement.offsetHeight : 70;
 
 
-      window.addEventListener('scroll', () => {
+      function updateActiveNav() {
         let current = '';
         
         sections.forEach(section => {
           const sectionTop = section.offsetTop;
-          // Ajusta el offset para la detección de la sección activa, considerando la altura del nav
-          // y un pequeño margen adicional (ej. 60px) para que el cambio sea más natural
           if (pageYOffset >= sectionTop - navHeight - 60) { 
             current = section.getAttribute('id');
           }
         });
         
+        // Si después de revisar todas las secciones, `current` está vacío (estamos muy arriba),
+        // y el header tiene id "home", se activa "home".
+        if (!current && document.querySelector('header#home') && pageYOffset < sections[0].offsetTop - navHeight - 60) {
+            current = 'home';
+        }
+
+
         navLinks.forEach(link => {
           link.classList.remove('active');
           const linkHref = link.getAttribute('href');
@@ -611,23 +644,11 @@
             link.classList.add('active');
           }
         });
-
-        // Lógica especial para cuando el scroll está arriba del todo
-        const firstSection = sections[0];
-        if (firstSection && pageYOffset < firstSection.offsetTop - navHeight - 60) {
-            const firstNavLink = navLinks[0];
-            if (firstNavLink) {
-                const firstNavLinkHref = firstNavLink.getAttribute('href');
-                // Activar el primer enlace si apunta al ID del header "home" o a la primera sección y estamos arriba
-                if (firstNavLinkHref && (firstNavLinkHref.substring(1) === 'home' || firstNavLinkHref.substring(1) === firstSection.id)) {
-                    navLinks.forEach(l => l.classList.remove('active')); // Quitar active de todos
-                    firstNavLink.classList.add('active'); // Activar el primero
-                }
-            }
-        }
-      });
-
-      // Activar el enlace correcto al cargar la página si hay un hash en la URL
+      }
+      
+      window.addEventListener('scroll', updateActiveNav);
+      
+      // Activar el enlace correcto al cargar la página
       if (window.location.hash) {
         const currentHash = window.location.hash.substring(1);
         navLinks.forEach(link => {
@@ -635,24 +656,16 @@
             const linkHref = link.getAttribute('href');
             if (linkHref && linkHref.substring(1) === currentHash) {
                 link.classList.add('active');
+                // Opcional: scroll suave a la sección si hay hash
+                // const targetSection = document.getElementById(currentHash);
+                // if (targetSection) {
+                //   targetSection.scrollIntoView({ behavior: 'smooth' });
+                // }
             }
         });
-      } else if (sections.length > 0 && navLinks.length > 0) {
-        // Activar el primer enlace por defecto si no hay hash,
-        // asumiendo que el primer enlace de navegación corresponde al header o a la primera sección.
-        const firstNavLink = navLinks[0];
-        const firstNavLinkHrefAttr = firstNavLink.getAttribute('href');
-        if (firstNavLinkHrefAttr) {
-            const firstNavLinkHref = firstNavLinkHrefAttr.substring(1);
-            const headerEl = document.querySelector('header');
-            const firstSectionEl = sections[0];
-
-            if (headerEl && headerEl.id === firstNavLinkHref) { // Si el primer enlace apunta al header
-                firstNavLink.classList.add('active');
-            } else if (firstSectionEl && firstSectionEl.id === firstNavLinkHref) { // Si el primer enlace apunta a la primera sección
-                firstNavLink.classList.add('active');
-            }
-        }
+      } else {
+        // Activar el primer enlace por defecto si no hay hash
+        updateActiveNav(); // Llama para establecer el estado inicial basado en la posición de scroll (generalmente "home" o la primera sección)
       }
     });
   </script>
