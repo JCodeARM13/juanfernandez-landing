@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Juan Fernández — Portfolio Innovador & Blog</title>
+  <meta name="description" content="Juan Fernández — Vendor Lead en Lyft, creador de soluciones IA con visión de futuro y autor de una bitácora personal sobre tecnología, IA y cultura.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-blue: #0A84FF; /* Azul Apple */
+      --accent-blue-rgb: 10, 132, 255; /* Para uso en rgba */
+      
+      --text-primary: rgba(255, 255, 255, 0.92);
+      --text-secondary: rgba(255, 255, 255, 0.65);
+      --text-tertiary: rgba(255, 255, 255, 0.45);
+
+      --bg-main: #000000;
+      --bg-elevated: #121212; 
+      --bg-elevated-hover: #1D1D1F; 
+
+      --border-subtle: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.2);
+
+      --shadow-soft: 0 8px 32px rgba(0,0,0,0.25);
+      --shadow-medium: 0 12px 45px rgba(0,0,0,0.3);
+
+      --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+      --transition-duration: 0.5s; 
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.7; 
+      padding-top: 80px; 
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(18, 18, 18, 0.75); 
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem 1rem; 
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    nav a {
+      margin: 0 1.25rem; /* Ajuste de espacio para más elementos */
+      color: var(--text-secondary); 
+      position: relative;
+      text-decoration: none;
+      font-weight: 500; 
+      transition: color 0.3s var(--ease-in-out-cubic);
+      padding: 0.25rem 0;
+    }
+
+    nav a:hover, nav a.active { 
+      color: var(--text-primary); 
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent-blue);
+      opacity: 0;
+      transition: width 0.3s var(--ease-in-out-cubic), opacity 0.3s var(--ease-in-out-cubic);
+    }
+
+    nav a:hover::after, nav a.active::after {
+      width: 100%;
+      opacity: 1;
+    }
+    
+    .container {
+      width: clamp(320px, 90%, 900px); 
+      margin: 0 auto;
+      padding: 4rem 1rem; 
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98); 
+      filter: blur(3px);
+      transition: opacity var(--transition-duration) var(--ease-out-quint),
+                  transform var(--transition-duration) var(--ease-out-quint),
+                  filter var(--transition-duration) var(--ease-out-quint);
+      transition-delay: 0.1s; 
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    
+    header.animate-on-scroll { transition-delay: 0s; } 
+
+    header {
+      text-align: center;
+      padding: 6rem 1rem 4rem; 
+      min-height: 60vh; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    header h1 {
+      font-size: clamp(3rem, 8vw, 5rem); 
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.025em; 
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    header p {
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      font-weight: 300; 
+      max-width: 650px; 
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section {
+      margin-bottom: 3rem; 
+    }
+    section:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem; 
+      position: relative;
+      text-align: center; 
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px; 
+      height: 3px;
+      background: var(--accent-blue);
+      margin: 1rem auto 0; 
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem; 
+      margin-top: 2rem;
+    }
+
+    .two-cols {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    }
+
+    .card {
+      background: var(--bg-elevated);
+      padding: 2rem;
+      border-radius: 12px; 
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.35s var(--ease-out-quint), 
+                  box-shadow 0.35s var(--ease-out-quint),
+                  background-color 0.35s var(--ease-out-quint),
+                  border-color 0.35s var(--ease-out-quint);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-medium);
+      background: var(--bg-elevated-hover);
+      border-color: rgba(var(--accent-blue-rgb), 0.5);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary); 
+      margin-bottom: 0.5rem;
+    }
+    
+    .card .project-meta {
+      font-size: 0.9rem;
+      color: var(--text-tertiary); 
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card .project-details {
+        list-style: none;
+        padding: 0;
+        margin-top: 1.25rem;
+        font-size: 0.95rem;
+    }
+    .card .project-details li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+    }
+    .card .project-details strong {
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+    .card .project-details a {
+        color: var(--accent-blue);
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s;
+    }
+    .card .project-details a:hover {
+        opacity: 0.75;
+        text-decoration: underline;
+    }
+
+    /* Estilos para la sección de Blog */
+    .blog-post-list {
+        display: grid;
+        gap: 2rem; /* Espacio entre las entradas del blog */
+    }
+
+    .blog-post-item {
+        background: var(--bg-elevated);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-subtle);
+        transition: transform 0.3s var(--ease-out-quint), 
+                    box-shadow 0.3s var(--ease-out-quint),
+                    background-color 0.3s var(--ease-out-quint),
+                    border-color 0.3s var(--ease-out-quint);
+    }
+
+    .blog-post-item:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-medium);
+        background: var(--bg-elevated-hover);
+        border-color: rgba(var(--accent-blue-rgb), 0.4);
+    }
+
+    .blog-post-item h3 { /* Título del post */
+        font-size: 1.75rem; /* Ligeramente más grande para destacar */
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .blog-post-item h3 a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s var(--ease-in-out-cubic);
+    }
+
+    .blog-post-item h3 a:hover {
+        color: var(--accent-blue);
+    }
+
+    .blog-post-meta {
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap; /* Para que las etiquetas se ajusten en móviles */
+    }
+
+    .blog-post-meta .date {
+        margin-right: 1rem;
+    }
+
+    .blog-post-meta .category-tag {
+        display: inline-block;
+        background-color: rgba(var(--accent-blue-rgb), 0.12);
+        color: var(--accent-blue);
+        padding: 0.25em 0.75em;
+        border-radius: 16px; /* Más redondeado, estilo "pill" */
+        font-weight: 500;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.25rem; /* Para espaciado si hay varias etiquetas */
+    }
+
+    .blog-post-excerpt {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+        line-height: 1.6;
+    }
+
+    .read-more-link {
+        display: inline-flex; /* Para alinear con ícono si se añade */
+        align-items: center;
+        color: var(--accent-blue);
+        text-decoration: none;
+        font-weight: 600; /* Más destacado */
+        font-size: 0.95rem;
+        transition: opacity 0.2s;
+    }
+    .read-more-link:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }
+    .read-more-link::after { /* Flecha sutil */
+        content: ' →';
+        margin-left: 0.25em;
+        transition: transform 0.2s;
+    }
+    .read-more-link:hover::after {
+        transform: translateX(3px);
+    }
+
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--accent-blue);
+      color: #fff; 
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      border-radius: 8px; 
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s var(--ease-in-out-cubic), transform 0.2s var(--ease-in-out-cubic);
+      margin: 0.75rem 0.5rem;
+      border: 1px solid transparent; 
+      box-shadow: 0 4px 12px rgba(var(--accent-blue-rgb), 0.2); 
+    }
+
+    .cta-button:hover {
+      background-color: color-mix(in srgb, var(--accent-blue) 90%, #fff 10%); 
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .cta-button.secondary {
+      background-color: rgba(var(--accent-blue-rgb), 0.12);
+      color: var(--accent-blue);
+      border: 1px solid transparent; 
+      box-shadow: none;
+    }
+
+    .cta-button.secondary:hover {
+      background-color: rgba(var(--accent-blue-rgb), 0.2);
+      transform: translateY(-3px) scale(1.03);
+      color: var(--accent-blue);
+    }
+    
+    .contact-links-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 1rem 2rem; 
+      font-size: 0.95rem;
+      color: var(--text-tertiary); 
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 4rem; 
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Navegación principal">
+    <a href="#about">Sobre mí</a>
+    <a href="#work">Proyectos</a>
+    <a href="#blog">Bitácora</a>
+    <a href="#contact">Contacto</a>
+  </nav>
+
+  <header class="container animate-on-scroll">
+    <h1>Juan Fernández</h1>
+    <p>Liderazgo en Tecnología y Desarrollo de Soluciones con Inteligencia Artificial.</p>
+  </header>
+
+  <main>
+    <section id="about" class="container animate-on-scroll" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title">Visión y Enfoque</h2>
+      <p style="font-size: 1.15rem; max-width: 75ch; margin: 0 auto 1.5rem; text-align: center; color: var(--text-secondary);">
+        Apasionado por la convergencia de tecnología avanzada, inteligencia artificial y cultura popular. Mi enfoque combina un análisis estratégico y riguroso con una ejecución creativa para materializar soluciones innovadoras que definen el futuro.
+      </p>
+      <p style="font-size: 1.15rem; max-width: 75ch; margin: 0 auto; text-align: center; color: var(--text-secondary);">
+        Proyectos como <strong>Alpha Trion</strong> y <strong>Lys</strong> son testimonio de mi compromiso con la excelencia y la búsqueda constante de desafíos que expandan los límites de lo posible.
+      </p>
+    </section>
+
+    <section id="work" class="container animate-on-scroll" aria-labelledby="work-title">
+      <h2 id="work-title" class="section-title">Proyectos Destacados</h2>
+      <div class="grid two-cols">
+        <div class="card">
+          <h3>Vendor Lead @ Lyft</h3>
+          <p class="project-meta">Feb 2025 – Actualidad</p>
+          <p>Dirijo la estrategia y gestión de proveedores tecnológicos clave, optimizando la inversión y garantizando la excelencia operativa para iniciativas de IA de alto impacto.</p>
+        </div>
+        <div class="card">
+          <h3>BananaPass</h3>
+          <p class="project-meta">Concepto Estratégico (Concierge Mundial 2026)</p>
+          <p>Conceptualización y diseño de una plataforma de servicios concierge hiper-personalizados para el Mundial 2026, impulsada por IA para predicciones y recomendaciones únicas.</p>
+          <ul class="project-details">
+            <li><strong>Tecnologías Clave:</strong> IA (NLP, Predictive Analytics), Serverless, Microservicios</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Alpha Trion</h3>
+          <p class="project-meta">Iniciativa Personal de Innovación</p>
+          <p>Bot de Telegram avanzado para análisis de sentimiento en mercados financieros y ejecución autónoma de estrategias de trading algorítmico. Un ejercicio de IA aplicada.</p>
+          <ul class="project-details">
+            <li><strong>Tecnologías Clave:</strong> Python, TensorFlow, Telegram API, Arquitectura Event-Driven</li>
+            <li><strong>Ver más:</strong> <a href="#" target="_blank" rel="noopener noreferrer">Explorar en GitHub (Ejemplo)</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Proyectos Platzi Masters</h3>
+          <p class="project-meta">Liderazgo y Contenido Educativo de Vanguardia</p>
+          <p>Desarrollo y mentoría en artículos técnicos, tutoriales y workshops sobre IA, Machine Learning y MLOps, fomentando el talento en la comunidad Platzi.</p>
+          <ul class="project-details">
+             <li><strong>Áreas de Foco:</strong> IA Generativa, LLMs, Ética en IA, Producción de Modelos</li>
+            <li><strong>Ver más:</strong> <a href="#" target="_blank" rel="noopener noreferrer">Artículos Destacados (Ejemplo)</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" class="container animate-on-scroll" aria-labelledby="blog-title">
+        <h2 id="blog-title" class="section-title">Bitácora Personal</h2>
+        <div class="blog-post-list">
+            <article class="blog-post-item">
+                <h3><a href="#">El Futuro de la IA Generativa en la Creatividad Humana</a></h3>
+                <div class="blog-post-meta">
+                    <span class="date">22 de Mayo, 2025</span>
+                    <span class="category-tag">Inteligencia Artificial</span>
+                    <span class="category-tag">Innovación</span>
+                </div>
+                <p class="blog-post-excerpt">Explorando cómo las herramientas de IA generativa están transformando industrias creativas, desde el arte y la música hasta el diseño de productos, y qué significa esto para el rol del creador humano...</p>
+                <a href="#" class="read-more-link">Leer más</a>
+            </article>
+
+            <article class="blog-post-item">
+                <h3><a href="#">Lecciones de Liderazgo Aprendidas del Cine de Ciencia Ficción</a></h3>
+                <div class="blog-post-meta">
+                    <span class="date">15 de Mayo, 2025</span>
+                    <span class="category-tag">Liderazgo</span>
+                    <span class="category-tag">Cultura Pop</span>
+                </div>
+                <p class="blog-post-excerpt">Un análisis de personajes icónicos del cine de ciencia ficción y las valiosas (y a veces advertencias) lecciones de liderazgo que podemos extraer de sus historias y decisiones.</p>
+                <a href="#" class="read-more-link">Leer más</a>
+            </article>
+
+            <article class="blog-post-item">
+                <h3><a href="#">Minimalismo Digital: Cómo Optimizar tu Vida Tecnológica</a></h3>
+                <div class="blog-post-meta">
+                    <span class="date">08 de Mayo, 2025</span>
+                    <span class="category-tag">Productividad</span>
+                    <span class="category-tag">Estilo de Vida</span>
+                </div>
+                <p class="blog-post-excerpt">Consejos prácticos y reflexiones sobre cómo aplicar principios minimalistas a nuestro entorno digital para reducir el ruido, aumentar el enfoque y mejorar el bienestar general.</p>
+                <a href="#" class="read-more-link">Leer más</a>
+            </article>
+        </div>
+    </section>
+
+    <section id="contact" class="container animate-on-scroll" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="section-title">Colaboremos</h2>
+      <p style="text-align:center; font-size: 1.15rem; margin-bottom: 2rem; color: var(--text-secondary); max-width: 60ch; margin-left: auto; margin-right:auto;">
+        ¿Tienes un proyecto que desafíe lo convencional o una idea que pueda transformar la industria? Estoy listo para la siguiente gran cosa.
+      </p>
+      <div class="contact-links-container">
+        <a href="mailto:juanfernandezvarela@lyft.com" class="cta-button">Iniciar Conversación</a>
+        <a href="https://wa.me/525575050350" class="cta-button secondary" target="_blank" rel="noopener noreferrer">WhatsApp Directo</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="animate-on-scroll">
+    &copy; 2025 Juan Fernández. Innovación con propósito.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              // obs.unobserve(entry.target); 
+            } else {
+              // entry.target.classList.remove('visible'); 
+            }
+          });
+        }, { threshold: 0.1 }); 
+        
+        animatedElements.forEach(el => observer.observe(el));
+      } else {
+        animatedElements.forEach(el => el.classList.add('visible'));
+      }
+
+      const sections = document.querySelectorAll('main section[id], header[id]'); // Incluir header si tiene ID y quieres que active nav
+      const navLinks = document.querySelectorAll('nav a');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        // Si el header no debe activar ningún link, empieza el loop desde la primera sección del main
+        // Si el header SÍ debe (ej. un link "#home" o similar), asegúrate que el header tenga un ID y esté en `sections`
+        
+        // Lógica para determinar la sección actual (ajustar offset según sea necesario)
+        // Este es un ejemplo, puedes necesitar una lógica más robusta para el "active"
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - (window.innerHeight / 2) ) { // Ajusta el offset para la detección
+            current = section.getAttribute('id');
+          }
+        });
+        
+        // Si al scrollear hasta arriba no hay sección "current" (ej. porque el header no tiene ID o está por encima del offset)
+        // podrías querer que "Sobre mí" (o el primer link) sea el activo por defecto, o ninguno.
+        // Por ahora, si `current` está vacío, ningún link estará activo.
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          // Comprueba si el href del link (quitando el #) coincide con el ID de la sección actual
+          if (link.getAttribute('href').substring(1) === current) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>
