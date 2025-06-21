@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Juan Fernández — Portfolio & Blog</title>
-  <meta name="description" content="Juan Fernández — Vendor Lead en Lyft, creador de soluciones IA con visión de futuro y autor de una bitácora personal sobre tecnología, IA y cultura.">
+  <title>Juan Carlos Fernández — Portfolio &amp; Blog de Innovación</title>
+  <meta name="description" content="Portafolio de Juan Carlos Fernández Varela Gómez. Explorando la intersección entre la Inteligencia Artificial, el desarrollo de software y la cultura digital.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     /* --------------------------------------------------- */
-    /* VARIABLES DE DISEÑO Y TEMAS - ESTILO APPLE */
+    /* VARIABLES DE DISEÑO Y TEMAS - v2 */
     /* --------------------------------------------------- */
     :root {
       --accent-blue: #0071E3;
       --accent-blue-rgb: 0, 113, 227;
+      --green-whatsapp: #25D366;
 
       /* Modo oscuro (predeterminado) */
       --text-primary: #f5f5f7;
@@ -41,17 +42,16 @@
       --grad-5: #0050ff;
     }
 
-    /* Modo claro (Revisado al estilo Apple) */
+    /* Modo claro (Estilo Apple) */
     :root.light-mode {
       --text-primary: #1d1d1f;
       --text-secondary: #4f4f52;
       --text-tertiary: #8a8a8e;
-      --bg-main: #f5f5f7; /* Blanco roto de Apple */
+      --bg-main: #f5f5f7;
       --bg-elevated: #ffffff;
       --bg-elevated-hover: #ffffff;
       --border-subtle: #d2d2d7;
       --border-strong: #c7c7c7;
-      /* Sombras sutiles y difusas */
       --shadow-soft: 0 4px 12px rgba(0,0,0,0.04);
       --shadow-medium: 0 12px 24px rgba(0,0,0,0.08);
     }
@@ -133,9 +133,7 @@
       right: 2rem;
       z-index: 1001;
     }
-    .theme-toggle__input {
-      display: none;
-    }
+    .theme-toggle__input { display: none; }
     .theme-toggle__label {
       display: flex;
       align-items: center;
@@ -161,10 +159,10 @@
     .theme-toggle__input:not(:checked) + .theme-toggle__label .theme-toggle__icon--light { opacity: 0; }
     
     /* --------------------------------------------------- */
-    /* LAYOUT GENERAL */
+    /* LAYOUT GENERAL Y ANIMACIONES DE SCROLL */
     /* --------------------------------------------------- */
     .container {
-      width: clamp(320px, 92%, 1100px);
+      width: clamp(320px, 92%, 1200px);
       margin: 0 auto;
       padding: 6rem 1rem;
     }
@@ -180,19 +178,19 @@
     }
     
     /* --------------------------------------------------- */
-    /* HEADER CON ANIMACIÓN TIPO APPLE INTELLIGENCE */
+    /* HEADER CON ANIMACIÓN MEJORADA */
     /* --------------------------------------------------- */
     header {
       text-align: center;
       padding: 10rem 1rem 6rem;
-      min-height: 80vh;
+      min-height: 90vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
     header h1 {
-      font-size: clamp(3.5rem, 10vw, 7.5rem);
-      font-weight: 800; /* Más bold, estilo Apple */
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 800;
       letter-spacing: -0.04em;
       margin-bottom: 1.5rem;
       line-height: 1.05;
@@ -204,28 +202,28 @@
       -webkit-text-fill-color: transparent;
       background-size: 300% 300%;
       animation:
-        super-flash-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-        apple-intelligence-gradient 15s linear infinite alternate 1.5s;
+        flash-in-enhanced 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        flow-gradient 8s linear infinite alternate 1.8s; /* Transición más rápida: 8s */
     }
 
-    @keyframes apple-intelligence-gradient {
+    @keyframes flow-gradient {
       0% { background-position: 0% center; }
       100% { background-position: 100% center; }
     }
 
-    @keyframes super-flash-in {
+    @keyframes flash-in-enhanced {
       0% {
         opacity: 0;
-        transform: translateY(50px) scale(0.9);
-        filter: blur(10px);
+        transform: translateY(60px) scale(0.9);
+        filter: blur(20px) brightness(2); /* Blur más pronunciado */
       }
       100% {
         opacity: 1;
         transform: translateY(0) scale(1);
-        filter: blur(0);
+        filter: blur(0) brightness(1);
       }
     }
-    header p {
+    header p.subtitle {
       font-size: clamp(1.2rem, 3vw, 1.75rem);
       color: var(--text-secondary);
       font-weight: 400;
@@ -234,7 +232,7 @@
       line-height: 1.4;
     }
     /* --------------------------------------------------- */
-    /* SECCIONES Y TÍTULOS - ESTILO APPLE */
+    /* ESTILOS DE SECCIÓN GENÉRICOS */
     /* --------------------------------------------------- */
     section {
       margin-bottom: 4rem;
@@ -253,15 +251,85 @@
       font-weight: 400;
       max-width: 700px;
       text-align: center;
-      margin: 0 auto 4rem auto;
+      margin: 0 auto 5rem auto;
       line-height: 1.5;
     }
     /* --------------------------------------------------- */
-    /* GRID Y TARJETAS */
+    /* SECCIÓN 'SOBRE MÍ' */
+    /* --------------------------------------------------- */
+    .about-section-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (min-width: 992px) {
+      .about-section-layout {
+        grid-template-columns: 1fr 1.2fr;
+      }
+    }
+    .about-image-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .about-image-container img {
+      width: 100%;
+      border-radius: 30px;
+      box-shadow: var(--shadow-medium);
+    }
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+    }
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+    /* --------------------------------------------------- */
+    /* SECCIÓN 'HABILIDADES' (SKILLS) */
+    /* --------------------------------------------------- */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .skill-tag {
+      background-color: var(--bg-elevated);
+      color: var(--text-secondary);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 1rem;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .skill-tag:hover {
+      transform: translateY(-5px);
+      color: var(--text-primary);
+      background-color: var(--bg-elevated-hover);
+      border-color: var(--accent-blue);
+      box-shadow: var(--shadow-soft);
+    }
+    .skill-tag i {
+      color: var(--accent-blue);
+      font-size: 1.2rem;
+    }
+
+    /* --------------------------------------------------- */
+    /* GRID Y TARJETAS (PROYECTOS Y BLOG) */
     /* --------------------------------------------------- */
     .grid {
       display: grid;
-      gap: 3rem; /* Más espacio */
+      gap: 3rem;
     }
     .two-cols {
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -269,67 +337,23 @@
     .card {
       background: var(--bg-elevated);
       padding: 2.5rem;
-      border-radius: 24px; /* Más redondeado */
+      border-radius: 24px;
       box-shadow: var(--shadow-soft);
       transition: transform 0.4s var(--ease-out-quint),
                   box-shadow 0.4s var(--ease-out-quint),
                   background-color 0.4s var(--ease-in-out-cubic);
       will-change: transform, box-shadow;
     }
-    .light-mode .card {
-      border: 1px solid #e5e5e5;
-    }
+    .light-mode .card { border: 1px solid #e5e5e5; }
     .card:hover {
       transform: translateY(-10px);
       box-shadow: var(--shadow-medium);
-      background: var(--bg-elevated-hover);
     }
-    .card h3 {
-      font-size: 1.6rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-    .card .project-meta {
-      font-size: 1rem;
-      color: var(--text-tertiary);
-      margin-bottom: 1.2rem;
-      font-weight: 500;
-    }
-    .card p {
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-      margin-bottom: 1.5rem;
-    }
-    .card .project-details {
-        list-style: none;
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        font-size: 0.95rem;
-        border-top: 1px solid var(--border-subtle);
-    }
-    .card .project-details li {
-        margin-bottom: 0.8rem;
-        color: var(--text-secondary);
-    }
-    .card .project-details strong {
-        color: var(--text-primary);
-        font-weight: 500;
-    }
-    .card .project-details a {
-      color: var(--accent-blue);
-      text-decoration: none;
-      font-weight: 500;
-      transition: opacity 0.2s ease;
-    }
-    .card .project-details a:hover { opacity: 0.7; }
-
-    /* --------------------------------------------------- */
-    /* BLOG */
-    /* --------------------------------------------------- */
-    .blog-post-list {
-      display: grid;
-      gap: 2rem;
-    }
+    .card h3 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .card .project-meta { font-size: 1rem; color: var(--text-tertiary); margin-bottom: 1.2rem; font-weight: 500; }
+    .card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1.5rem; }
+    
+    /* Blog Post Item */
     .blog-post-item {
       background: var(--bg-elevated);
       padding: 2.5rem;
@@ -340,43 +364,16 @@
       display: block;
       color: inherit;
     }
-     .light-mode .blog-post-item {
-      border: 1px solid #e5e5e5;
-    }
-    .blog-post-item:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-medium);
-    }
-    .blog-post-item h3 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      line-height: 1.3;
-    }
-    .blog-post-item .blog-post-meta {
-      font-size: 0.95rem;
-      color: var(--text-tertiary);
-      margin-bottom: 1.2rem;
-    }
-    .blog-post-item .blog-post-excerpt {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-    }
-    .blog-post-item .read-more-link {
-        display: inline-block;
-        color: var(--accent-blue);
-        text-decoration: none;
-        font-weight: 600;
-        margin-top: 1.5rem;
-        transition: transform 0.2s ease;
-    }
-    .blog-post-item:hover .read-more-link {
-        transform: translateX(5px);
-    }
+     .light-mode .blog-post-item { border: 1px solid #e5e5e5; }
+    .blog-post-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-medium); }
+    .blog-post-item h3 { font-size: 1.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.3; }
+    .blog-post-item .blog-post-meta { font-size: 0.95rem; color: var(--text-tertiary); margin-bottom: 1.2rem; }
+    .blog-post-item .blog-post-excerpt { font-size: 1.05rem; color: var(--text-secondary); }
+    .blog-post-item .read-more-link { display: inline-block; color: var(--accent-blue); text-decoration: none; font-weight: 600; margin-top: 1.5rem; transition: transform 0.2s ease; }
+    .blog-post-item:hover .read-more-link { transform: translateX(5px); }
 
     /* --------------------------------------------------- */
-    /* BOTONES CTA Y SECCIÓN CONTACTO */
+    /* CONTACTO, BOTONES Y QR */
     /* --------------------------------------------------- */
     .cta-button {
       display: inline-flex;
@@ -387,23 +384,15 @@
       color: #fff;
       padding: 0.9rem 1.8rem;
       text-decoration: none;
-      border-radius: 999px; /* Botón píldora */
+      border-radius: 999px;
       font-weight: 500;
       font-size: 1rem;
       border: 1px solid transparent;
       transition: background-color 0.3s ease;
     }
-    .cta-button:hover {
-      background-color: #0077ED;
-    }
-    .cta-button.secondary {
-      background-color: var(--bg-elevated);
-      color: var(--accent-blue);
-      border: 1px solid var(--accent-blue);
-    }
-     .cta-button.secondary:hover {
-      background-color: rgba(var(--accent-blue-rgb), 0.1);
-    }
+    .cta-button:hover { background-color: #0077ED; }
+    .cta-button.whatsapp { background-color: var(--green-whatsapp); }
+    .cta-button.whatsapp:hover { background-color: #29e271; }
     .contact-links-container {
       text-align: center;
       margin-top: 2rem;
@@ -412,30 +401,7 @@
       justify-content: center;
       gap: 1rem;
     }
-    .qr-container {
-      background: var(--bg-elevated);
-      border-radius: 24px;
-      padding: 2.5rem;
-      margin: 4rem auto 0 auto;
-      max-width: 400px;
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-    }
-    .light-mode .qr-container {
-      border: 1px solid #e5e5e5;
-    }
-    .qr-container p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-    .qr-container img {
-      width: 200px;
-      height: 200px;
-      border-radius: 16px;
-      background-color: white;
-      padding: 10px;
-    }
+    
     /* --------------------------------------------------- */
     /* FOOTER */
     /* --------------------------------------------------- */
@@ -450,13 +416,13 @@
     .social-links { margin-bottom: 2rem; }
     .social-links a {
       color: var(--text-tertiary);
-      font-size: 1.5rem;
-      margin: 0 0.75rem;
+      font-size: 1.8rem; /* Íconos más grandes */
+      margin: 0 1rem;
       transition: all 0.3s ease;
     }
     .social-links a:hover {
-      color: var(--text-secondary);
-      transform: scale(1.1);
+      color: var(--text-primary);
+      transform: translateY(-4px) scale(1.1);
     }
     
     /* --------------------------------------------------- */
@@ -469,7 +435,7 @@
       nav a { padding: 0.4rem 0.5rem; }
       header { padding: 6rem 1rem 4rem; }
       .container { padding: 4rem 1rem; }
-      .card, .blog-post-item, .qr-container { padding: 1.8rem; }
+      .card, .blog-post-item { padding: 1.8rem; }
       .cta-button { width: 100%; padding: 1rem 2rem; }
       .contact-links-container { gap: 0.75rem; }
     }
@@ -477,11 +443,16 @@
 </head>
 <body>
 
+  <!-- =================================================== -->
+  <!-- NAVEGACIÓN Y ELEMENTOS FIJOS -->
+  <!-- =================================================== -->
   <nav>
     <ul>
-      <li><a href="#proyectos" class="active">Proyectos</a></li>
+      <li><a href="#about" class="active">Sobre Mí</a></li>
+      <li><a href="#skills">Habilidades</a></li>
+      <li><a href="#projects">Proyectos</a></li>
       <li><a href="#blog">Blog</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#contact">Contacto</a></li>
     </ul>
   </nav>
 
@@ -493,90 +464,169 @@
     </label>
   </div>
 
+
+  <!-- =================================================== -->
+  <!-- HEADER PRINCIPAL -->
+  <!-- =================================================== -->
   <header>
-    <h1 class="animate-on-scroll">Juan Fernández</h1>
-    <p class="animate-on-scroll" style="transition-delay: 0.1s;">Innovación en la intersección de la IA y la experiencia humana.</p>
+    <h1 class="animate-on-scroll">Juan Carlos Fernández</h1>
+    <p class="subtitle animate-on-scroll" style="transition-delay: 0.1s;">Creando soluciones inteligentes en la intersección del código y la estrategia.</p>
   </header>
 
+
+  <!-- =================================================== -->
+  <!-- CONTENIDO PRINCIPAL -->
+  <!-- =================================================== -->
   <main>
-    <section id="proyectos" class="container">
-      <h2 class="section-title animate-on-scroll">Proyectos</h2>
-      <p class="section-subtitle animate-on-scroll">Una selección de trabajos que exploran nuevas fronteras en machine learning, automatización y diseño de productos inteligentes.</p>
+
+    <!-- SECCIÓN 'SOBRE MÍ' -->
+    <section id="about" class="container">
+      <div class="about-section-layout">
+        <div class="about-image-container animate-on-scroll" style="transition-delay: 0.2s;">
+          <!-- Usa una foto tuya profesional aquí. Uso un placeholder como ejemplo. -->
+          <img src="https://placehold.co/600x700/1d1d1f/f5f5f7?text=JC" alt="Fotografía de Juan Carlos Fernández">
+        </div>
+        <div class="about-text animate-on-scroll" style="transition-delay: 0.3s;">
+          <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Hola, soy Juan Carlos.</h2>
+          <p>
+            Apasionado por la tecnología y su capacidad para resolver problemas complejos. Mi carrera se ha centrado en el puente que une la estrategia de negocio con la ejecución técnica, especializándome en la creación de soluciones de software que no solo son funcionales, sino también inteligentes y escalables.
+          </p>
+          <p>
+            Creo firmemente en el aprendizaje continuo y en la colaboración como motores del crecimiento. Me encanta desglosar desafíos, experimentar con nuevas tecnologías y liderar equipos para transformar ideas ambiciosas en productos reales y de alto impacto.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 'HABILIDADES' -->
+    <section id="skills" class="container">
+      <h2 class="section-title animate-on-scroll">Mis Habilidades</h2>
+      <p class="section-subtitle animate-on-scroll">Un vistazo a las tecnologías y herramientas que utilizo para construir el futuro, una línea de código a la vez.</p>
+      
+      <div class="skills-container animate-on-scroll" style="transition-delay: 0.2s;">
+        <div class="skill-tag"><i class="fab fa-python"></i> Python</div>
+        <div class="skill-tag"><i class="fas fa-brain"></i> Machine Learning</div>
+        <div class="skill-tag"><i class="fab fa-js-square"></i> JavaScript</div>
+        <div class="skill-tag"><i class="fab fa-react"></i> React.js</div>
+        <div class="skill-tag"><i class="fab fa-node-js"></i> Node.js</div>
+        <div class="skill-tag"><i class="fas fa-database"></i> SQL & NoSQL</div>
+        <div class="skill-tag"><i class="fab fa-docker"></i> Docker</div>
+        <div class="skill-tag"><i class="fab fa-aws"></i> AWS</div>
+        <div class="skill-tag"><i class="fas fa-sitemap"></i> Arquitectura de Software</div>
+        <div class="skill-tag"><i class="fas fa-project-diagram"></i> API Design (REST & GraphQL)</div>
+        <div class="skill-tag"><i class="fas fa-users-cog"></i> Liderazgo de Equipos</div>
+        <div class="skill-tag"><i class="fas fa-lightbulb"></i> Estrategia de Producto</div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 'PROYECTOS' -->
+    <section id="projects" class="container">
+      <h2 class="section-title animate-on-scroll">Proyectos Destacados</h2>
+      <p class="section-subtitle animate-on-scroll">Una selección de trabajos donde la teoría y la práctica convergen para crear valor tangible.</p>
       
       <div class="grid two-cols">
+        <!-- Las tarjetas de proyectos se añadirán aquí en la siguiente parte -->
+      </div>
+    </section>
+
         <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
-          <h3>Centinela IA</h3>
-          <p class="project-meta">Análisis Inteligente de Soporte</p>
-          <p>Plataforma de IA que analiza y clasifica tickets de soporte en tiempo real usando NLP, reduciendo el tiempo de respuesta en un 40%.</p>
-          <ul class="project-details">
-            <li><strong>Tecnología:</strong> Python, TensorFlow, FastAPI, Docker</li>
-            <li><strong>Enlace:</strong> <a href="#" target="_blank">Ver estudio de caso</a></li>
-          </ul>
+          <h3><i class="fas fa-brain" style="color:#8d00e0;"></i> Motor de Inferencia IA</h3>
+          <p class="project-meta">Optimización de Modelos de Lenguaje</p>
+          <p>Desarrollo de un sistema de inferencia para LLMs que reduce la latencia en un 35% y los costos de cómputo en un 20% mediante cuantización y batching dinámico. Desplegado en un entorno de alta disponibilidad en AWS.</p>
         </div>
+
         <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
-          <h3>QuantumLeap</h3>
-          <p class="project-meta">Motor de Recomendación Personalizada</p>
-          <p>Motor de personalización para e-commerce que aumenta la conversión un 18% mediante el uso de reinforcement learning.</p>
-           <ul class="project-details">
-            <li><strong>Tecnología:</strong> PyTorch, Kubernetes, Scikit-learn</li>
-            <li><strong>Código:</strong> <a href="#" target="_blank">Repositorio en GitHub</a></li>
-          </ul>
+          <h3><i class="fas fa-store" style="color:#0071E3;"></i> Plataforma E-commerce Full-Stack</h3>
+          <p class="project-meta">React.js, Node.js, PostgreSQL</p>
+          <p>Creación desde cero de una plataforma de comercio electrónico moderna, con un dashboard de administración, pasarela de pagos integrada con Stripe y un sistema de autenticación seguro basado en JWT.</p>
+        </div>
+
+        <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
+          <h3><i class="fas fa-chart-bar" style="color:#ff8d00;"></i> Dashboard de Métricas en Tiempo Real</h3>
+          <p class="project-meta">Análisis y Visualización de Datos</p>
+          <p>Implementación de un panel de control interactivo para la visualización de KPIs de negocio, utilizando D3.js para gráficos personalizados y WebSockets para la actualización de datos en tiempo real desde una API en Python/FastAPI.</p>
+        </div>
+
+        <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
+          <h3><i class="fab fa-github" style="color:#f5f5f7;"></i> Contribución a Open Source</h3>
+          <p class="project-meta">Librería de Componentes de UI</p>
+          <p>Colaboración activa en una librería de componentes de React, enfocándome en mejorar la accesibilidad (A11Y), optimizar el rendimiento y desarrollar nuevos componentes solicitados por la comunidad. Gestioné issues y pull requests.</p>
         </div>
       </div>
     </section>
 
     <section id="blog" class="container">
-      <h2 class="section-title animate-on-scroll">Bitácora</h2>
-      <p class="section-subtitle animate-on-scroll">Ideas, reflexiones y análisis sobre el futuro de la tecnología y su impacto en la cultura y los negocios.</p>
-      
-      <div class="blog-post-list">
-        <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
-          <h3>El Futuro es Híbrido: Humanos y IA en Sinergia Creativa</h3>
-          <p class="blog-post-meta">15 de Junio, 2025 · Innovación</p>
-          <p class="blog-post-excerpt">Exploro cómo la colaboración entre la intuición humana y la precisión de la IA está desbloqueando nuevos horizontes...</p>
-          <span class="read-more-link">Leer más →</span>
-        </a>
-        <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.3s;">
-          <h3>Más Allá del Prompt: Comprendiendo el "Razonamiento" de los LLMs</h3>
-          <p class="blog-post-meta">28 de Mayo, 2025 · Inteligencia Artificial</p>
-          <p class="blog-post-excerpt">Un análisis profundo sobre las arquitecturas Transformer y las técnicas emergentes que permiten a los modelos de lenguaje realizar tareas complejas...</p>
-          <span class="read-more-link">Leer más →</span>
-        </a>
-      </div>
+        <h2 class="section-title animate-on-scroll">Mi Bitácora</h2>
+        <p class="section-subtitle animate-on-scroll">Pensamientos, tutoriales y análisis sobre tecnología, desarrollo y el impacto de la IA en nuestro mundo.</p>
+        
+        <div class="grid two-cols">
+            <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
+              <h3>Más allá de la API: Los Fundamentos de MLOps</h3>
+              <p class="blog-post-meta">15 de Junio, 2025 · IA & DevOps</p>
+              <p class="blog-post-excerpt">Exploro el ciclo de vida completo de un modelo de Machine Learning en producción, desde la gestión de datos hasta el monitoreo y re-entrenamiento automatizado...</p>
+              <span class="read-more-link">Leer artículo completo →</span>
+            </a>
+            <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.3s;">
+              <h3>El Dilema del Estado en React: ¿Cuándo usar Redux, Zustand o Context?</h3>
+              <p class="blog-post-meta">28 de Mayo, 2025 · Desarrollo Web</p>
+              <p class="blog-post-excerpt">Un análisis comparativo y práctico de las principales soluciones de gestión de estado en el ecosistema de React, con ejemplos de casos de uso para cada una...</p>
+              <span class="read-more-link">Leer artículo completo →</span>
+            </a>
+            <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
+              <h3>Arquitecturas Asíncronas en Python: FastAPI vs. Flask</h3>
+              <p class="blog-post-meta">10 de Mayo, 2025 · Backend & Python</p>
+              <p class="blog-post-excerpt">Poniendo a prueba dos de los frameworks más populares de Python para la creación de APIs, evaluando rendimiento, facilidad de uso y ecosistema en un escenario real...</p>
+              <span class="read-more-link">Leer artículo completo →</span>
+            </a>
+        </div>
     </section>
 
-    <section id="contacto" class="container">
-      <h2 class="section-title animate-on-scroll">Hablemos</h2>
-      <p class="section-subtitle animate-on-scroll">Estoy disponible para colaboraciones, consultoría o una simple charla sobre ideas que puedan cambiar el futuro. Contáctame por el medio que prefieras.</p>
+    <section id="contact" class="container">
+      <h2 class="section-title animate-on-scroll">Hablemos.</h2>
+      <p class="section-subtitle animate-on-scroll">Siempre estoy abierto a discutir nuevas ideas, colaborar en proyectos innovadores o simplemente conectar. Envíame un mensaje.</p>
       
       <div class="contact-links-container animate-on-scroll" style="transition-delay: 0.2s;">
-        <a href="mailto:juan.fernandez.demo@email.com" class="cta-button">
+        <a href="mailto:tu.email@ejemplo.com" class="cta-button">
           <i class="fas fa-paper-plane"></i> Enviar un Email
         </a>
-        <a href="https://www.linkedin.com/in/juanfernandez" target="_blank" class="cta-button secondary">
-          <i class="fab fa-linkedin"></i> Conectar en LinkedIn
+        <a href="https://wa.me/525548869123" target="_blank" class="cta-button whatsapp">
+          <i class="fab fa-whatsapp"></i> Chatear en WhatsApp
         </a>
       </div>
-
-      <div class="qr-container animate-on-scroll" style="transition-delay: 0.3s;">
-        <p>O escanea el código para enviarme un WhatsApp directamente.</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwa.me%2F525548869123" alt="Código QR para chatear en WhatsApp">
-      </div>
     </section>
-    </main>
+
+  </main>
+
 
   <footer>
     <div class="social-links">
-      <a href="#" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="#" aria-label="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="Medium" target="_blank"><i class="fab fa-medium"></i></a>
+      <a href="https://www.linkedin.com/in/juan-carlos-fern%C3%A1ndez-varela-g%C3%B3mez-b4596a15b/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/JCodeARM13" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.instagram.com/juan_carlos_fvg/?next=%2F" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
-    <p>Diseñado con inspiración en Cupertino. <br>&copy; 2025 Juan Fernández.</p>
+    <p>
+      Diseñado y construido con pasión por el detalle. <br>
+      &copy; 2025 Juan Carlos Fernández Varela Gómez
+    </p>
+    <div style="margin-top: 2rem; opacity: 0.5; cursor: pointer;" id="secret-trigger" title="Acceso Secreto">
+        <i class="fas fa-key"></i>
+    </div>
   </footer>
 
+
   <script>
+    // Se encapsula todo el código en un event listener para asegurar que el DOM esté completamente cargado.
     document.addEventListener('DOMContentLoaded', () => {
-      // --- MANEJO DEL CAMBIO DE TEMA ---
+
+      /**
+       * ---------------------------------------------------
+       * MANEJO DEL CAMBIO DE TEMA (MODO CLARO/OSCURO)
+       * ---------------------------------------------------
+       * Este módulo gestiona el interruptor de tema.
+       * - Comprueba si hay un tema guardado en el localStorage del navegador.
+       * - Aplica el tema guardado al cargar la página.
+       * - Escucha los cambios en el interruptor para cambiar de tema y guardar la preferencia.
+       */
       const themeToggle = document.getElementById('theme-toggle');
       const docElement = document.documentElement;
       const currentTheme = localStorage.getItem('theme');
@@ -596,21 +646,40 @@
         }
       });
 
-      // --- ANIMACIONES AL DESPLAZAR (SCROLL) ---
+
+      /**
+       * ---------------------------------------------------
+       * ANIMACIONES AL HACER SCROLL (INTERSECTION OBSERVER)
+       * ---------------------------------------------------
+       * Este módulo anima los elementos a medida que aparecen en la pantalla.
+       * - Utiliza la API IntersectionObserver para una mayor eficiencia.
+       * - Selecciona todos los elementos con la clase '.animate-on-scroll'.
+       * - Cuando un elemento es visible en un 15% (threshold), le añade la clase '.visible'.
+       * - Una vez animado, deja de observar el elemento para optimizar el rendimiento.
+       */
       const animatedElements = document.querySelectorAll('.animate-on-scroll');
-      const observer = new IntersectionObserver((entries) => {
+      const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // Opcional: para que la animación ocurra solo una vez
+            scrollObserver.unobserve(entry.target);
           }
         });
       }, {
         threshold: 0.15
       });
-      animatedElements.forEach(el => observer.observe(el));
+      animatedElements.forEach(el => scrollObserver.observe(el));
 
-      // --- SEGUIMIENTO DE SECCIÓN ACTIVA EN LA NAVEGACIÓN ---
+
+      /**
+       * ---------------------------------------------------
+       * INDICADOR DE SECCIÓN ACTIVA EN LA NAVEGACIÓN
+       * ---------------------------------------------------
+       * Este módulo resalta el enlace de navegación correspondiente a la sección visible.
+       * - Utiliza otro IntersectionObserver para detectar qué sección está en el centro de la pantalla.
+       * - El 'rootMargin' está configurado para que la activación ocurra cuando la sección está en la zona media del viewport.
+       * - Actualiza la clase '.active' en los enlaces de la navegación dinámicamente.
+       */
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('nav a');
       const navObserver = new IntersectionObserver((entries) => {
@@ -628,6 +697,42 @@
         rootMargin: '-40% 0px -60% 0px'
       });
       sections.forEach(section => navObserver.observe(section));
+
+
+      /**
+       * ---------------------------------------------------
+       * MENÚ SECRETO Y EASTER EGG (KONAMI CODE + CLIC)
+       * ---------------------------------------------------
+       * Este módulo implementa dos formas de acceder a una página secreta.
+       * - URL_SECRETA: Define la página a la que se redirigirá. ¡Cámbiala por la tuya!
+       */
+      const URL_SECRETA = 'secret-page.html'; // <-- CAMBIA ESTO A LA URL DE TU PÁGINA SECRETA
+
+      // Método 1: Konami Code
+      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      let konamiIndex = 0;
+      window.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            console.log('Konami Code Activado!');
+            window.location.href = URL_SECRETA;
+            konamiIndex = 0; // Reset
+          }
+        } else {
+          konamiIndex = 0; // Reset si la tecla es incorrecta
+        }
+      });
+      
+      // Método 2: Clic en el ícono de la llave
+      const secretTrigger = document.getElementById('secret-trigger');
+      if(secretTrigger) {
+        secretTrigger.addEventListener('click', () => {
+            console.log('Acceso secreto por clic activado!');
+            window.location.href = URL_SECRETA;
+        });
+      }
+
     });
   </script>
 
