@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     /* --------------------------------------------------- */
-    /* VARIABLES DE DISEÑO Y TEMAS - v2 */
+    /* VARIABLES DE DISEÑO Y TEMAS - v3 */
     /* --------------------------------------------------- */
     :root {
       --accent-blue: #0071E3;
@@ -401,6 +401,30 @@
       justify-content: center;
       gap: 1rem;
     }
+    .qr-container {
+      background: var(--bg-elevated);
+      border-radius: 24px;
+      padding: 2.5rem;
+      margin: 4rem auto 0 auto;
+      max-width: 400px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+    .light-mode .qr-container {
+      border: 1px solid #e5e5e5;
+    }
+    .qr-container p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .qr-container img {
+      width: 200px;
+      height: 200px;
+      border-radius: 16px;
+      background-color: white;
+      padding: 10px;
+    }
     
     /* --------------------------------------------------- */
     /* FOOTER */
@@ -435,7 +459,7 @@
       nav a { padding: 0.4rem 0.5rem; }
       header { padding: 6rem 1rem 4rem; }
       .container { padding: 4rem 1rem; }
-      .card, .blog-post-item { padding: 1.8rem; }
+      .card, .blog-post-item, .qr-container { padding: 1.8rem; }
       .cta-button { width: 100%; padding: 1rem 2rem; }
       .contact-links-container { gap: 0.75rem; }
     }
@@ -525,28 +549,21 @@
       <p class="section-subtitle animate-on-scroll">Una selección de trabajos donde la teoría y la práctica convergen para crear valor tangible.</p>
       
       <div class="grid two-cols">
-        <!-- Las tarjetas de proyectos se añadirán aquí en la siguiente parte -->
-      </div>
-    </section>
-
         <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
           <h3><i class="fas fa-brain" style="color:#8d00e0;"></i> Motor de Inferencia IA</h3>
           <p class="project-meta">Optimización de Modelos de Lenguaje</p>
           <p>Desarrollo de un sistema de inferencia para LLMs que reduce la latencia en un 35% y los costos de cómputo en un 20% mediante cuantización y batching dinámico. Desplegado en un entorno de alta disponibilidad en AWS.</p>
         </div>
-
         <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
           <h3><i class="fas fa-store" style="color:#0071E3;"></i> Plataforma E-commerce Full-Stack</h3>
           <p class="project-meta">React.js, Node.js, PostgreSQL</p>
           <p>Creación desde cero de una plataforma de comercio electrónico moderna, con un dashboard de administración, pasarela de pagos integrada con Stripe y un sistema de autenticación seguro basado en JWT.</p>
         </div>
-
         <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
           <h3><i class="fas fa-chart-bar" style="color:#ff8d00;"></i> Dashboard de Métricas en Tiempo Real</h3>
           <p class="project-meta">Análisis y Visualización de Datos</p>
           <p>Implementación de un panel de control interactivo para la visualización de KPIs de negocio, utilizando D3.js para gráficos personalizados y WebSockets para la actualización de datos en tiempo real desde una API en Python/FastAPI.</p>
         </div>
-
         <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
           <h3><i class="fab fa-github" style="color:#f5f5f7;"></i> Contribución a Open Source</h3>
           <p class="project-meta">Librería de Componentes de UI</p>
@@ -555,6 +572,7 @@
       </div>
     </section>
 
+    <!-- SECCIÓN 'BLOG' -->
     <section id="blog" class="container">
         <h2 class="section-title animate-on-scroll">Mi Bitácora</h2>
         <p class="section-subtitle animate-on-scroll">Pensamientos, tutoriales y análisis sobre tecnología, desarrollo y el impacto de la IA en nuestro mundo.</p>
@@ -572,15 +590,10 @@
               <p class="blog-post-excerpt">Un análisis comparativo y práctico de las principales soluciones de gestión de estado en el ecosistema de React, con ejemplos de casos de uso para cada una...</p>
               <span class="read-more-link">Leer artículo completo →</span>
             </a>
-            <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
-              <h3>Arquitecturas Asíncronas en Python: FastAPI vs. Flask</h3>
-              <p class="blog-post-meta">10 de Mayo, 2025 · Backend & Python</p>
-              <p class="blog-post-excerpt">Poniendo a prueba dos de los frameworks más populares de Python para la creación de APIs, evaluando rendimiento, facilidad de uso y ecosistema en un escenario real...</p>
-              <span class="read-more-link">Leer artículo completo →</span>
-            </a>
         </div>
     </section>
 
+    <!-- SECCIÓN 'CONTACTO' -->
     <section id="contact" class="container">
       <h2 class="section-title animate-on-scroll">Hablemos.</h2>
       <p class="section-subtitle animate-on-scroll">Siempre estoy abierto a discutir nuevas ideas, colaborar en proyectos innovadores o simplemente conectar. Envíame un mensaje.</p>
@@ -593,11 +606,19 @@
           <i class="fab fa-whatsapp"></i> Chatear en WhatsApp
         </a>
       </div>
+
+      <div class="qr-container animate-on-scroll" style="transition-delay: 0.3s;">
+        <p>O escanea el código para enviarme un WhatsApp directamente.</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwa.me%2F525548869123" alt="Código QR para chatear en WhatsApp">
+      </div>
     </section>
 
   </main>
 
 
+  <!-- =================================================== -->
+  <!-- FOOTER -->
+  <!-- =================================================== -->
   <footer>
     <div class="social-links">
       <a href="https://www.linkedin.com/in/juan-carlos-fern%C3%A1ndez-varela-g%C3%B3mez-b4596a15b/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -614,48 +635,40 @@
   </footer>
 
 
+  <!-- =================================================== -->
+  <!-- JAVASCRIPT -->
+  <!-- =================================================== -->
   <script>
-    // Se encapsula todo el código en un event listener para asegurar que el DOM esté completamente cargado.
     document.addEventListener('DOMContentLoaded', () => {
 
       /**
-       * ---------------------------------------------------
-       * MANEJO DEL CAMBIO DE TEMA (MODO CLARO/OSCURO)
-       * ---------------------------------------------------
-       * Este módulo gestiona el interruptor de tema.
-       * - Comprueba si hay un tema guardado en el localStorage del navegador.
-       * - Aplica el tema guardado al cargar la página.
-       * - Escucha los cambios en el interruptor para cambiar de tema y guardar la preferencia.
+       * MÓDULO DE CAMBIO DE TEMA
+       * Gestiona el modo claro/oscuro y guarda la preferencia en localStorage.
        */
       const themeToggle = document.getElementById('theme-toggle');
-      const docElement = document.documentElement;
-      const currentTheme = localStorage.getItem('theme');
+      if (themeToggle) { // FIX: Se añade una comprobación para evitar el error si el elemento no existe.
+          const docElement = document.documentElement;
+          const currentTheme = localStorage.getItem('theme');
 
-      if (currentTheme === 'light') {
-        docElement.classList.add('light-mode');
-        themeToggle.checked = true;
+          if (currentTheme === 'light') {
+              docElement.classList.add('light-mode');
+              themeToggle.checked = true;
+          }
+
+          themeToggle.addEventListener('change', () => {
+              if (themeToggle.checked) {
+                  docElement.classList.add('light-mode');
+                  localStorage.setItem('theme', 'light');
+              } else {
+                  docElement.classList.remove('light-mode');
+                  localStorage.setItem('theme', 'dark');
+              }
+          });
       }
 
-      themeToggle.addEventListener('change', () => {
-        if (themeToggle.checked) {
-          docElement.classList.add('light-mode');
-          localStorage.setItem('theme', 'light');
-        } else {
-          docElement.classList.remove('light-mode');
-          localStorage.setItem('theme', 'dark');
-        }
-      });
-
-
       /**
-       * ---------------------------------------------------
-       * ANIMACIONES AL HACER SCROLL (INTERSECTION OBSERVER)
-       * ---------------------------------------------------
-       * Este módulo anima los elementos a medida que aparecen en la pantalla.
-       * - Utiliza la API IntersectionObserver para una mayor eficiencia.
-       * - Selecciona todos los elementos con la clase '.animate-on-scroll'.
-       * - Cuando un elemento es visible en un 15% (threshold), le añade la clase '.visible'.
-       * - Una vez animado, deja de observar el elemento para optimizar el rendimiento.
+       * MÓDULO DE ANIMACIONES POR SCROLL
+       * Utiliza IntersectionObserver para animar elementos cuando entran en el viewport.
        */
       const animatedElements = document.querySelectorAll('.animate-on-scroll');
       const scrollObserver = new IntersectionObserver((entries) => {
@@ -665,20 +678,13 @@
             scrollObserver.unobserve(entry.target);
           }
         });
-      }, {
-        threshold: 0.15
-      });
+      }, { threshold: 0.15 });
       animatedElements.forEach(el => scrollObserver.observe(el));
 
 
       /**
-       * ---------------------------------------------------
-       * INDICADOR DE SECCIÓN ACTIVA EN LA NAVEGACIÓN
-       * ---------------------------------------------------
-       * Este módulo resalta el enlace de navegación correspondiente a la sección visible.
-       * - Utiliza otro IntersectionObserver para detectar qué sección está en el centro de la pantalla.
-       * - El 'rootMargin' está configurado para que la activación ocurra cuando la sección está en la zona media del viewport.
-       * - Actualiza la clase '.active' en los enlaces de la navegación dinámicamente.
+       * MÓDULO DE NAVEGACIÓN ACTIVA
+       * Resalta la sección actual en la barra de navegación.
        */
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('nav a');
@@ -693,18 +699,13 @@
             });
           }
         });
-      }, {
-        rootMargin: '-40% 0px -60% 0px'
-      });
+      }, { rootMargin: '-40% 0px -60% 0px' });
       sections.forEach(section => navObserver.observe(section));
 
 
       /**
-       * ---------------------------------------------------
-       * MENÚ SECRETO Y EASTER EGG (KONAMI CODE + CLIC)
-       * ---------------------------------------------------
-       * Este módulo implementa dos formas de acceder a una página secreta.
-       * - URL_SECRETA: Define la página a la que se redirigirá. ¡Cámbiala por la tuya!
+       * MÓDULO DE ACCESO SECRETO (EASTER EGG)
+       * Permite el acceso a una URL secreta mediante Konami Code o un clic.
        */
       const URL_SECRETA = 'secret-page.html'; // <-- CAMBIA ESTO A LA URL DE TU PÁGINA SECRETA
 
@@ -717,10 +718,10 @@
           if (konamiIndex === konamiCode.length) {
             console.log('Konami Code Activado!');
             window.location.href = URL_SECRETA;
-            konamiIndex = 0; // Reset
+            konamiIndex = 0;
           }
         } else {
-          konamiIndex = 0; // Reset si la tecla es incorrecta
+          konamiIndex = 0;
         }
       });
       
@@ -732,7 +733,6 @@
             window.location.href = URL_SECRETA;
         });
       }
-
     });
   </script>
 
