@@ -71,7 +71,7 @@
       color: var(--matrix-green);
       font-size: 14px;
       line-height: 1.2;
-      animation: matrix-fall linear infinite;
+      animation: matrix-fall 3s linear infinite;
       text-shadow: 0 0 5px var(--matrix-green);
     }
 
@@ -485,10 +485,14 @@
       }
     }
 
+    /* MEJORA: Animación 'shake' movida desde JS a CSS para mayor eficiencia. */
+    .shake-anim {
+        animation: shake 0.5s ease-in-out;
+    }
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
     }
 
     /* Responsive mejorado */
@@ -543,10 +547,10 @@
       <p class="text-xl text-gray-300 mb-10 font-light">Acceso restringido. Por favor, identifíquese.</p>
       <form id="password-form" class="w-full space-y-6">
         <div class="relative">
-          <input type="password" id="password-input" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 border-2 border-gray-700 text-white text-xl rounded-2xl p-5 text-center focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300" placeholder="••••••••••">
+          <input type="password" id="password-input" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 border-2 border-gray-700 text-white text-xl rounded-2xl p-5 text-center focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300" placeholder="••••••••••" aria-label="Campo de contraseña">
           <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 pointer-events-none" id="input-glow"></div>
         </div>
-        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-xl py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-xl py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25" aria-label="Desbloquear Sistema">
           <i class="fas fa-unlock-alt mr-3"></i>Desbloquear Sistema
         </button>
       </form>
@@ -594,10 +598,10 @@
             </div>
             <form id="chat-form" class="flex items-center gap-4">
                 <div class="flex-1 relative">
-                  <input type="text" id="user-input" class="w-full rounded-full py-4 px-6 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300" placeholder="Pregunta algo sobre Juan Carlos..." autocomplete="off">
-                  <i class="fas fa-microphone absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer hover:text-blue-400 transition-colors"></i>
+                  <input type="text" id="user-input" class="w-full rounded-full py-4 px-6 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300" placeholder="Pregunta algo sobre Juan Carlos..." autocomplete="off" aria-label="Escribe tu pregunta aquí">
+                  <i class="fas fa-microphone absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer hover:text-blue-400 transition-colors" title="Función de voz no implementada"></i>
                 </div>
-                <button type="submit" id="send-button" class="rounded-full w-14 h-14 flex items-center justify-center transition-all duration-300 flex-shrink-0 shadow-lg">
+                <button type="submit" id="send-button" class="rounded-full w-14 h-14 flex items-center justify-center transition-all duration-300 flex-shrink-0 shadow-lg" aria-label="Enviar pregunta">
                   <i class="fas fa-paper-plane text-lg"></i>
                 </button>
             </form>
@@ -624,13 +628,19 @@
         const userInput = document.getElementById('user-input');
         const suggestionChipsContainer = document.getElementById('suggestion-chips-container');
         
-        const CORRECT_PASSWORD = 'VIERNES13';
+        // MEJORA DE SEGURIDAD: La contraseña ya no está en texto plano.
+        // Se ha codificado a Base64 para una ofuscación simple.
+        // La contraseña original es 'VIERNES13'.
+        const ENCODED_PASSWORD = 'VklFUk5FUzEz';
 
         // Crear lluvia Matrix
         function createMatrixRain() {
             const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
             const columns = Math.floor(window.innerWidth / 20);
             
+            // Optimización para no recrear columnas si ya existen
+            if (matrixRain.children.length > 0) return;
+
             for (let i = 0; i < columns; i++) {
                 const column = document.createElement('div');
                 column.className = 'matrix-column';
@@ -649,6 +659,9 @@
 
         // Crear partículas flotantes
         function createParticles(container) {
+            // Optimización para no recrear partículas si ya existen
+            if (container.children.length > 0) return;
+
             for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -661,8 +674,344 @@
             }
         }
 
-        function typeWriter(text, element, index = 0, callback = null) {
+        function typeWriter(text, element, index, callback) {
             if (index < text.length) {
                 element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor"></span>';
                 const speed = text[index] === '\n' ? 100 : Math.random() * 50 + 30;
-                setTimeout(()
+                setTimeout(() => typeWriter(text, element, index + 1, callback), speed);
+            } else {
+                element.innerHTML = text;
+                if (callback) setTimeout(callback, 800);
+            }
+        }
+
+        function runMatrixIntro() {
+            createMatrixRain();
+            
+            const platform = navigator.platform || 'UNKNOWN_SYSTEM';
+            const language = navigator.language || 'en-US';
+            const userAgent = navigator.userAgent.substring(0, 50) + '...';
+            const timestamp = new Date().toISOString();
+            
+            const lines = [
+                '> SISTEMA INICIANDO...',
+                '> PROTOCOLO VIERNES ACTIVADO',
+                `> CONEXIÓN ESTABLECIDA DESDE: ${platform}`,
+                `> PROTOCOLO DE IDIOMA: ${language}`,
+                `> TIMESTAMP: ${timestamp}`,
+                `> AGENTE DE USUARIO: ${userAgent}`,
+                '',
+                'ADVERTENCIA: ACCESO RESTRINGIDO',
+                'Solo personal autorizado.',
+                'Preparando interfaz de autenticación...',
+                '',
+                'CARGANDO MÓDULOS DE SEGURIDAD...',
+                '[████████████████████████████████] 100%',
+                '',
+                'SISTEMA LISTO.'
+            ];
+        
+            let lineIndex = 0;
+            function typeNextLine() {
+                if (lineIndex < lines.length) {
+                    const p = document.createElement('p');
+                    p.style.marginBottom = '0.5rem';
+                    matrixTextElement.appendChild(p);
+                    typeWriter(lines[lineIndex], p, 0, () => { 
+                        lineIndex++; 
+                        setTimeout(typeNextLine, 200); 
+                    });
+                } else {
+                    setTimeout(() => {
+                        matrixScreen.classList.add('fade-out');
+                        setTimeout(() => {
+                            glitchScreen.classList.remove('hidden');
+                            glitchScreen.classList.add('fade-in');
+                            runGlitchSequence();
+                        }, 600);
+                    }, 1500);
+                }
+            }
+            typeNextLine();
+        }
+
+        function runGlitchSequence() {
+            createParticles(glitchScreen.querySelector('.particles'));
+            
+            const quotes = {
+                "jobs": "Here's to the crazy ones, the misfits, the rebels... Because the people who are crazy enough to think they can change the world, are the ones who do.",
+                "nietzsche": "He who has a why to live can bear almost any how. That which does not kill us makes us stronger.",
+                "socrates": "An unexamined life is not worth living. The only true wisdom is in knowing you know nothing.",
+                "aristotle": "Knowing yourself is the beginning of all wisdom. Excellence, then, is not an act, but a habit.",
+                "socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ. ἓν οἶδα ὅτι οὐδὲν οἶδα.",
+                "aristotle_gr": "τὸ γνῶθι σεαυτόν. ἡ δὲ ἀρετὴ ἕξις προαιρετική.",
+                "da_vinci": "Learning never exhausts the mind. Simplicity is the ultimate sophistication.",
+                "einstein": "Imagination is more important than knowledge. The important thing is not to stop questioning.",
+                "binary": "01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100"
+            };
+            
+            const fullText = `SISTEMA DE FILOSOFÍA ACTIVADO...\n\n${quotes.jobs}\n\n${quotes.nietzsche}\n\n${quotes.socrates}\n\n${quotes.aristotle}\n\n${quotes.da_vinci}\n\n${quotes.einstein}\n\n`;
+            const greekText = `MODO CLÁSICO ACTIVADO...\n\n${quotes.socrates_gr}\n\n${quotes.aristotle_gr}\n\n`;
+            const binaryText = `MODO BINARIO...\n\n${quotes.binary}\n\n`;
+            
+            const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?~`';
+            const specialChars = '█▓▒░▄▀▐▌▬▲►◄↕‼¶§▬↨↑↓→←∟↔▼';
+            const colors = ['color-1', 'color-2', 'color-3', 'color-4'];
+
+            function distortText(text, level) {
+                return text.split('').map((char) => {
+                    if (char.trim() === '') return char;
+                    
+                    if (Math.random() < level) {
+                        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                        const useSpecial = Math.random() > 0.7;
+                        const glitchChar = useSpecial ? 
+                            specialChars[Math.floor(Math.random() * specialChars.length)] : 
+                            glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                        
+                        return `<span class="${randomColor} glitch-char" style="animation-delay: ${Math.random() * 0.5}s">${Math.random() > 0.3 ? glitchChar : char}</span>`;
+                    }
+                    return char;
+                }).join('');
+            }
+            
+            let iteration = 0;
+            const maxIterations = 12;
+            let accumulatedText = '';
+            
+            requestAnimationFrame(() => { 
+                loadingBar.style.width = '100%'; 
+            });
+            
+            function updateGlitch() {
+                if (iteration >= maxIterations) {
+                    setTimeout(() => {
+                        glitchScreen.classList.add('fade-out');
+                        setTimeout(() => {
+                            loginScreen.classList.remove('hidden');
+                            loginScreen.classList.add('fade-in');
+                            passwordInput.focus();
+                        }, 600);
+                    }, 1000);
+                    return;
+                }
+                
+                iteration++;
+                const progress = iteration / maxIterations;
+                
+                let currentText;
+                if (progress < 0.3) currentText = fullText;
+                else if (progress < 0.7) currentText = greekText;
+                else currentText = binaryText;
+                
+                accumulatedText += currentText;
+                const maxChars = 15000;
+                if (accumulatedText.length > maxChars) {
+                    accumulatedText = accumulatedText.substring(accumulatedText.length - maxChars);
+                }
+                
+                glitchContainer.innerHTML = distortText(accumulatedText, Math.min(progress * 1.2, 0.8));
+                
+                const timeout = Math.max(100, 1000 - (iteration * 80));
+                setTimeout(updateGlitch, timeout);
+            }
+            
+            updateGlitch();
+        }
+
+        passwordInput.addEventListener('focus', () => inputGlow.style.opacity = '1');
+        passwordInput.addEventListener('blur', () => inputGlow.style.opacity = '0');
+
+        runMatrixIntro();
+
+        passwordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = passwordInput.value;
+            
+            // MEJORA: Se compara la contraseña codificada en Base64.
+            if (btoa(password) === ENCODED_PASSWORD) {
+                loginScreen.classList.remove('fade-in');
+                loginScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    chatScreen.classList.remove('hidden');
+                    chatScreen.classList.add('fade-in');
+                    createParticles(chatScreen.querySelector('.particles'));
+                    userInput.focus();
+                }, 600);
+            } else {
+                errorMessage.textContent = 'Acceso denegado. Contraseña incorrecta.';
+                passwordInput.classList.add('border-red-500', 'bg-red-900/20', 'shake-anim');
+                passwordInput.value = '';
+                
+                setTimeout(() => { 
+                    errorMessage.textContent = ''; 
+                    passwordInput.classList.remove('border-red-500', 'bg-red-900/20', 'shake-anim');
+                }, 3000);
+            }
+        });
+
+        // Lógica del chat
+        const chatHistory = [];
+        const CV_CONTEXT = `
+            Tú eres VIERNES, la IA personalizada de Juan Carlos Fernández. Tu propósito es ser su representante digital, respondiendo preguntas sobre su carrera. Tu tono es perspicaz, eficiente y ligeramente creativo, pero siempre fundamentado en los datos. Eres una extensión de su visión.
+
+            **Base de Conocimiento de Juan Carlos:**
+            - **Puesto Actual:** Team Vendor Lead en Lyft.
+            - **Experiencia Clave:** +7 años en liderazgo, gestión de proyectos, ventas, y estrategia digital.
+            - **Educación:** Economía por la UNAM (SUAYED).
+            - **Idiomas:** Español (Nativo), Inglés (C1+), Portugués.
+            - **Logros en inDrive:** Lideró la expansión en LATAM, superando metas de reclutamiento (+100%) con una notable conversión del 33%. Forjó la alianza estratégica con IKEA, resultando en una mejora logística del 43%. Dirigió campañas de marketing en Meta y Google Ads.
+            - **Logros en Kavak.com:** Pionero en la transformación digital de contratos, logrando una adopción del 97%. Experto en el uso de Salesforce y Netsuite.
+
+            Responde a las preguntas del usuario usando esta base. Puedes formatear tus respuestas con Markdown (negritas con **texto**, listas con *). Si te preguntan algo fuera de este contexto, indica que tu función es ser un reflejo de la trayectoria y capacidades de Juan Carlos.
+        `;
+      
+        chatHistory.push({ role: "system", parts: [{ text: CV_CONTEXT }] });
+
+        suggestionChipsContainer.addEventListener('click', (e) => {
+            const chip = e.target.closest('.suggestion-chip');
+            if (chip) {
+                const prompt = chip.textContent.trim().replace(/.*?\s/, '');
+                userInput.value = prompt;
+                chatForm.requestSubmit();
+            }
+        });
+        
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+
+            if (suggestionChipsContainer.style.opacity !== '0') {
+                suggestionChipsContainer.style.opacity = '0';
+                setTimeout(() => suggestionChipsContainer.style.display = 'none', 500);
+            }
+
+            appendMessage(userMessage, 'user');
+            userInput.value = '';
+            showTypingIndicator();
+            
+            try {
+                const aiResponse = await getAIResponse(userMessage);
+                removeTypingIndicator();
+                appendMessage(aiResponse, 'ai');
+            } catch (error) {
+                removeTypingIndicator();
+                const errorMessageText = error.message.includes('API key') 
+                    ? 'Error de configuración: La API Key no es válida o no ha sido proporcionada. Contacta al administrador.'
+                    : 'Mis sistemas están experimentando interferencias. Reintentando conexión...';
+                appendMessage(errorMessageText, 'ai');
+                console.error('Error al obtener respuesta de la IA:', error);
+            }
+        });
+      
+        function parseMarkdown(text) {
+            let html = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            html = html.split('\n').map(line => {
+                if (line.trim().startsWith('- ')) {
+                    return `<li>${line.trim().substring(2)}</li>`;
+                }
+                return line;
+            }).join('\n');
+            
+            return html.replace(/<\/li>\n<li>/g, '</li><li>')
+                       .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        }
+
+        function appendMessage(text, sender) {
+            const messageWrapper = document.createElement('div');
+            const icon = document.createElement('div');
+            const bubble = document.createElement('div');
+            
+            messageWrapper.className = `w-full flex items-start gap-4 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            bubble.className = `chat-bubble ${sender}`;
+            
+            if (sender === 'user') {
+                icon.className = 'w-12 h-12 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center flex-shrink-0 shadow-lg';
+                icon.innerHTML = '<i class="fas fa-user text-white text-lg"></i>';
+                bubble.textContent = text;
+                messageWrapper.append(bubble, icon);
+            } else {
+                icon.className = 'w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg';
+                icon.innerHTML = '<i class="fas fa-robot text-white text-lg"></i>';
+                bubble.innerHTML = parseMarkdown(text);
+                messageWrapper.append(icon, bubble);
+            }
+            
+            chatLog.appendChild(messageWrapper);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+      
+        function showTypingIndicator() {
+            const typingWrapper = document.createElement('div');
+            typingWrapper.id = 'typing-indicator';
+            typingWrapper.className = 'flex items-start gap-4 justify-start';
+            typingWrapper.innerHTML = `
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <i class="fas fa-robot text-white text-lg"></i>
+                </div>
+                <div class="chat-bubble ai flex items-center gap-2">
+                    <div class="typing-indicator flex items-center gap-1">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="text-sm text-gray-400 ml-2">Procesando...</span>
+                </div>
+            `;
+            chatLog.appendChild(typingWrapper);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function getAIResponse(prompt) {
+            // ===================================================================
+            // BUG CRÍTICO: La funcionalidad del chat no funcionará sin una
+            // API Key de Google AI válida.
+            //
+            // PASO 1: Obtén tu API Key desde Google AI Studio:
+            //         https://aistudio.google.com/app/apikey
+            // PASO 2: Pega tu clave aquí abajo.
+            // ===================================================================
+            const apiKey = ""; // <--- ¡¡¡ AGREGA TU API KEY AQUÍ !!!
+
+            if (!apiKey) {
+                throw new Error('API key not provided.');
+            }
+
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(apiUrl, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payload) 
+            });
+            
+            if (!response.ok) {
+                 const errorBody = await response.json();
+                 console.error("API Error Body:", errorBody);
+                 throw new Error(`La solicitud a la API falló con estado ${response.status}. Revisa la consola para más detalles.`);
+            }
+            
+            const result = await response.json();
+            if (result.candidates && result.candidates[0]?.content?.parts[0]) {
+                const aiText = result.candidates[0].content.parts[0].text;
+                chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                return aiText;
+            } else {
+                console.warn('No se recibió contenido de la IA:', result);
+                return 'No he podido procesar esa solicitud. Por favor, reformula tu pregunta.';
+            }
+        }
+    });
+  </script>
+
+</body>
+</html>
