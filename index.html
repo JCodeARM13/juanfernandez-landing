@@ -36,7 +36,7 @@
     #matrix-screen { z-index: 40; }
     #glitch-screen { z-index: 30; }
 
-    #matrix-text { white-space: pre-wrap; }
+    #matrix-text { white-space: pre-wrap; color: #00ff41;}
     .blinking-cursor { animation: blink 1s step-end infinite; }
     @keyframes blink { 50% { border-right-color: #00ff41; } }
 
@@ -59,17 +59,27 @@
     .color-2 { color: #00fff3; } /* Cyan */
     .color-3 { color: #f0db4f; } /* Yellow */
     
+    #loading-bar-container {
+        position: absolute;
+        bottom: 5%;
+        left: 10%;
+        width: 80%;
+        height: 4px;
+        background-color: rgba(0, 255, 65, 0.1);
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    #loading-bar {
+        width: 0%;
+        height: 100%;
+        background-color: #00ff41;
+        transition: width 8s linear; /* Debe coincidir con la duración de la secuencia */
+    }
+
     /* Estilos para el chat rediseñado */
-    #chat-container {
-        background: url('https://www.transparenttextures.com/patterns/dark-matter.png'), #0a0a0a;
-        transition: opacity 1s ease-in;
-    }
-    .glass-header, .glass-footer {
-        background: rgba(10, 10, 10, 0.5);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-color: rgba(255, 255, 255, 0.1);
-    }
+    #chat-container { background: url('https://www.transparenttextures.com/patterns/dark-matter.png'), #0a0a0a; transition: opacity 1s ease-in; }
+    .glass-header, .glass-footer { background: rgba(10, 10, 10, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: rgba(255, 255, 255, 0.1); }
     .ai-pulse { animation: pulse-glow 3s ease-in-out infinite alternate; }
     @keyframes pulse-glow { from { filter: drop-shadow(0 0 2px #00A3FF); } to { filter: drop-shadow(0 0 8px #00A3FF); } }
     .chat-bubble { max-width: 80%; padding: 14px 20px; border-radius: 22px; line-height: 1.6; }
@@ -86,19 +96,19 @@
 </head>
 <body class="w-screen h-screen">
 
-  <!-- Pantalla de Intro "Matrix" -->
   <div id="matrix-screen" class="w-full h-full flex items-center justify-center p-4">
     <div class="w-full max-w-3xl">
-        <pre id="matrix-text" class="text-sm md:text-lg text-green-400"></pre>
+        <pre id="matrix-text" class="text-sm md:text-lg"></pre>
     </div>
   </div>
 
-  <!-- Pantalla de Intro "Glitch" -->
   <div id="glitch-screen" class="hidden opacity-0">
       <div id="glitch-container"></div>
+      <div id="loading-bar-container">
+          <div id="loading-bar"></div>
+      </div>
   </div>
 
-  <!-- Pantalla de Contraseña -->
   <div id="login-screen" class="w-full h-full flex flex-col items-center justify-center p-4 z-10 absolute top-0 left-0 bg-black opacity-0 hidden">
     <div class="text-center w-full max-w-md">
       <i class="fas fa-shield-alt text-6xl text-blue-500 mb-6 ai-pulse"></i>
@@ -112,12 +122,10 @@
     </div>
   </div>
 
-  <!-- Interfaz de Chat -->
   <div id="chat-container" class="w-full h-full flex flex-col opacity-0 hidden">
     <header class="p-4 text-center glass-header border-b">
       <h2 class="text-xl font-bold">VIERNES <i class="fas fa-circle text-blue-500 text-xs ai-pulse"></i></h2>
     </header>
-    
     <main id="chat-log" class="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
       <div class="flex items-start gap-4 justify-start">
         <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
@@ -126,7 +134,6 @@
         </div>
       </div>
     </main>
-
     <footer class="p-4 glass-footer border-t">
       <form id="chat-form" class="flex items-center gap-4">
         <input type="text" id="user-input" class="flex-1 chat-input text-white rounded-full py-3 px-5 focus:outline-none transition" placeholder="Interactúa con Viernes..." autocomplete="off">
@@ -143,6 +150,7 @@
         const matrixTextElement = document.getElementById('matrix-text');
         const glitchScreen = document.getElementById('glitch-screen');
         const glitchContainer = document.getElementById('glitch-container');
+        const loadingBar = document.getElementById('loading-bar');
         const loginScreen = document.getElementById('login-screen');
         const passwordForm = document.getElementById('password-form');
         const passwordInput = document.getElementById('password-input');
@@ -165,8 +173,15 @@
         }
 
         function runMatrixIntro() {
+            const platform = navigator.platform || 'source unknown';
+            const language = navigator.language || 'en-US';
+            const userAgent = navigator.userAgent || 'unidentified';
+            
             const lines = [
                 'Wake up, user...',
+                `> Connection established from: ${platform}`,
+                `> Language Protocol: ${language}`,
+                `> User Agent Signature: ${userAgent}`,
                 'The matrix has you.',
                 'Follow the white rabbit.',
                 'Initializing core philosophies...'
@@ -195,32 +210,23 @@
 
         function runGlitchSequence() {
             const quotes = {
-                "S.J.": "Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes... the ones who see things differently.",
-                "Nietzsche": "He who has a why to live can bear almost any how.",
-                "Socrates": "An unexamined life is not worth living.",
-                "Aristotle": "Knowing yourself is the beginning of all wisdom.",
-                "Socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ.",
-                "Aristotle_gr": "τὸ γνῶθι σεαυτόν."
+                "S.J.": "Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes... Because the people who are crazy enough to think they can change the world, are the ones who do.",
+                "Nietzsche": "He who has a why to live can bear almost any how. That which does not kill us makes us stronger. Become what you are.",
+                "Socrates": "An unexamined life is not worth living. The only true wisdom is in knowing you know nothing.",
+                "Aristotle": "Knowing yourself is the beginning of all wisdom. We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+                "Socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ. ἓν οἶδα ὅτι οὐδὲν οἶδα.",
+                "Aristotle_gr": "τὸ γνῶθι σεαυτόν. ἡ δὲ ἀρετὴ ἕξις."
             };
             
-            const fullText = `
-${quotes["S.J."]}
-${quotes["Nietzsche"]}
-${quotes["Socrates"]}
-${quotes["Aristotle"]}
-`;
-            const greekText = `
-${quotes["S.J."]}
-${quotes["Nietzsche"]}
-${quotes["Socrates_gr"]}
-${quotes["Aristotle_gr"]}
-`;
-            const glitchChars = '#*[]?%&@01$';
+            const fullText = `\n${quotes["S.J."]}\n\n${quotes["Nietzsche"]}\n\n${quotes["Socrates"]}\n\n${quotes["Aristotle"]}\n`;
+            const greekText = `\n${quotes["S.J."]}\n\n${quotes["Nietzsche"]}\n\n${quotes["Socrates_gr"]}\n\n${quotes["Aristotle_gr"]}\n`;
+            
+            const glitchChars = '#*[]?%&@01$<>|';
             const colors = ['color-1', 'color-2', 'color-3'];
 
             function distortText(text, level) {
                 return text.split('').map(char => {
-                    if (char === ' ' || char === '\n') return char;
+                    if (char.trim() === '') return char;
                     if (Math.random() < level) {
                         const randomColor = colors[Math.floor(Math.random() * colors.length)];
                         const randomGlitch = glitchChars[Math.floor(Math.random() * glitchChars.length)];
@@ -232,6 +238,10 @@ ${quotes["Aristotle_gr"]}
             
             let iteration = 0;
             const maxIterations = 10;
+            let fullGlitchText = '';
+
+            // Iniciar la barra de carga
+            requestAnimationFrame(() => { loadingBar.style.width = '100%'; });
             
             function updateGlitch() {
                 if(iteration >= maxIterations) {
@@ -245,17 +255,17 @@ ${quotes["Aristotle_gr"]}
                 
                 iteration++;
                 const distortionLevel = iteration / maxIterations;
-                const currentText = iteration > 7 ? greekText : fullText; // Cambiar a griego en las últimas iteraciones
+                const currentText = iteration > 7 ? greekText : fullText;
                 
-                let textToFillScreen = '';
-                // Repetir el texto para llenar la pantalla
-                while (textToFillScreen.length < 15000) {
-                     textToFillScreen += currentText;
+                fullGlitchText += currentText;
+                // Mantener el texto en pantalla para que se llene
+                const maxChars = 20000; 
+                if(fullGlitchText.length > maxChars) {
+                    fullGlitchText = fullGlitchText.substring(fullGlitchText.length - maxChars);
                 }
 
-                glitchContainer.innerHTML = distortText(textToFillScreen, distortionLevel);
+                glitchContainer.innerHTML = distortText(fullGlitchText, distortionLevel);
                 
-                // Variar la velocidad
                 let timeout = 800 - (iteration * 60);
                 setTimeout(updateGlitch, timeout);
             }
