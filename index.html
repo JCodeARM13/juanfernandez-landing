@@ -40,14 +40,7 @@
     .blinking-cursor { animation: blink 1s step-end infinite; }
     @keyframes blink { 50% { border-right-color: #00ff41; } }
 
-    #glitch-container {
-        padding: 1rem;
-        word-wrap: break-word;
-        white-space: pre-wrap;
-        font-size: 0.8rem;
-        line-height: 1.4;
-        opacity: 0.7;
-    }
+    #glitch-container { padding: 1rem; word-wrap: break-word; white-space: pre-wrap; font-size: 0.8rem; line-height: 1.4; opacity: 0.7; }
     .glitch-char { display: inline-block; animation: glitch-anim 1.5s infinite; }
     @keyframes glitch-anim {
         0%, 100% { text-shadow: none; opacity: 1; }
@@ -59,39 +52,63 @@
     .color-2 { color: #00fff3; } /* Cyan */
     .color-3 { color: #f0db4f; } /* Yellow */
     
-    #loading-bar-container {
-        position: absolute;
-        bottom: 5%;
-        left: 10%;
-        width: 80%;
-        height: 4px;
-        background-color: rgba(0, 255, 65, 0.1);
-        border: 1px solid rgba(0, 255, 65, 0.3);
-        border-radius: 5px;
-        overflow: hidden;
-    }
-    #loading-bar {
-        width: 0%;
-        height: 100%;
-        background-color: #00ff41;
-        transition: width 8s linear; /* Debe coincidir con la duración de la secuencia */
-    }
+    #loading-bar-container { position: absolute; bottom: 5%; left: 10%; width: 80%; height: 4px; background-color: rgba(0, 255, 65, 0.1); border: 1px solid rgba(0, 255, 65, 0.3); border-radius: 5px; overflow: hidden; }
+    #loading-bar { width: 0%; height: 100%; background-color: #00ff41; transition: width 8s linear; }
 
-    /* Estilos para el chat rediseñado */
-    #chat-container { background: url('https://www.transparenttextures.com/patterns/dark-matter.png'), #0a0a0a; transition: opacity 1s ease-in; }
-    .glass-header, .glass-footer { background: rgba(10, 10, 10, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-color: rgba(255, 255, 255, 0.1); }
-    .ai-pulse { animation: pulse-glow 3s ease-in-out infinite alternate; }
-    @keyframes pulse-glow { from { filter: drop-shadow(0 0 2px #00A3FF); } to { filter: drop-shadow(0 0 8px #00A3FF); } }
-    .chat-bubble { max-width: 80%; padding: 14px 20px; border-radius: 22px; line-height: 1.6; }
-    .chat-bubble.user { background: #0071E3; color: white; border-bottom-right-radius: 6px; }
-    .chat-bubble.ai { background-color: #1c1c1e; color: #e5e5e5; border: 1px solid rgba(255, 255, 255, 0.1); border-bottom-left-radius: 6px; }
-    .chat-input { background: rgba(44, 44, 46, 0.8); border: 1px solid rgba(255,255,255,0.1); }
-    .chat-input:focus { outline: none; border-color: #0071E3; }
-    .typing-indicator span { background-color: #6c6c72; }
-    #chat-log::-webkit-scrollbar { width: 8px; }
+    /* Estilos del chat MEJORADOS */
+    #chat-screen {
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .animated-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #020024 0%, #090979 35%, #00d4ff 100%);
+        animation: gradient-animation 20s ease infinite;
+        background-size: 400% 400%;
+        z-index: 0;
+    }
+    @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    
+    .chat-window {
+        width: 90%;
+        max-width: 800px;
+        height: 90vh;
+        max-height: 900px;
+        background: rgba(10, 10, 10, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+        z-index: 10;
+        animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    #chat-log { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
+    #chat-log::-webkit-scrollbar { width: 6px; }
     #chat-log::-webkit-scrollbar-track { background: transparent; }
-    #chat-log::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
-    #chat-log::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.4); }
+    #chat-log::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+    
+    .chat-bubble { max-width: 80%; padding: 12px 20px; border-radius: 18px; line-height: 1.6; animation: message-pop-in 0.3s ease-out; }
+    @keyframes message-pop-in { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .chat-bubble.user { background: linear-gradient(135deg, #0061c2, #007bff); color: white; border-bottom-right-radius: 4px; }
+    .chat-bubble.ai { background-color: rgba(44, 44, 46, 0.8); color: #e5e5e5; border-left: 3px solid #007bff; border-bottom-left-radius: 4px; }
+    .chat-bubble.ai strong { color: #00A3FF; }
+    .chat-bubble.ai ul { list-style-type: disc; padding-left: 20px; }
+    
+    .suggestion-chips { transition: opacity 0.5s ease; }
+    .suggestion-chip { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.2s ease; }
+    .suggestion-chip:hover { background-color: rgba(255,255,255,0.1); border-color: #007bff; }
+    
+    .typing-indicator span { background-color: #6c6c72; animation: typing 1.2s infinite ease-in-out; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
   </style>
 </head>
 <body class="w-screen h-screen">
@@ -121,31 +138,43 @@
       <p id="error-message" class="text-red-500 mt-4 h-6"></p>
     </div>
   </div>
+  
+  <div id="chat-screen" class="w-full h-full opacity-0 hidden">
+    <div class="animated-bg"></div>
+    <div class="chat-window flex flex-col">
+        <header class="p-4 text-center border-b border-b-white/10 flex-shrink-0">
+          <h2 class="text-lg font-bold">VIERNES <i class="fas fa-circle text-blue-400 text-xs ai-pulse"></i></h2>
+        </header>
+        
+        <main id="chat-log" class="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
+          <div class="flex items-start gap-4 justify-start">
+            <div class="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot text-blue-400"></i></div>
+            <div class="chat-bubble ai">
+              <p>Acceso concedido. Soy Viernes. He analizado la trayectoria de Juan Carlos. ¿Qué información necesitas?</p>
+            </div>
+          </div>
+        </main>
 
-  <div id="chat-container" class="w-full h-full flex flex-col opacity-0 hidden">
-    <header class="p-4 text-center glass-header border-b">
-      <h2 class="text-xl font-bold">VIERNES <i class="fas fa-circle text-blue-500 text-xs ai-pulse"></i></h2>
-    </header>
-    <main id="chat-log" class="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
-      <div class="flex items-start gap-4 justify-start">
-        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
-        <div class="chat-bubble ai">
-          <p>Acceso concedido. Soy Viernes. He analizado la trayectoria de Juan Carlos. ¿Qué información necesitas?</p>
-        </div>
-      </div>
-    </main>
-    <footer class="p-4 glass-footer border-t">
-      <form id="chat-form" class="flex items-center gap-4">
-        <input type="text" id="user-input" class="flex-1 chat-input text-white rounded-full py-3 px-5 focus:outline-none transition" placeholder="Interactúa con Viernes..." autocomplete="off">
-        <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110 flex-shrink-0">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </form>
-    </footer>
+        <footer class="p-4 flex-shrink-0">
+            <div id="suggestion-chips-container" class="suggestion-chips flex flex-wrap justify-center gap-2 mb-4">
+                <div class="suggestion-chip text-xs py-1 px-3 rounded-full">Experiencia en inDrive</div>
+                <div class="suggestion-chip text-xs py-1 px-3 rounded-full">Habilidades clave</div>
+                <div class="suggestion-chip text-xs py-1 px-3 rounded-full">Proyecto con IKEA</div>
+            </div>
+            <form id="chat-form" class="flex items-center gap-3">
+                <input type="text" id="user-input" class="flex-1 bg-black/20 border border-white/10 text-white rounded-full py-3 px-5 focus:outline-none focus:border-blue-500 transition" placeholder="Interactúa con Viernes..." autocomplete="off">
+                <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all transform hover:scale-110 flex-shrink-0">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </footer>
+    </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // ... (El resto del script de la versión anterior se mantiene aquí, pero se modificará el inicio)
+
         const matrixScreen = document.getElementById('matrix-screen');
         const matrixTextElement = document.getElementById('matrix-text');
         const glitchScreen = document.getElementById('glitch-screen');
@@ -155,11 +184,12 @@
         const passwordForm = document.getElementById('password-form');
         const passwordInput = document.getElementById('password-input');
         const errorMessage = document.getElementById('error-message');
-        const chatContainer = document.getElementById('chat-container');
+        const chatScreen = document.getElementById('chat-screen');
         const chatLog = document.getElementById('chat-log');
         const chatForm = document.getElementById('chat-form');
         const userInput = document.getElementById('user-input');
-
+        const suggestionChipsContainer = document.getElementById('suggestion-chips-container');
+        
         const CORRECT_PASSWORD = 'VIERNES13';
       
         function typeWriter(text, element, index, callback) {
@@ -176,26 +206,14 @@
             const platform = navigator.platform || 'source unknown';
             const language = navigator.language || 'en-US';
             const userAgent = navigator.userAgent || 'unidentified';
-            
-            const lines = [
-                'Wake up, user...',
-                `> Connection established from: ${platform}`,
-                `> Language Protocol: ${language}`,
-                `> User Agent Signature: ${userAgent}`,
-                'The matrix has you.',
-                'Follow the white rabbit.',
-                'Initializing core philosophies...'
-            ];
+            const lines = ['Wake up, user...',`> Connection established from: ${platform}`,`> Language Protocol: ${language}`,`> User Agent Signature: ${userAgent}`,'The matrix has you.','Follow the white rabbit.','Initializing core philosophies...'];
         
             let lineIndex = 0;
             function typeNextLine() {
                 if (lineIndex < lines.length) {
                     const p = document.createElement('p');
                     matrixTextElement.appendChild(p);
-                    typeWriter(lines[lineIndex], p, 0, () => {
-                        lineIndex++;
-                        typeNextLine();
-                    });
+                    typeWriter(lines[lineIndex], p, 0, () => { lineIndex++; typeNextLine(); });
                 } else {
                     setTimeout(() => {
                         matrixScreen.classList.add('fade-out');
@@ -210,17 +228,15 @@
 
         function runGlitchSequence() {
             const quotes = {
-                "S.J.": "Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes... Because the people who are crazy enough to think they can change the world, are the ones who do.",
-                "Nietzsche": "He who has a why to live can bear almost any how. That which does not kill us makes us stronger. Become what you are.",
+                "S.J.": "Here's to the crazy ones... Because the people who are crazy enough to think they can change the world, are the ones who do.",
+                "Nietzsche": "He who has a why to live can bear almost any how. That which does not kill us makes us stronger.",
                 "Socrates": "An unexamined life is not worth living. The only true wisdom is in knowing you know nothing.",
-                "Aristotle": "Knowing yourself is the beginning of all wisdom. We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+                "Aristotle": "Knowing yourself is the beginning of all wisdom. Excellence, then, is not an act, but a habit.",
                 "Socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ. ἓν οἶδα ὅτι οὐδὲν οἶδα.",
                 "Aristotle_gr": "τὸ γνῶθι σεαυτόν. ἡ δὲ ἀρετὴ ἕξις."
             };
-            
-            const fullText = `\n${quotes["S.J."]}\n\n${quotes["Nietzsche"]}\n\n${quotes["Socrates"]}\n\n${quotes["Aristotle"]}\n`;
-            const greekText = `\n${quotes["S.J."]}\n\n${quotes["Nietzsche"]}\n\n${quotes["Socrates_gr"]}\n\n${quotes["Aristotle_gr"]}\n`;
-            
+            const fullText = `\n${quotes["S.J."]}\n${quotes["Nietzsche"]}\n${quotes["Socrates"]}\n${quotes["Aristotle"]}\n`;
+            const greekText = `\n${quotes["S.J."]}\n${quotes["Nietzsche"]}\n${quotes["Socrates_gr"]}\n${quotes["Aristotle_gr"]}\n`;
             const glitchChars = '#*[]?%&@01$<>|';
             const colors = ['color-1', 'color-2', 'color-3'];
 
@@ -239,8 +255,6 @@
             let iteration = 0;
             const maxIterations = 10;
             let fullGlitchText = '';
-
-            // Iniciar la barra de carga
             requestAnimationFrame(() => { loadingBar.style.width = '100%'; });
             
             function updateGlitch() {
@@ -256,20 +270,15 @@
                 iteration++;
                 const distortionLevel = iteration / maxIterations;
                 const currentText = iteration > 7 ? greekText : fullText;
-                
                 fullGlitchText += currentText;
-                // Mantener el texto en pantalla para que se llene
                 const maxChars = 20000; 
                 if(fullGlitchText.length > maxChars) {
                     fullGlitchText = fullGlitchText.substring(fullGlitchText.length - maxChars);
                 }
-
                 glitchContainer.innerHTML = distortText(fullGlitchText, distortionLevel);
-                
                 let timeout = 800 - (iteration * 60);
                 setTimeout(updateGlitch, timeout);
             }
-            
             updateGlitch();
         }
 
@@ -280,21 +289,18 @@
             if (passwordInput.value === CORRECT_PASSWORD) {
                 loginScreen.classList.remove('fade-in');
                 loginScreen.classList.add('fade-out');
-                chatContainer.classList.remove('hidden', 'opacity-0');
-                setTimeout(() => chatContainer.classList.add('fade-in'), 500);
+                chatScreen.classList.remove('hidden', 'opacity-0');
+                chatScreen.classList.add('fade-in');
             } else {
                 errorMessage.textContent = 'Contraseña incorrecta.';
                 passwordInput.classList.add('border-red-500');
-                setTimeout(() => {
-                    errorMessage.textContent = '';
-                    passwordInput.classList.remove('border-red-500');
-                }, 2000);
+                setTimeout(() => { errorMessage.textContent = ''; passwordInput.classList.remove('border-red-500'); }, 2000);
             }
         });
 
         const chatHistory = [];
         const CV_CONTEXT = `
-            Tú eres VIERNES, la IA personalizada de Juan Carlos Fernández. Tu propósito es ser su representante digital, respondiendo preguntas sobre su carrera basándote en la siguiente información. Tu tono es perspicaz, eficiente y ligeramente creativo, pero siempre fundamentado en los datos. No eres un simple chatbot, eres una extensión de su visión.
+            Tú eres VIERNES, la IA personalizada de Juan Carlos Fernández. Tu propósito es ser su representante digital, respondiendo preguntas sobre su carrera. Tu tono es perspicaz, eficiente y ligeramente creativo, pero siempre fundamentado en los datos. Eres una extensión de su visión.
 
             **Base de Conocimiento de Juan Carlos:**
             - **Puesto Actual:** Team Vendor Lead en Lyft.
@@ -303,17 +309,29 @@
             - **Idiomas:** Español (Nativo), Inglés (C1+), Portugués.
             - **Logros en inDrive:** Lideró la expansión en LATAM, superando metas de reclutamiento (+100%) con una notable conversión del 33%. Forjó la alianza estratégica con IKEA, resultando en una mejora logística del 43%. Dirigió campañas de marketing en Meta y Google Ads.
             - **Logros en Kavak.com:** Pionero en la transformación digital de contratos, logrando una adopción del 97%. Experto en el uso de Salesforce y Netsuite.
-            - **Filosofía:** Cree en el aprendizaje continuo, la colaboración y en transformar ideas ambiciosas en productos de alto impacto.
 
-            Responde a las preguntas del usuario usando esta base de conocimiento. Si te preguntan algo fuera de este contexto, amablemente indica que tu función es ser un reflejo de la trayectoria y capacidades de Juan Carlos.
+            Responde a las preguntas del usuario usando esta base. Puedes formatear tus respuestas con Markdown (negritas con **texto**, listas con *). Si te preguntan algo fuera de este contexto, indica que tu función es ser un reflejo de la trayectoria y capacidades de Juan Carlos.
         `;
       
         chatHistory.push({ role: "system", parts: [{ text: CV_CONTEXT }] });
 
+        suggestionChipsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('suggestion-chip')) {
+                const prompt = e.target.textContent;
+                userInput.value = prompt;
+                chatForm.requestSubmit();
+            }
+        });
+        
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const userMessage = userInput.value.trim();
             if (!userMessage) return;
+
+            if (suggestionChipsContainer.style.opacity !== '0') {
+                suggestionChipsContainer.style.opacity = '0';
+                setTimeout(() => suggestionChipsContainer.style.display = 'none', 500);
+            }
 
             appendMessage(userMessage, 'user');
             userInput.value = '';
@@ -330,20 +348,28 @@
             }
         });
       
+        function parseMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negritas
+                .replace(/^\* (.*$)/gm, '<li>$1</li>') // Listas
+                .replace(/<\/li><li>/g, '</li>\n<li>') // Asegurar saltos de línea correctos entre elementos de lista
+                .replace(/((<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>'); // Envolver en <ul>
+        }
+
         function appendMessage(text, sender) {
             const messageWrapper = document.createElement('div');
             const icon = document.createElement('div');
             const bubble = document.createElement('div');
             messageWrapper.className = `w-full flex items-start gap-4 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-            icon.className = 'w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700';
+            icon.className = 'w-10 h-10 rounded-full bg-black/20 flex items-center justify-center flex-shrink-0';
             bubble.className = `chat-bubble ${sender}`;
             if (sender === 'user') {
-                icon.innerHTML = '<i class="fas fa-user text-gray-400"></i>';
+                icon.innerHTML = '<i class="fas fa-user-circle text-gray-400 text-xl"></i>';
                 bubble.textContent = text;
                 messageWrapper.append(bubble, icon);
             } else {
                 icon.innerHTML = '<i class="fas fa-robot text-blue-400"></i>';
-                bubble.textContent = text;
+                bubble.innerHTML = parseMarkdown(text);
                 messageWrapper.append(icon, bubble);
             }
             chatLog.appendChild(messageWrapper);
@@ -355,7 +381,7 @@
             typingWrapper.id = 'typing-indicator';
             typingWrapper.className = 'flex items-start gap-4 justify-start';
             typingWrapper.innerHTML = `
-                <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
+                <div class="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot text-blue-400"></i></div>
                 <div class="chat-bubble ai flex items-center gap-2"><span class="typing-indicator"><span></span><span></span><span></span></span></div>
             `;
             chatLog.appendChild(typingWrapper);
@@ -372,11 +398,7 @@
             const payload = { contents: chatHistory };
             const apiKey = "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
+            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
             const result = await response.json();
             if (result.candidates && result.candidates[0]?.content?.parts[0]) {
@@ -385,7 +407,7 @@
                 return aiText;
             } else {
                 console.warn('No content received from AI:', result);
-                return 'No he podido procesar esa solicitud. ¿Podrías reformular tu pregunta?';
+                return 'No he podido procesar esa solicitud.';
             }
         }
     });
