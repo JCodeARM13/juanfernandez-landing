@@ -48,26 +48,14 @@
     }
 
     body {
-      background: linear-gradient(135deg, #0A1428 0%, #000000 100%); /* Fondo degradado sutil */
+      background: var(--bg-main); /* Fondo negro */
       color: var(--text-primary);
       line-height: 1.7; 
       padding-top: 80px;
       overflow-x: hidden; /* Prevenir scroll horizontal */
     }
 
-    /* Mejora del fondo con gradientes radiales para un efecto de profundidad */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 10% 20%, rgba(10, 132, 255, 0.05) 0%, transparent 40%),
-                  radial-gradient(circle at 90% 80%, rgba(10, 132, 255, 0.03) 0%, transparent 40%);
-      pointer-events: none;
-      z-index: -1;
-    }
+    /* Eliminado el gradiente de fondo */
 
     nav {
       position: fixed;
@@ -161,16 +149,18 @@
       margin-bottom: 1.5rem; /* Más espacio */
       line-height: 1.1;
       position: relative; /* Para el gradiente de texto */
-      background: linear-gradient(90deg, #ADD8E6, #DDA0DD, #ADD8E6); /* Gradiente sutil para el texto */
+      /* Gradiente de texto más brillante y con más "movimiento" */
+      background: linear-gradient(90deg, #ADD8E6, #DDA0DD, #ADD8E6, #DDA0DD, #ADD8E6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-size: 200% auto;
-      animation: text-gradient 8s linear infinite alternate;
+      background-size: 300% auto; /* Más grande para el movimiento */
+      animation: text-gradient 10s linear infinite alternate; /* Más lento y continuo */
+      text-shadow: 0 0 10px rgba(173, 216, 230, 0.7); /* Brillo extra */
     }
 
     @keyframes text-gradient {
       to {
-        background-position: 200% center;
+        background-position: 300% center; /* Más movimiento */
       }
     }
 
@@ -737,7 +727,7 @@
         ¿Tienes un proyecto que desafíe lo convencional o una idea que pueda transformar la industria? Estoy listo para la siguiente gran cosa.
       </p>
       <div class="contact-links-container">
-        <a href="mailto:juanfernandezvarela@lyft.com" class="cta-button"><i class="fas fa-envelope"></i> Iniciar Conversación</a>
+        <a href="mailto:juancfvg@icloud.com" class="cta-button"><i class="fas fa-envelope"></i> Iniciar Conversación</a>
         <a href="https://wa.me/525548869123" class="cta-button secondary" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> WhatsApp Directo</a>
       </div>
 
