@@ -291,13 +291,29 @@
     /* --------------------------------------------------- */
     /* SECCIÓN 'HABILIDADES' (SKILLS) */
     /* --------------------------------------------------- */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        align-items: start;
+    }
+     @media (min-width: 768px) {
+      .skills-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .skills-category h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: var(--text-primary);
+    }
     .skills-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
-      max-width: 900px;
-      margin: 0 auto;
     }
     .skill-tag {
       background-color: var(--bg-elevated);
@@ -323,6 +339,9 @@
       color: var(--accent-blue);
       font-size: 1.2rem;
     }
+    .skill-tag .fab.fa-platzi {
+        color: #98ca3f;
+    }
 
     /* --------------------------------------------------- */
     /* GRID Y TARJETAS (PROYECTOS Y BLOG) */
@@ -343,15 +362,27 @@
                   box-shadow 0.4s var(--ease-out-quint),
                   background-color 0.4s var(--ease-in-out-cubic);
       will-change: transform, box-shadow;
+      display: flex;
+      flex-direction: column;
     }
     .light-mode .card { border: 1px solid #e5e5e5; }
     .card:hover {
       transform: translateY(-10px);
       box-shadow: var(--shadow-medium);
     }
+    .card-content { flex-grow: 1; }
     .card h3 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.75rem; }
     .card .project-meta { font-size: 1rem; color: var(--text-tertiary); margin-bottom: 1.2rem; font-weight: 500; }
     .card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1.5rem; }
+    .card-footer {
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 1.5rem;
+        margin-top: auto;
+    }
+    .card-footer span {
+        font-size: 0.9rem;
+        color: var(--text-tertiary);
+    }
     
     /* Blog Post Item */
     .blog-post-item {
@@ -494,7 +525,7 @@
   <!-- =================================================== -->
   <header>
     <h1 class="animate-on-scroll">Juan Carlos Fernández</h1>
-    <p class="subtitle animate-on-scroll" style="transition-delay: 0.1s;">Creando soluciones inteligentes en la intersección del código y la estrategia.</p>
+    <p class="subtitle animate-on-scroll" style="transition-delay: 0.1s;">Team Vendor Lead en Lyft. +7 años de experiencia cruzando datos, personas y tecnología.</p>
   </header>
 
 
@@ -507,16 +538,16 @@
     <section id="about" class="container">
       <div class="about-section-layout">
         <div class="about-image-container animate-on-scroll" style="transition-delay: 0.2s;">
-          <!-- Usa una foto tuya profesional aquí. Uso un placeholder como ejemplo. -->
+          <!-- REEMPLAZA ESTE PLACEHOLDER CON UNA FOTO TUYA PROFESIONAL -->
           <img src="https://placehold.co/600x700/1d1d1f/f5f5f7?text=JC" alt="Fotografía de Juan Carlos Fernández">
         </div>
         <div class="about-text animate-on-scroll" style="transition-delay: 0.3s;">
           <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Hola, soy Juan Carlos.</h2>
           <p>
-            Apasionado por la tecnología y su capacidad para resolver problemas complejos. Mi carrera se ha centrado en el puente que une la estrategia de negocio con la ejecución técnica, especializándome en la creación de soluciones de software que no solo son funcionales, sino también inteligentes y escalables.
+            Busco mi siguiente reto profesional en una empresa de primer nivel en LATAM. Con más de 7 años de experiencia en implementación de proyectos, ventas, servicio al cliente y gestión de información digital, estoy listo para nuevos desafíos.
           </p>
           <p>
-            Creo firmemente en el aprendizaje continuo y en la colaboración como motores del crecimiento. Me encanta desglosar desafíos, experimentar con nuevas tecnologías y liderar equipos para transformar ideas ambiciosas en productos reales y de alto impacto.
+            Soy un profesional apasionado, orientado a resultados y comprometido con la excelencia. Si buscas a alguien dedicado y cualificado que pueda añadir valor a tu organización, me encantaría colaborar contigo.
           </p>
         </div>
       </div>
@@ -525,49 +556,69 @@
     <!-- SECCIÓN 'HABILIDADES' -->
     <section id="skills" class="container">
       <h2 class="section-title animate-on-scroll">Mis Habilidades</h2>
-      <p class="section-subtitle animate-on-scroll">Un vistazo a las tecnologías y herramientas que utilizo para construir el futuro, una línea de código a la vez.</p>
+      <p class="section-subtitle animate-on-scroll">Un vistazo a las tecnologías, herramientas y competencias que utilizo para construir el futuro.</p>
       
-      <div class="skills-container animate-on-scroll" style="transition-delay: 0.2s;">
-        <div class="skill-tag"><i class="fab fa-python"></i> Python</div>
-        <div class="skill-tag"><i class="fas fa-brain"></i> Machine Learning</div>
-        <div class="skill-tag"><i class="fab fa-js-square"></i> JavaScript</div>
-        <div class="skill-tag"><i class="fab fa-react"></i> React.js</div>
-        <div class="skill-tag"><i class="fab fa-node-js"></i> Node.js</div>
-        <div class="skill-tag"><i class="fas fa-database"></i> SQL & NoSQL</div>
-        <div class="skill-tag"><i class="fab fa-docker"></i> Docker</div>
-        <div class="skill-tag"><i class="fab fa-aws"></i> AWS</div>
-        <div class="skill-tag"><i class="fas fa-sitemap"></i> Arquitectura de Software</div>
-        <div class="skill-tag"><i class="fas fa-project-diagram"></i> API Design (REST & GraphQL)</div>
-        <div class="skill-tag"><i class="fas fa-users-cog"></i> Liderazgo de Equipos</div>
-        <div class="skill-tag"><i class="fas fa-lightbulb"></i> Estrategia de Producto</div>
+      <div class="skills-grid animate-on-scroll" style="transition-delay: 0.2s;">
+        <div class="skills-category">
+            <h3>Técnicas y de Gestión</h3>
+            <div class="skills-container">
+                <div class="skill-tag"><i class="fas fa-users-cog"></i> Liderazgo de Equipos</div>
+                <div class="skill-tag"><i class="fas fa-tasks"></i> Gestión de Proyectos</div>
+                <div class="skill-tag"><i class="fas fa-chart-line"></i> Análisis de Datos</div>
+                <div class="skill-tag"><i class="fas fa-bullseye"></i> Estrategia de Negocio</div>
+                <div class="skill-tag"><i class="fab fa-salesforce"></i> Salesforce</div>
+                <div class="skill-tag"><i class="fab fa-google"></i> Google Ads</div>
+                <div class="skill-tag"><i class="fab fa-facebook"></i> Meta Ads</div>
+                <div class="skill-tag"><i class="fas fa-brain"></i> Innovación con IA</div>
+                <div class="skill-tag"><i class="fas fa-file-contract"></i> Gestión de Contratos</div>
+            </div>
+        </div>
+        <div class="skills-category">
+            <h3>Certificaciones y Formación</h3>
+             <div class="skills-container">
+                <div class="skill-tag"><i class="fab fa-platzi"></i> Introducción a la IA</div>
+                <div class="skill-tag"><i class="fab fa-platzi"></i> Curso de ChatGPT</div>
+                <div class="skill-tag"><i class="fab fa-platzi"></i> Historia del Dinero</div>
+                <div class="skill-tag"><i class="fas fa-language"></i> Inglés (C1+)</div>
+                <div class="skill-tag"><i class="fas fa-language"></i> Portugués</div>
+             </div>
+        </div>
       </div>
     </section>
 
     <!-- SECCIÓN 'PROYECTOS' -->
     <section id="projects" class="container">
-      <h2 class="section-title animate-on-scroll">Proyectos Destacados</h2>
-      <p class="section-subtitle animate-on-scroll">Una selección de trabajos donde la teoría y la práctica convergen para crear valor tangible.</p>
+      <h2 class="section-title animate-on-scroll">Experiencia Destacada</h2>
+      <p class="section-subtitle animate-on-scroll">Una selección de logros profesionales donde la estrategia y la ejecución convergen para crear valor tangible.</p>
       
       <div class="grid two-cols">
         <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
-          <h3><i class="fas fa-brain" style="color:#8d00e0;"></i> Motor de Inferencia IA</h3>
-          <p class="project-meta">Optimización de Modelos de Lenguaje</p>
-          <p>Desarrollo de un sistema de inferencia para LLMs que reduce la latencia en un 35% y los costos de cómputo en un 20% mediante cuantización y batching dinámico. Desplegado en un entorno de alta disponibilidad en AWS.</p>
+          <div class="card-content">
+            <h3><i class="fas fa-people-arrows" style="color:#8d00e0;"></i> Liderazgo y Expansión LATAM</h3>
+            <p class="project-meta">Supervisor of Special Branches en inDrive</p>
+            <p>Lideré equipos online y offline en México y Centroamérica, superando consistentemente las metas de reclutamiento y activación de conductores (+100%) con una tasa de conversión promedio del 33% mediante el monitoreo de KPIs y OKRs.</p>
+          </div>
         </div>
         <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
-          <h3><i class="fas fa-store" style="color:#0071E3;"></i> Plataforma E-commerce Full-Stack</h3>
-          <p class="project-meta">React.js, Node.js, PostgreSQL</p>
-          <p>Creación desde cero de una plataforma de comercio electrónico moderna, con un dashboard de administración, pasarela de pagos integrada con Stripe y un sistema de autenticación seguro basado en JWT.</p>
+          <div class="card-content">
+            <h3><i class="fas fa-handshake" style="color:#0071E3;"></i> Alianza Estratégica B2B con IKEA</h3>
+            <p class="project-meta">Proyecto Clave en inDrive</p>
+            <p>Gestioné la creación de un "delivery hub" en CDMX y Puebla en colaboración con IKEA, mejorando su logística en un 43% y representando hasta el 10% de los pedidos totales de la app en esas regiones.</p>
+          </div>
         </div>
         <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
-          <h3><i class="fas fa-chart-bar" style="color:#ff8d00;"></i> Dashboard de Métricas en Tiempo Real</h3>
-          <p class="project-meta">Análisis y Visualización de Datos</p>
-          <p>Implementación de un panel de control interactivo para la visualización de KPIs de negocio, utilizando D3.js para gráficos personalizados y WebSockets para la actualización de datos en tiempo real desde una API en Python/FastAPI.</p>
+          <div class="card-content">
+            <h3><i class="fas fa-file-alt" style="color:#25D366;"></i> Transformación Digital de Contratos</h3>
+            <p class="project-meta">Team Leader en Kavak.com</p>
+            <p>Impulsé la adopción de procesos "paperless", logrando pasar del 0% al 97% de contratos digitales entre octubre y febrero. Gestioné repositorios y creé documentos para B2C y B2B utilizando Salesforce y Netsuite.</p>
+          </div>
         </div>
         <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
-          <h3><i class="fab fa-github" style="color:#f5f5f7;"></i> Contribución a Open Source</h3>
-          <p class="project-meta">Librería de Componentes de UI</p>
-          <p>Colaboración activa en una librería de componentes de React, enfocándome en mejorar la accesibilidad (A11Y), optimizar el rendimiento y desarrollar nuevos componentes solicitados por la comunidad. Gestioné issues y pull requests.</p>
+            <div class="card-content">
+              <h3><i class="fas fa-bullhorn" style="color:#ff8d00;"></i> Marketing Digital y Adquisición</h3>
+              <p class="project-meta">Estrategia de Leads en inDrive</p>
+              <p>Diseñé y administré campañas en Meta Ads y Google Ads para incrementar la generación de leads, integrando estrategias de seguimiento y activación que potenciaron la visibilidad y conversión en ciudades clave.</p>
+            </div>
         </div>
       </div>
     </section>
@@ -575,19 +626,19 @@
     <!-- SECCIÓN 'BLOG' -->
     <section id="blog" class="container">
         <h2 class="section-title animate-on-scroll">Mi Bitácora</h2>
-        <p class="section-subtitle animate-on-scroll">Pensamientos, tutoriales y análisis sobre tecnología, desarrollo y el impacto de la IA en nuestro mundo.</p>
+        <p class="section-subtitle animate-on-scroll">Pensamientos y análisis sobre tecnología, liderazgo y el impacto de la IA en nuestro mundo.</p>
         
         <div class="grid two-cols">
             <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
-              <h3>Más allá de la API: Los Fundamentos de MLOps</h3>
-              <p class="blog-post-meta">15 de Junio, 2025 · IA & DevOps</p>
-              <p class="blog-post-excerpt">Exploro el ciclo de vida completo de un modelo de Machine Learning en producción, desde la gestión de datos hasta el monitoreo y re-entrenamiento automatizado...</p>
+              <h3>Liderazgo en la Era de la IA: Más Allá de los Datos</h3>
+              <p class="blog-post-meta">15 de Junio, 2025 · Liderazgo & IA</p>
+              <p class="blog-post-excerpt">Exploro cómo los líderes pueden combinar la empatía y la intuición humana con las herramientas de IA para tomar decisiones más completas y efectivas...</p>
               <span class="read-more-link">Leer artículo completo →</span>
             </a>
             <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.3s;">
-              <h3>El Dilema del Estado en React: ¿Cuándo usar Redux, Zustand o Context?</h3>
-              <p class="blog-post-meta">28 de Mayo, 2025 · Desarrollo Web</p>
-              <p class="blog-post-excerpt">Un análisis comparativo y práctico de las principales soluciones de gestión de estado en el ecosistema de React, con ejemplos de casos de uso para cada una...</p>
+              <h3>La Anatomía de una Alianza Estratégica Exitosa</h3>
+              <p class="blog-post-meta">28 de Mayo, 2025 · Estrategia de Negocio</p>
+              <p class="blog-post-excerpt">Un análisis de los componentes clave para construir partnerships B2B que generen valor real, basado en experiencias prácticas...</p>
               <span class="read-more-link">Leer artículo completo →</span>
             </a>
         </div>
