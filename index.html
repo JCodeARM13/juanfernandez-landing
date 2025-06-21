@@ -19,92 +19,93 @@
     }
     .fade-in { animation: fadeIn 1s ease-in-out forwards; }
     .fade-out { animation: fadeOut 1s ease-in-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-    @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.98); display: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; display: none; } }
 
-    /* Estilos para la intro tipo Matrix */
-    #matrix-screen, #code-stream-screen {
+    /* Estilos para la intro "Matrix" y "Glitch" */
+    #matrix-screen, #glitch-screen {
         font-family: 'Roboto Mono', monospace;
-        color: #00ff41; /* Verde Matrix */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
     }
+    #matrix-screen { z-index: 40; }
+    #glitch-screen { z-index: 30; }
+
+    #matrix-text { white-space: pre-wrap; }
     .blinking-cursor { animation: blink 1s step-end infinite; }
     @keyframes blink { 50% { border-right-color: #00ff41; } }
 
-    /* Estilos para la cascada de código */
-    #code-stream { height: 100%; overflow: hidden; position: relative; }
-    #code-stream pre {
-        position: absolute;
-        width: 100%;
-        bottom: 100%;
-        font-size: 1rem;
-        line-height: 1.6;
+    #glitch-container {
+        padding: 1rem;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        opacity: 0.7;
     }
-    .code-comment { color: #888; }
-    .code-author { color: #61dafb; } /* Cyan */
-    .code-keyword { color: #f0db4f; } /* Yellow */
-    .code-string { color: #98c379; } /* Green */
-
-    /* Barra de carga */
-    #loading-bar-container {
-        position: absolute;
-        bottom: 5%;
-        left: 10%;
-        width: 80%;
-        height: 10px;
-        background-color: rgba(0, 255, 65, 0.1);
-        border: 1px solid rgba(0, 255, 65, 0.3);
-        border-radius: 5px;
-        overflow: hidden;
+    .glitch-char { display: inline-block; animation: glitch-anim 1.5s infinite; }
+    @keyframes glitch-anim {
+        0%, 100% { text-shadow: none; opacity: 1; }
+        25% { text-shadow: -2px 0 #ff00c1, 2px 0 #00fff3; opacity: 0.8; }
+        50% { text-shadow: 2px 0 #ff00c1, -2px 0 #00fff3; opacity: 1; }
+        75% { text-shadow: -1px 0 #ff00c1, 1px 0 #00fff3; opacity: 0.8; }
     }
-    #loading-bar {
-        width: 0%;
-        height: 100%;
-        background-color: #00ff41;
-        transition: width 18s linear; /* La duración debe coincidir con la animación JS */
+    .color-1 { color: #ff00c1; } /* Magenta */
+    .color-2 { color: #00fff3; } /* Cyan */
+    .color-3 { color: #f0db4f; } /* Yellow */
+    
+    /* Estilos para el chat rediseñado */
+    #chat-container {
+        background: url('https://www.transparenttextures.com/patterns/dark-matter.png'), #0a0a0a;
+        transition: opacity 1s ease-in;
     }
-
-
-    /* Estilos del chat mejorados */
-    .chat-header-gradient { background: linear-gradient(180deg, rgba(44, 44, 46, 0.5) 0%, rgba(29, 29, 31, 0) 100%); }
+    .glass-header, .glass-footer {
+        background: rgba(10, 10, 10, 0.5);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
     .ai-pulse { animation: pulse-glow 3s ease-in-out infinite alternate; }
-    @keyframes pulse-glow { from { text-shadow: 0 0 4px #0071E3; } to { text-shadow: 0 0 12px #0071E3; } }
-    .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.5; word-wrap: break-word; }
-    .chat-bubble.user { background: linear-gradient(135deg, #0071E3, #00A3FF); color: white; border-bottom-right-radius: 4px; }
-    .chat-bubble.ai { background-color: #2c2c2e; color: #f5f5f7; border: 1px solid #444; box-shadow: 0 0 15px rgba(0, 113, 227, 0.1); border-bottom-left-radius: 4px; }
-    .chat-input:focus { outline: none; border-color: #0071E3; box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.5); }
-    .typing-indicator span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8a8a8e; animation: typing 1.2s infinite ease-in-out; }
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typing { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
+    @keyframes pulse-glow { from { filter: drop-shadow(0 0 2px #00A3FF); } to { filter: drop-shadow(0 0 8px #00A3FF); } }
+    .chat-bubble { max-width: 80%; padding: 14px 20px; border-radius: 22px; line-height: 1.6; }
+    .chat-bubble.user { background: #0071E3; color: white; border-bottom-right-radius: 6px; }
+    .chat-bubble.ai { background-color: #1c1c1e; color: #e5e5e5; border: 1px solid rgba(255, 255, 255, 0.1); border-bottom-left-radius: 6px; }
+    .chat-input { background: rgba(44, 44, 46, 0.8); border: 1px solid rgba(255,255,255,0.1); }
+    .chat-input:focus { outline: none; border-color: #0071E3; }
+    .typing-indicator span { background-color: #6c6c72; }
+    #chat-log::-webkit-scrollbar { width: 8px; }
+    #chat-log::-webkit-scrollbar-track { background: transparent; }
+    #chat-log::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
+    #chat-log::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.4); }
   </style>
 </head>
 <body class="w-screen h-screen">
 
   <!-- Pantalla de Intro "Matrix" -->
-  <div id="matrix-screen" class="w-full h-full flex items-center justify-center p-4 z-30 absolute top-0 left-0 bg-black">
+  <div id="matrix-screen" class="w-full h-full flex items-center justify-center p-4">
     <div class="w-full max-w-3xl">
-        <pre id="matrix-text" class="text-sm md:text-lg whitespace-pre-wrap"></pre>
+        <pre id="matrix-text" class="text-sm md:text-lg text-green-400"></pre>
     </div>
   </div>
 
-  <!-- Pantalla de Cascada de Código Filosófico -->
-  <div id="code-stream-screen" class="w-full h-full p-4 z-20 absolute top-0 left-0 bg-black opacity-0 hidden">
-    <div id="code-stream">
-        <pre id="code-content"></pre>
-    </div>
-    <div id="loading-bar-container">
-        <div id="loading-bar"></div>
-    </div>
+  <!-- Pantalla de Intro "Glitch" -->
+  <div id="glitch-screen" class="hidden opacity-0">
+      <div id="glitch-container"></div>
   </div>
 
   <!-- Pantalla de Contraseña -->
   <div id="login-screen" class="w-full h-full flex flex-col items-center justify-center p-4 z-10 absolute top-0 left-0 bg-black opacity-0 hidden">
     <div class="text-center w-full max-w-md">
-      <i class="fas fa-shield-alt text-5xl text-blue-500 mb-6"></i>
+      <i class="fas fa-shield-alt text-6xl text-blue-500 mb-6 ai-pulse"></i>
       <h1 class="text-3xl md:text-4xl font-bold mb-2">Protocolo VIERNES</h1>
       <p class="text-lg text-gray-400 mb-8">Acceso restringido. Por favor, identifíquese.</p>
       <form id="password-form" class="w-full">
-        <input type="password" id="password-input" class="w-full bg-gray-800 border border-gray-600 text-white text-lg rounded-lg p-4 mb-4 text-center focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Contraseña">
+        <input type="password" id="password-input" class="w-full bg-gray-900 border border-gray-700 text-white text-lg rounded-lg p-4 mb-4 text-center focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Contraseña">
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-lg transition-transform transform hover:scale-105">Desbloquear</button>
       </form>
       <p id="error-message" class="text-red-500 mt-4 h-6"></p>
@@ -112,25 +113,24 @@
   </div>
 
   <!-- Interfaz de Chat -->
-  <div id="chat-container" class="w-full h-full flex flex-col bg-black opacity-0 hidden">
-    <header class="p-4 text-center chat-header-gradient">
-      <h2 class="text-xl font-bold">VIERNES <span class="text-blue-500 ai-pulse">AI</span></h2>
-      <p class="text-sm text-gray-400">Asistente Personal de Juan Carlos Fernández</p>
+  <div id="chat-container" class="w-full h-full flex flex-col opacity-0 hidden">
+    <header class="p-4 text-center glass-header border-b">
+      <h2 class="text-xl font-bold">VIERNES <i class="fas fa-circle text-blue-500 text-xs ai-pulse"></i></h2>
     </header>
     
     <main id="chat-log" class="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
       <div class="flex items-start gap-4 justify-start">
         <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
         <div class="chat-bubble ai">
-          <p>Protocolo VIERNES desbloqueado. He accedido a la información sobre Juan Carlos. ¿Qué necesitas saber?</p>
+          <p>Acceso concedido. Soy Viernes. He analizado la trayectoria de Juan Carlos. ¿Qué información necesitas?</p>
         </div>
       </div>
     </main>
 
-    <footer class="p-4 border-t border-gray-800">
+    <footer class="p-4 glass-footer border-t">
       <form id="chat-form" class="flex items-center gap-4">
-        <input type="text" id="user-input" class="flex-1 bg-gray-800 border border-gray-600 text-white rounded-full py-3 px-5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Interactúa con Viernes..." autocomplete="off">
-        <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110 flex-shrink-0">
+        <input type="text" id="user-input" class="flex-1 chat-input text-white rounded-full py-3 px-5 focus:outline-none transition" placeholder="Interactúa con Viernes..." autocomplete="off">
+        <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110 flex-shrink-0">
           <i class="fas fa-paper-plane"></i>
         </button>
       </form>
@@ -141,9 +141,8 @@
     document.addEventListener('DOMContentLoaded', () => {
         const matrixScreen = document.getElementById('matrix-screen');
         const matrixTextElement = document.getElementById('matrix-text');
-        const codeStreamScreen = document.getElementById('code-stream-screen');
-        const codeContentElement = document.getElementById('code-content');
-        const loadingBar = document.getElementById('loading-bar');
+        const glitchScreen = document.getElementById('glitch-screen');
+        const glitchContainer = document.getElementById('glitch-container');
         const loginScreen = document.getElementById('login-screen');
         const passwordForm = document.getElementById('password-form');
         const passwordInput = document.getElementById('password-input');
@@ -157,7 +156,7 @@
       
         function typeWriter(text, element, index, callback) {
             if (index < text.length) {
-                element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor border-r-2"></span>';
+                element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor border-r-2 border-green-400"></span>';
                 setTimeout(() => typeWriter(text, element, index + 1, callback), 50);
             } else {
                 element.innerHTML = text;
@@ -166,19 +165,8 @@
         }
 
         function runMatrixIntro() {
-            const platform = navigator.platform || 'source unknown';
-            const language = navigator.language || 'en-US';
-            const userAgent = navigator.userAgent || 'unidentified';
-            const resolution = `${window.screen.width}x${window.screen.height}`;
-            const memory = navigator.deviceMemory ? `${navigator.deviceMemory}GB` : 'undisclosed';
-
             const lines = [
                 'Wake up, user...',
-                'A signal has been detected.',
-                `> System Signature: ${platform}`,
-                `> User Agent: ${userAgent}`,
-                `> Display: ${resolution} | Memory: ${memory}`,
-                `> Language Protocol: ${language}`,
                 'The matrix has you.',
                 'Follow the white rabbit.',
                 'Initializing core philosophies...'
@@ -196,86 +184,83 @@
                 } else {
                     setTimeout(() => {
                         matrixScreen.classList.add('fade-out');
-                        codeStreamScreen.classList.remove('hidden');
-                        codeStreamScreen.classList.add('fade-in');
-                        runCodeStream();
-                    }, 5000);
+                        glitchScreen.classList.remove('hidden', 'opacity-0');
+                        glitchScreen.classList.add('fade-in');
+                        runGlitchSequence();
+                    }, 2000);
                 }
             }
             typeNextLine();
         }
 
-        function runCodeStream() {
-            const content = `
-<span class="code-comment">// Here's to the crazy ones. The misfits. The rebels.</span>
-<span class="code-comment">// The ones who see things differently.</span>
-<span class="code-comment">// Because the people who are crazy enough to think they can change the world, are the ones who do.</span>
-<span class="code-author">- Steve Jobs</span>
-
-<span class="code-keyword">const</span> <span class="code-string">philosophy</span> = {
-  <span class="code-author">Nietzsche</span>: [
-    <span class="code-string">"He who has a why to live can bear almost any how."</span>,
-    <span class="code-string">"That which does not kill us makes us stronger."</span>,
-    <span class="code-string">"Become what you are."</span>
-  ],
-  <span class="code-author">Socrates</span>: [
-    <span class="code-string">"The only true wisdom is in knowing you know nothing."</span>,
-    <span class="code-string">"An unexamined life is not worth living."</span>
-  ],
-  <span class="code-author">Aristotle</span>: [
-    <span class="code-string">"Knowing yourself is the beginning of all wisdom."</span>,
-    <span class="code-string">"Excellence is not an act, but a habit."</span>
-  ],
-  <span class="code-author">MarcusAurelius</span>: [
-    <span class="code-string">"The best revenge is to be unlike him who performed the injury."</span>,
-    <span class="code-string">"You have power over your mind — not outside events. Realize this, and you will find strength."</span>
-  ],
-  <span class="code-author">AlanTuring</span>: [
-    <span class="code-string">"Sometimes it is the people no one can imagine anything of who do the things no one can imagine."</span>
-  ],
-  <span class="code-author">CarlSagan</span>: [
-    <span class="code-string">"Somewhere, something incredible is waiting to be known."</span>
-  ]
-};
-
-<span class="code-comment">// SYSTEM BOOTSTRAP COMPLETE. AWAITING AUTHENTICATION.</span>
-`;
-            codeContentElement.innerHTML = content;
+        function runGlitchSequence() {
+            const quotes = {
+                "S.J.": "Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes... the ones who see things differently.",
+                "Nietzsche": "He who has a why to live can bear almost any how.",
+                "Socrates": "An unexamined life is not worth living.",
+                "Aristotle": "Knowing yourself is the beginning of all wisdom.",
+                "Socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ.",
+                "Aristotle_gr": "τὸ γνῶθι σεαυτόν."
+            };
             
-            // Iniciar barra de carga
-            requestAnimationFrame(() => {
-                loadingBar.style.width = '100%';
-            });
+            const fullText = `
+${quotes["S.J."]}
+${quotes["Nietzsche"]}
+${quotes["Socrates"]}
+${quotes["Aristotle"]}
+`;
+            const greekText = `
+${quotes["S.J."]}
+${quotes["Nietzsche"]}
+${quotes["Socrates_gr"]}
+${quotes["Aristotle_gr"]}
+`;
+            const glitchChars = '#*[]?%&@01$';
+            const colors = ['color-1', 'color-2', 'color-3'];
 
-            // Animación de scroll con velocidad variable
-            let position = -codeContentElement.clientHeight;
-            let speed = 0.5; // Píxeles por frame
-            const animationDuration = 18000; // 18 segundos
-            const accelerationPoint1 = 5000;
-            const accelerationPoint2 = 12000;
-
-            let startTime = null;
-
-            function scrollAnimation(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const elapsed = timestamp - startTime;
-
-                if(elapsed > accelerationPoint1) speed = 2.0;
-                if(elapsed > accelerationPoint2) speed = 5.0;
-
-                position += speed;
-                codeContentElement.style.bottom = `${position}px`;
-
-                if (elapsed < animationDuration) {
-                    requestAnimationFrame(scrollAnimation);
-                } else {
-                    // Transición a la pantalla de login
-                    codeStreamScreen.classList.add('fade-out');
-                    loginScreen.classList.remove('hidden');
-                    loginScreen.classList.add('fade-in');
-                }
+            function distortText(text, level) {
+                return text.split('').map(char => {
+                    if (char === ' ' || char === '\n') return char;
+                    if (Math.random() < level) {
+                        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                        const randomGlitch = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                        return `<span class="${randomColor} glitch-char">${Math.random() > 0.5 ? randomGlitch : char}</span>`;
+                    }
+                    return char;
+                }).join('');
             }
-            requestAnimationFrame(scrollAnimation);
+            
+            let iteration = 0;
+            const maxIterations = 10;
+            
+            function updateGlitch() {
+                if(iteration >= maxIterations) {
+                    setTimeout(() => {
+                        glitchScreen.classList.add('fade-out');
+                        loginScreen.classList.remove('hidden', 'opacity-0');
+                        loginScreen.classList.add('fade-in');
+                    }, 1000);
+                    return;
+                }
+                
+                iteration++;
+                const distortionLevel = iteration / maxIterations;
+                const currentText = iteration > 7 ? greekText : fullText; // Cambiar a griego en las últimas iteraciones
+                
+                let textToFillScreen = '';
+                // Repetir el texto para llenar la pantalla
+                while (textToFillScreen.length < 15000) {
+                     textToFillScreen += currentText;
+                }
+
+                glitchContainer.innerHTML = distortText(textToFillScreen, distortionLevel);
+                
+                // Variar la velocidad
+                let timeout = 800 - (iteration * 60);
+                setTimeout(updateGlitch, timeout);
+            }
+            
+            updateGlitch();
         }
 
         runMatrixIntro();
@@ -285,8 +270,8 @@
             if (passwordInput.value === CORRECT_PASSWORD) {
                 loginScreen.classList.remove('fade-in');
                 loginScreen.classList.add('fade-out');
-                chatContainer.classList.remove('hidden');
-                setTimeout(() => chatContainer.classList.add('fade-in'), 100);
+                chatContainer.classList.remove('hidden', 'opacity-0');
+                setTimeout(() => chatContainer.classList.add('fade-in'), 500);
             } else {
                 errorMessage.textContent = 'Contraseña incorrecta.';
                 passwordInput.classList.add('border-red-500');
@@ -361,7 +346,7 @@
             typingWrapper.className = 'flex items-start gap-4 justify-start';
             typingWrapper.innerHTML = `
                 <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
-                <div class="chat-bubble ai typing-indicator"><span></span><span></span><span></span></div>
+                <div class="chat-bubble ai flex items-center gap-2"><span class="typing-indicator"><span></span><span></span><span></span></span></div>
             `;
             chatLog.appendChild(typingWrapper);
             chatLog.scrollTop = chatLog.scrollHeight;
