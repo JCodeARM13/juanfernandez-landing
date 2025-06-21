@@ -2,787 +2,332 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Juan Carlos Fernández — Portfolio &amp; Blog de Innovación</title>
-  <meta name="description" content="Portafolio de Juan Carlos Fernández Varela Gómez. Explorando la intersección entre la Inteligencia Artificial, el desarrollo de software y la cultura digital.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protocolo VIERNES - Acceso Restringido</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* --------------------------------------------------- */
-    /* VARIABLES DE DISEÑO Y TEMAS - v3 */
-    /* --------------------------------------------------- */
-    :root {
-      --accent-blue: #0071E3;
-      --accent-blue-rgb: 0, 113, 227;
-      --green-whatsapp: #25D366;
-
-      /* Modo oscuro (predeterminado) */
-      --text-primary: #f5f5f7;
-      --text-secondary: rgba(245, 245, 247, 0.75);
-      --text-tertiary: rgba(245, 245, 247, 0.55);
-      --bg-main: #000000;
-      --bg-elevated: #1d1d1f;
-      --bg-elevated-hover: #2c2c2e;
-      --border-subtle: rgba(255, 255, 255, 0.15);
-      --border-strong: rgba(255, 255, 255, 0.3);
-      --shadow-soft: 0 8px 32px rgba(0,0,0,0.5);
-      --shadow-medium: 0 16px 48px rgba(0,0,0,0.6);
-
-      --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
-      --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
-      --transition-duration: 0.5s;
-
-      /* Paleta para gradiente del nombre */
-      --grad-1: #ff8d00;
-      --grad-2: #ff456c;
-      --grad-3: #e70054;
-      --grad-4: #8d00e0;
-      --grad-5: #0050ff;
-    }
-
-    /* Modo claro (Estilo Apple) */
-    :root.light-mode {
-      --text-primary: #1d1d1f;
-      --text-secondary: #4f4f52;
-      --text-tertiary: #8a8a8e;
-      --bg-main: #f5f5f7;
-      --bg-elevated: #ffffff;
-      --bg-elevated-hover: #ffffff;
-      --border-subtle: #d2d2d7;
-      --border-strong: #c7c7c7;
-      --shadow-soft: 0 4px 12px rgba(0,0,0,0.04);
-      --shadow-medium: 0 12px 24px rgba(0,0,0,0.08);
-    }
-    /* --------------------------------------------------- */
-    /* RESET Y ESTILOS BASE */
-    /* --------------------------------------------------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      scroll-behavior: smooth;
-      font-size: clamp(15px, 2vw, 17px);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
     body {
-      background: var(--bg-main);
-      color: var(--text-primary);
-      line-height: 1.65;
-      padding-top: 80px;
-      overflow-x: hidden;
-      transition: background-color 0.4s var(--ease-in-out-cubic),
-                  color 0.4s var(--ease-in-out-cubic);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #000;
+      color: #f5f5f7;
+      overflow: hidden;
     }
-    /* --------------------------------------------------- */
-    /* NAVEGACIÓN */
-    /* --------------------------------------------------- */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(var(--bg-elevated-rgb, 29, 29, 31), 0.7);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 1rem 2rem;
-      z-index: 1000;
-      transition: background-color 0.3s var(--ease-in-out-cubic), border-color 0.3s var(--ease-in-out-cubic);
+    .fade-in { animation: fadeIn 1s ease-in-out forwards; }
+    .fade-out { animation: fadeOut 1s ease-in-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.98); visibility: hidden; } }
+
+    /* Estilos para la intro tipo Matrix */
+    #matrix-screen {
+        font-family: 'Roboto Mono', monospace;
+        color: #00ff41; /* Verde Matrix */
     }
-    :root.light-mode nav {
-       --bg-elevated-rgb: 255, 255, 255;
+    .blinking-cursor {
+        animation: blink 1s step-end infinite;
     }
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    nav a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      transition: all 0.3s var(--ease-in-out-cubic);
-      position: relative;
-    }
-    nav a:hover {
-      color: var(--accent-blue);
-      background: rgba(var(--accent-blue-rgb), 0.1);
-    }
-    nav a.active {
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-    /* --------------------------------------------------- */
-    /* THEME SWITCHER */
-    /* --------------------------------------------------- */
-    .theme-switcher {
-      position: fixed;
-      top: 1.5rem;
-      right: 2rem;
-      z-index: 1001;
-    }
-    .theme-toggle__input { display: none; }
-    .theme-toggle__label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s var(--ease-in-out-cubic);
-    }
-    .theme-toggle__label:hover {
-      transform: scale(1.1);
-      border-color: var(--border-strong);
-    }
-    .theme-toggle__icon {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      transition: all 0.3s var(--ease-in-out-cubic);
-    }
-    .theme-toggle__input:checked + .theme-toggle__label .theme-toggle__icon--dark { opacity: 0; }
-    .theme-toggle__input:not(:checked) + .theme-toggle__label .theme-toggle__icon--light { opacity: 0; }
-    
-    /* --------------------------------------------------- */
-    /* LAYOUT GENERAL Y ANIMACIONES DE SCROLL */
-    /* --------------------------------------------------- */
-    .container {
-      width: clamp(320px, 92%, 1200px);
-      margin: 0 auto;
-      padding: 6rem 1rem;
-    }
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s var(--ease-out-quint),
-                  transform 0.8s var(--ease-out-quint);
-    }
-    .animate-on-scroll.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* --------------------------------------------------- */
-    /* HEADER CON ANIMACIÓN MEJORADA */
-    /* --------------------------------------------------- */
-    header {
-      text-align: center;
-      padding: 10rem 1rem 6rem;
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    header h1 {
-      font-size: clamp(3rem, 10vw, 7rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.5rem;
-      line-height: 1.05;
-      background: linear-gradient(90deg,
-        var(--grad-1), var(--grad-2), var(--grad-3),
-        var(--grad-4), var(--grad-5), var(--grad-1)
-      );
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-size: 300% 300%;
-      animation:
-        flash-in-enhanced 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-        flow-gradient 8s linear infinite alternate 1.8s; /* Transición más rápida: 8s */
+    @keyframes blink {
+        from, to { border-right-color: transparent; }
+        50% { border-right-color: #00ff41; }
     }
 
-    @keyframes flow-gradient {
-      0% { background-position: 0% center; }
-      100% { background-position: 100% center; }
-    }
-
-    @keyframes flash-in-enhanced {
-      0% {
-        opacity: 0;
-        transform: translateY(60px) scale(0.9);
-        filter: blur(20px) brightness(2); /* Blur más pronunciado */
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0) brightness(1);
-      }
-    }
-    header p.subtitle {
-      font-size: clamp(1.2rem, 3vw, 1.75rem);
-      color: var(--text-secondary);
-      font-weight: 400;
-      max-width: 750px;
-      margin: 1rem auto 0;
-      line-height: 1.4;
-    }
-    /* --------------------------------------------------- */
-    /* ESTILOS DE SECCIÓN GENÉRICOS */
-    /* --------------------------------------------------- */
-    section {
-      margin-bottom: 4rem;
-      scroll-margin-top: 100px;
-    }
-    .section-title {
-      font-size: clamp(2.8rem, 7vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .section-subtitle {
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      color: var(--text-secondary);
-      font-weight: 400;
-      max-width: 700px;
-      text-align: center;
-      margin: 0 auto 5rem auto;
-      line-height: 1.5;
-    }
-    /* --------------------------------------------------- */
-    /* SECCIÓN 'SOBRE MÍ' */
-    /* --------------------------------------------------- */
-    .about-section-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    @media (min-width: 992px) {
-      .about-section-layout {
-        grid-template-columns: 1fr 1.2fr;
-      }
-    }
-    .about-image-container {
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .about-image-container img {
-      width: 100%;
-      border-radius: 30px;
-      box-shadow: var(--shadow-medium);
-    }
-    .about-text p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      color: var(--text-secondary);
-    }
-    .about-text p:last-child {
-      margin-bottom: 0;
-    }
-    /* --------------------------------------------------- */
-    /* SECCIÓN 'HABILIDADES' (SKILLS) */
-    /* --------------------------------------------------- */
-    .skills-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        align-items: start;
-    }
-     @media (min-width: 768px) {
-      .skills-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .skills-category h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        color: var(--text-primary);
-    }
-    .skills-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .skill-tag {
-      background-color: var(--bg-elevated);
-      color: var(--text-secondary);
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
-      font-weight: 500;
-      font-size: 1rem;
-      border: 1px solid var(--border-subtle);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .skill-tag:hover {
-      transform: translateY(-5px);
-      color: var(--text-primary);
-      background-color: var(--bg-elevated-hover);
-      border-color: var(--accent-blue);
-      box-shadow: var(--shadow-soft);
-    }
-    .skill-tag i {
-      color: var(--accent-blue);
-      font-size: 1.2rem;
-    }
-    .skill-tag .fab.fa-platzi {
-        color: #98ca3f;
-    }
-
-    /* --------------------------------------------------- */
-    /* GRID Y TARJETAS (PROYECTOS Y BLOG) */
-    /* --------------------------------------------------- */
-    .grid {
-      display: grid;
-      gap: 3rem;
-    }
-    .two-cols {
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    }
-    .card {
-      background: var(--bg-elevated);
-      padding: 2.5rem;
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.4s var(--ease-out-quint),
-                  box-shadow 0.4s var(--ease-out-quint),
-                  background-color 0.4s var(--ease-in-out-cubic);
-      will-change: transform, box-shadow;
-      display: flex;
-      flex-direction: column;
-    }
-    .light-mode .card { border: 1px solid #e5e5e5; }
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-medium);
-    }
-    .card-content { flex-grow: 1; }
-    .card h3 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.75rem; }
-    .card .project-meta { font-size: 1rem; color: var(--text-tertiary); margin-bottom: 1.2rem; font-weight: 500; }
-    .card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1.5rem; }
-    .card-footer {
-        border-top: 1px solid var(--border-subtle);
-        padding-top: 1.5rem;
-        margin-top: auto;
-    }
-    .card-footer span {
-        font-size: 0.9rem;
-        color: var(--text-tertiary);
-    }
+    /* Estilos del chat */
+    .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.5; }
+    .chat-bubble.user { background-color: #0071E3; color: white; border-bottom-right-radius: 4px; }
+    .chat-bubble.ai { background-color: #2c2c2e; color: #f5f5f7; border-bottom-left-radius: 4px; }
+    .chat-input:focus { outline: none; border-color: #0071E3; box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.5); }
     
-    /* Blog Post Item */
-    .blog-post-item {
-      background: var(--bg-elevated);
-      padding: 2.5rem;
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.4s var(--ease-out-quint), box-shadow 0.4s var(--ease-out-quint);
-      text-decoration: none;
-      display: block;
-      color: inherit;
-    }
-     .light-mode .blog-post-item { border: 1px solid #e5e5e5; }
-    .blog-post-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-medium); }
-    .blog-post-item h3 { font-size: 1.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.3; }
-    .blog-post-item .blog-post-meta { font-size: 0.95rem; color: var(--text-tertiary); margin-bottom: 1.2rem; }
-    .blog-post-item .blog-post-excerpt { font-size: 1.05rem; color: var(--text-secondary); }
-    .blog-post-item .read-more-link { display: inline-block; color: var(--accent-blue); text-decoration: none; font-weight: 600; margin-top: 1.5rem; transition: transform 0.2s ease; }
-    .blog-post-item:hover .read-more-link { transform: translateX(5px); }
-
-    /* --------------------------------------------------- */
-    /* CONTACTO, BOTONES Y QR */
-    /* --------------------------------------------------- */
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      background-color: var(--accent-blue);
-      color: #fff;
-      padding: 0.9rem 1.8rem;
-      text-decoration: none;
-      border-radius: 999px;
-      font-weight: 500;
-      font-size: 1rem;
-      border: 1px solid transparent;
-      transition: background-color 0.3s ease;
-    }
-    .cta-button:hover { background-color: #0077ED; }
-    .cta-button.whatsapp { background-color: var(--green-whatsapp); }
-    .cta-button.whatsapp:hover { background-color: #29e271; }
-    .contact-links-container {
-      text-align: center;
-      margin-top: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .qr-container {
-      background: var(--bg-elevated);
-      border-radius: 24px;
-      padding: 2.5rem;
-      margin: 4rem auto 0 auto;
-      max-width: 400px;
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-    }
-    .light-mode .qr-container {
-      border: 1px solid #e5e5e5;
-    }
-    .qr-container p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-    .qr-container img {
-      width: 200px;
-      height: 200px;
-      border-radius: 16px;
-      background-color: white;
-      padding: 10px;
-    }
-    
-    /* --------------------------------------------------- */
-    /* FOOTER */
-    /* --------------------------------------------------- */
-    footer {
-      text-align: center;
-      padding: 5rem 1rem 3rem;
-      font-size: 0.9rem;
-      color: var(--text-tertiary);
-      border-top: 1px solid var(--border-subtle);
-      margin-top: 6rem;
-    }
-    .social-links { margin-bottom: 2rem; }
-    .social-links a {
-      color: var(--text-tertiary);
-      font-size: 1.8rem; /* Íconos más grandes */
-      margin: 0 1rem;
-      transition: all 0.3s ease;
-    }
-    .social-links a:hover {
-      color: var(--text-primary);
-      transform: translateY(-4px) scale(1.1);
-    }
-    
-    /* --------------------------------------------------- */
-    /* RESPONSIVE */
-    /* --------------------------------------------------- */
-    @media (max-width: 767px) {
-      .theme-switcher { top: 1rem; right: 1rem; }
-      nav { padding: 0.8rem 1rem; }
-      nav ul { gap: 1rem; }
-      nav a { padding: 0.4rem 0.5rem; }
-      header { padding: 6rem 1rem 4rem; }
-      .container { padding: 4rem 1rem; }
-      .card, .blog-post-item, .qr-container { padding: 1.8rem; }
-      .cta-button { width: 100%; padding: 1rem 2rem; }
-      .contact-links-container { gap: 0.75rem; }
-    }
+    /* Estilo para "escribiendo..." */
+    .typing-indicator span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8a8a8e; animation: typing 1s infinite; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
   </style>
 </head>
-<body>
+<body class="w-screen h-screen">
 
-  <!-- =================================================== -->
-  <!-- NAVEGACIÓN Y ELEMENTOS FIJOS -->
-  <!-- =================================================== -->
-  <nav>
-    <ul>
-      <li><a href="#about" class="active">Sobre Mí</a></li>
-      <li><a href="#skills">Habilidades</a></li>
-      <li><a href="#projects">Proyectos</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contact">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <div class="theme-switcher">
-    <input type="checkbox" id="theme-toggle" class="theme-toggle__input">
-    <label for="theme-toggle" class="theme-toggle__label">
-      <i class="fas fa-moon theme-toggle__icon theme-toggle__icon--dark"></i>
-      <i class="fas fa-sun theme-toggle__icon theme-toggle__icon--light"></i>
-    </label>
+  <!-- Pantalla de Intro "Matrix" -->
+  <div id="matrix-screen" class="w-full h-full flex items-center justify-center p-4 z-20 absolute top-0 left-0 bg-black">
+    <div class="w-full max-w-2xl">
+        <pre id="matrix-text" class="text-sm md:text-lg whitespace-pre-wrap"></pre>
+    </div>
   </div>
 
-
-  <!-- =================================================== -->
-  <!-- HEADER PRINCIPAL -->
-  <!-- =================================================== -->
-  <header>
-    <h1 class="animate-on-scroll">Juan Carlos Fernández</h1>
-    <p class="subtitle animate-on-scroll" style="transition-delay: 0.1s;">Team Vendor Lead en Lyft. +7 años de experiencia cruzando datos, personas y tecnología.</p>
-  </header>
-
-
-  <!-- =================================================== -->
-  <!-- CONTENIDO PRINCIPAL -->
-  <!-- =================================================== -->
-  <main>
-
-    <!-- SECCIÓN 'SOBRE MÍ' -->
-    <section id="about" class="container">
-      <div class="about-section-layout">
-        <div class="about-image-container animate-on-scroll" style="transition-delay: 0.2s;">
-          <!-- REEMPLAZA ESTE PLACEHOLDER CON UNA FOTO TUYA PROFESIONAL -->
-          <img src="https://placehold.co/600x700/1d1d1f/f5f5f7?text=JC" alt="Fotografía de Juan Carlos Fernández">
-        </div>
-        <div class="about-text animate-on-scroll" style="transition-delay: 0.3s;">
-          <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Hola, soy Juan Carlos.</h2>
-          <p>
-            Busco mi siguiente reto profesional en una empresa de primer nivel en LATAM. Con más de 7 años de experiencia en implementación de proyectos, ventas, servicio al cliente y gestión de información digital, estoy listo para nuevos desafíos.
-          </p>
-          <p>
-            Soy un profesional apasionado, orientado a resultados y comprometido con la excelencia. Si buscas a alguien dedicado y cualificado que pueda añadir valor a tu organización, me encantaría colaborar contigo.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 'HABILIDADES' -->
-    <section id="skills" class="container">
-      <h2 class="section-title animate-on-scroll">Mis Habilidades</h2>
-      <p class="section-subtitle animate-on-scroll">Un vistazo a las tecnologías, herramientas y competencias que utilizo para construir el futuro.</p>
-      
-      <div class="skills-grid animate-on-scroll" style="transition-delay: 0.2s;">
-        <div class="skills-category">
-            <h3>Técnicas y de Gestión</h3>
-            <div class="skills-container">
-                <div class="skill-tag"><i class="fas fa-users-cog"></i> Liderazgo de Equipos</div>
-                <div class="skill-tag"><i class="fas fa-tasks"></i> Gestión de Proyectos</div>
-                <div class="skill-tag"><i class="fas fa-chart-line"></i> Análisis de Datos</div>
-                <div class="skill-tag"><i class="fas fa-bullseye"></i> Estrategia de Negocio</div>
-                <div class="skill-tag"><i class="fab fa-salesforce"></i> Salesforce</div>
-                <div class="skill-tag"><i class="fab fa-google"></i> Google Ads</div>
-                <div class="skill-tag"><i class="fab fa-facebook"></i> Meta Ads</div>
-                <div class="skill-tag"><i class="fas fa-brain"></i> Innovación con IA</div>
-                <div class="skill-tag"><i class="fas fa-file-contract"></i> Gestión de Contratos</div>
-            </div>
-        </div>
-        <div class="skills-category">
-            <h3>Certificaciones y Formación</h3>
-             <div class="skills-container">
-                <div class="skill-tag"><i class="fab fa-platzi"></i> Introducción a la IA</div>
-                <div class="skill-tag"><i class="fab fa-platzi"></i> Curso de ChatGPT</div>
-                <div class="skill-tag"><i class="fab fa-platzi"></i> Historia del Dinero</div>
-                <div class="skill-tag"><i class="fas fa-language"></i> Inglés (C1+)</div>
-                <div class="skill-tag"><i class="fas fa-language"></i> Portugués</div>
-             </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 'PROYECTOS' -->
-    <section id="projects" class="container">
-      <h2 class="section-title animate-on-scroll">Experiencia Destacada</h2>
-      <p class="section-subtitle animate-on-scroll">Una selección de logros profesionales donde la estrategia y la ejecución convergen para crear valor tangible.</p>
-      
-      <div class="grid two-cols">
-        <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
-          <div class="card-content">
-            <h3><i class="fas fa-people-arrows" style="color:#8d00e0;"></i> Liderazgo y Expansión LATAM</h3>
-            <p class="project-meta">Supervisor of Special Branches en inDrive</p>
-            <p>Lideré equipos online y offline en México y Centroamérica, superando consistentemente las metas de reclutamiento y activación de conductores (+100%) con una tasa de conversión promedio del 33% mediante el monitoreo de KPIs y OKRs.</p>
-          </div>
-        </div>
-        <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
-          <div class="card-content">
-            <h3><i class="fas fa-handshake" style="color:#0071E3;"></i> Alianza Estratégica B2B con IKEA</h3>
-            <p class="project-meta">Proyecto Clave en inDrive</p>
-            <p>Gestioné la creación de un "delivery hub" en CDMX y Puebla en colaboración con IKEA, mejorando su logística en un 43% y representando hasta el 10% de los pedidos totales de la app en esas regiones.</p>
-          </div>
-        </div>
-        <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
-          <div class="card-content">
-            <h3><i class="fas fa-file-alt" style="color:#25D366;"></i> Transformación Digital de Contratos</h3>
-            <p class="project-meta">Team Leader en Kavak.com</p>
-            <p>Impulsé la adopción de procesos "paperless", logrando pasar del 0% al 97% de contratos digitales entre octubre y febrero. Gestioné repositorios y creé documentos para B2C y B2B utilizando Salesforce y Netsuite.</p>
-          </div>
-        </div>
-        <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
-            <div class="card-content">
-              <h3><i class="fas fa-bullhorn" style="color:#ff8d00;"></i> Marketing Digital y Adquisición</h3>
-              <p class="project-meta">Estrategia de Leads en inDrive</p>
-              <p>Diseñé y administré campañas en Meta Ads y Google Ads para incrementar la generación de leads, integrando estrategias de seguimiento y activación que potenciaron la visibilidad y conversión en ciudades clave.</p>
-            </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN 'BLOG' -->
-    <section id="blog" class="container">
-        <h2 class="section-title animate-on-scroll">Mi Bitácora</h2>
-        <p class="section-subtitle animate-on-scroll">Pensamientos y análisis sobre tecnología, liderazgo y el impacto de la IA en nuestro mundo.</p>
-        
-        <div class="grid two-cols">
-            <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
-              <h3>Liderazgo en la Era de la IA: Más Allá de los Datos</h3>
-              <p class="blog-post-meta">15 de Junio, 2025 · Liderazgo & IA</p>
-              <p class="blog-post-excerpt">Exploro cómo los líderes pueden combinar la empatía y la intuición humana con las herramientas de IA para tomar decisiones más completas y efectivas...</p>
-              <span class="read-more-link">Leer artículo completo →</span>
-            </a>
-            <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.3s;">
-              <h3>La Anatomía de una Alianza Estratégica Exitosa</h3>
-              <p class="blog-post-meta">28 de Mayo, 2025 · Estrategia de Negocio</p>
-              <p class="blog-post-excerpt">Un análisis de los componentes clave para construir partnerships B2B que generen valor real, basado en experiencias prácticas...</p>
-              <span class="read-more-link">Leer artículo completo →</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- SECCIÓN 'CONTACTO' -->
-    <section id="contact" class="container">
-      <h2 class="section-title animate-on-scroll">Hablemos.</h2>
-      <p class="section-subtitle animate-on-scroll">Siempre estoy abierto a discutir nuevas ideas, colaborar en proyectos innovadores o simplemente conectar. Envíame un mensaje.</p>
-      
-      <div class="contact-links-container animate-on-scroll" style="transition-delay: 0.2s;">
-        <a href="mailto:jvancipn@gmail.com" class="cta-button">
-          <i class="fas fa-paper-plane"></i> Enviar un Email
-        </a>
-        <a href="https://wa.me/525548869123" target="_blank" class="cta-button whatsapp">
-          <i class="fab fa-whatsapp"></i> Chatear en WhatsApp
-        </a>
-      </div>
-
-      <div class="qr-container animate-on-scroll" style="transition-delay: 0.3s;">
-        <p>O escanea el código para enviarme un WhatsApp directamente.</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwa.me%2F525548869123" alt="Código QR para chatear en WhatsApp">
-      </div>
-    </section>
-
-  </main>
-
-
-  <!-- =================================================== -->
-  <!-- FOOTER -->
-  <!-- =================================================== -->
-  <footer>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/juan-carlos-fern%C3%A1ndez-varela-g%C3%B3mez-b4596a15b/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/JCodeARM13" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://www.instagram.com/juan_carlos_fvg/?next=%2F" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+  <!-- Pantalla de Contraseña (inicialmente invisible) -->
+  <div id="login-screen" class="w-full h-full flex flex-col items-center justify-center p-4 z-10 absolute top-0 left-0 bg-black opacity-0">
+    <div class="text-center w-full max-w-md">
+      <i class="fas fa-shield-alt text-5xl text-blue-500 mb-6"></i>
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">Protocolo VIERNES</h1>
+      <p class="text-lg text-gray-400 mb-8">Acceso restringido. Por favor, identifíquese.</p>
+      <form id="password-form" class="w-full">
+        <input type="password" id="password-input" class="w-full bg-gray-800 border border-gray-600 text-white text-lg rounded-lg p-4 mb-4 text-center focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Contraseña">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-lg transition-transform transform hover:scale-105">Desbloquear</button>
+      </form>
+      <p id="error-message" class="text-red-500 mt-4 h-6"></p>
     </div>
-    <p>
-      Diseñado y construido con pasión por el detalle. <br>
-      &copy; 2025 Juan Carlos Fernández Varela Gómez
-    </p>
-    <div style="margin-top: 2rem; opacity: 0.5; cursor: pointer;" id="secret-trigger" title="Acceso Secreto">
-        <i class="fas fa-key"></i>
-    </div>
-  </footer>
+  </div>
 
+  <!-- Interfaz de Chat (oculta inicialmente) -->
+  <div id="chat-container" class="w-full h-full flex flex-col opacity-0 hidden">
+    <header class="p-4 border-b border-gray-700 text-center">
+      <h2 class="text-xl font-bold">VIERNES <span class="text-blue-500">AI</span></h2>
+      <p class="text-sm text-gray-400">Asistente Profesional de Juan Carlos Fernández</p>
+    </header>
+    
+    <main id="chat-log" class="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
+      <div class="flex items-start gap-3 justify-start">
+        <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center"><i class="fas fa-robot text-blue-400"></i></div>
+        <div class="chat-bubble ai">
+          <p>Protocolo VIERNES desbloqueado. Soy el asistente de IA de Juan Carlos. ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre su experiencia, proyectos o habilidades.</p>
+        </div>
+      </div>
+    </main>
 
-  <!-- =================================================== -->
-  <!-- JAVASCRIPT -->
-  <!-- =================================================== -->
+    <footer class="p-4 border-t border-gray-700">
+      <form id="chat-form" class="flex items-center gap-4">
+        <input type="text" id="user-input" class="flex-1 bg-gray-800 border border-gray-600 text-white rounded-full py-3 px-5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Escribe tu pregunta aquí..." autocomplete="off">
+        <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </footer>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const matrixScreen = document.getElementById('matrix-screen');
+      const matrixTextElement = document.getElementById('matrix-text');
+      const loginScreen = document.getElementById('login-screen');
+      const passwordForm = document.getElementById('password-form');
+      const passwordInput = document.getElementById('password-input');
+      const errorMessage = document.getElementById('error-message');
+      const chatContainer = document.getElementById('chat-container');
+      const chatLog = document.getElementById('chat-log');
+      const chatForm = document.getElementById('chat-form');
+      const userInput = document.getElementById('user-input');
+
+      const CORRECT_PASSWORD = 'VIERNES13';
 
       /**
-       * MÓDULO DE CAMBIO DE TEMA
-       * Gestiona el modo claro/oscuro y guarda la preferencia en localStorage.
+       * ---------------------------------------------------
+       * 1. INTRODUCCIÓN ESTILO MATRIX
+       * ---------------------------------------------------
        */
-      const themeToggle = document.getElementById('theme-toggle');
-      if (themeToggle) { // FIX: Se añade una comprobación para evitar el error si el elemento no existe.
-          const docElement = document.documentElement;
-          const currentTheme = localStorage.getItem('theme');
-
-          if (currentTheme === 'light') {
-              docElement.classList.add('light-mode');
-              themeToggle.checked = true;
-          }
-
-          themeToggle.addEventListener('change', () => {
-              if (themeToggle.checked) {
-                  docElement.classList.add('light-mode');
-                  localStorage.setItem('theme', 'light');
-              } else {
-                  docElement.classList.remove('light-mode');
-                  localStorage.setItem('theme', 'dark');
-              }
-          });
+      function typeWriter(text, element, index, callback) {
+        if (index < text.length) {
+          element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor border-r-2"></span>';
+          setTimeout(() => typeWriter(text, element, index + 1, callback), 60);
+        } else {
+            element.innerHTML = text; // Quitar el cursor al final
+            if (callback) callback();
+        }
       }
 
+      function runMatrixIntro() {
+        const platform = navigator.platform || 'Desconocido';
+        const language = navigator.language || 'Desconocido';
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+
+        const lines = [
+            'Wake up, user...',
+            'A signal has been detected.',
+            `> Origin: ${platform}`,
+            `> Language: ${language}`,
+            `> Timestamp: ${timeString}`,
+            'The matrix has you.',
+            'Follow the white rabbit.',
+            'It is time to see how deep the rabbit hole goes.',
+            'Identify yourself to proceed...'
+        ];
+        
+        let lineIndex = 0;
+        
+        function typeNextLine() {
+            if (lineIndex < lines.length) {
+                const p = document.createElement('p');
+                matrixTextElement.appendChild(p);
+                typeWriter(lines[lineIndex], p, 0, () => {
+                    lineIndex++;
+                    setTimeout(typeNextLine, 500); // Pausa entre líneas
+                });
+            } else {
+                // Transición a la pantalla de login
+                setTimeout(() => {
+                    matrixScreen.classList.add('fade-out');
+                    loginScreen.classList.remove('opacity-0');
+                    loginScreen.classList.add('fade-in');
+                }, 1500); // Pausa final antes de la transición
+            }
+        }
+        
+        typeNextLine();
+      }
+
+      runMatrixIntro(); // Iniciar la secuencia de introducción
+
       /**
-       * MÓDULO DE ANIMACIONES POR SCROLL
-       * Utiliza IntersectionObserver para animar elementos cuando entran en el viewport.
+       * ---------------------------------------------------
+       * 2. MANEJO DE LA CONTRASEÑA
+       * ---------------------------------------------------
        */
-      const animatedElements = document.querySelectorAll('.animate-on-scroll');
-      const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            scrollObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
-      animatedElements.forEach(el => scrollObserver.observe(el));
-
-
-      /**
-       * MÓDULO DE NAVEGACIÓN ACTIVA
-       * Resalta la sección actual en la barra de navegación.
-       */
-      const sections = document.querySelectorAll('section');
-      const navLinks = document.querySelectorAll('nav a');
-      const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navLinks.forEach(link => {
-              link.classList.remove('active');
-              if (link.getAttribute('href').substring(1) === entry.target.id) {
-                link.classList.add('active');
-              }
-            });
-          }
-        });
-      }, { rootMargin: '-40% 0px -60% 0px' });
-      sections.forEach(section => navObserver.observe(section));
-
-
-      /**
-       * MÓDULO DE ACCESO SECRETO (EASTER EGG)
-       * Permite el acceso a una URL secreta mediante Konami Code o un clic.
-       */
-      const URL_SECRETA = 'secret-page.html'; // <-- CAMBIA ESTO A LA URL DE TU PÁGINA SECRETA
-
-      // Método 1: Konami Code
-      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-      let konamiIndex = 0;
-      window.addEventListener('keydown', (e) => {
-        if (e.key === konamiCode[konamiIndex]) {
-          konamiIndex++;
-          if (konamiIndex === konamiCode.length) {
-            console.log('Konami Code Activado!');
-            window.location.href = URL_SECRETA;
-            konamiIndex = 0;
-          }
+      passwordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (passwordInput.value === CORRECT_PASSWORD) {
+          console.log('Acceso concedido');
+          loginScreen.classList.remove('fade-in');
+          loginScreen.classList.add('fade-out');
+          chatContainer.classList.remove('hidden');
+          setTimeout(() => {
+            chatContainer.classList.add('fade-in');
+          }, 100);
         } else {
-          konamiIndex = 0;
+          errorMessage.textContent = 'Contraseña incorrecta. Inténtalo de nuevo.';
+          passwordInput.classList.add('border-red-500');
+          setTimeout(() => {
+            errorMessage.textContent = '';
+            passwordInput.classList.remove('border-red-500');
+          }, 2000);
+        }
+      });
+
+      /**
+       * ---------------------------------------------------
+       * 3. LÓGICA DEL CHAT CON IA
+       * ---------------------------------------------------
+       */
+      const chatHistory = [];
+      const CV_CONTEXT = `
+        Tú eres VIERNES, un asistente de IA profesional para Juan Carlos Fernández Varela Gómez. Tu propósito es responder preguntas sobre su carrera basándote en la siguiente información de su CV. Eres cortés, profesional y directo.
+
+        **Información Clave del CV:**
+        - **Nombre:** Juan Carlos Fernández Varela Gómez
+        - **Puesto Actual:** Team Vendor Lead en Lyft.
+        - **Experiencia:** Más de 7 años en implementación de proyectos, ventas, servicio al cliente y gestión digital.
+        - **Educación:** Licenciatura en Economía por la UNAM (SUAYED).
+        - **Idiomas:** Español (Nativo), Inglés (C1+), Portugués.
+        - **Empresas Anteriores y Logros:**
+            - **inDrive (Supervisor of Special Branches LATAM):**
+                - Lideró equipos online/offline en México y Centroamérica, superando metas de reclutamiento (+100%) con 33% de conversión.
+                - Gestionó la alianza B2B con IKEA, mejorando su logística en un 43%.
+                - Realizó viajes de negocio estratégicos a Guatemala y Jamaica.
+                - Diseñó campañas de marketing en Meta Ads y Google Ads.
+            - **Verizon (Team Leader, Customer Service):**
+                - Lideró un equipo de servicio al cliente y ventas por chat, enfocado en KPIs de conversión y satisfacción.
+            - **Kavak.com (Team Leader, Back-office/Digital Contracts):**
+                - Lideró la transformación digital, llevando la adopción de contratos sin papel del 0% al 97%.
+                - Utilizó Salesforce y Netsuite.
+        - **Habilidades y Certificaciones:**
+            - **Gestión:** Liderazgo de Equipos, Gestión de Proyectos, Estrategia de Negocio.
+            - **Técnicas:** Análisis de Datos, Salesforce, Meta/Google Ads, Innovación con IA.
+            - **Certificaciones (Platzi):** Introducción a la IA, ChatGPT, Historia del Dinero.
+
+        Responde a las preguntas del usuario basándote únicamente en esta información. Si te preguntan algo fuera de este contexto, amablemente indica que tu conocimiento se limita a la trayectoria profesional de Juan Carlos.
+      `;
+      
+      chatHistory.push({ role: "system", parts: [{ text: CV_CONTEXT }] });
+
+      chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return;
+
+        appendMessage(userMessage, 'user');
+        userInput.value = '';
+        
+        showTypingIndicator();
+        
+        try {
+            const aiResponse = await getAIResponse(userMessage);
+            removeTypingIndicator();
+            appendMessage(aiResponse, 'ai');
+        } catch (error) {
+            removeTypingIndicator();
+            appendMessage('Lo siento, estoy teniendo problemas para conectar con mis sistemas en este momento. Por favor, inténtalo de nuevo más tarde.', 'ai');
+            console.error('Error fetching AI response:', error);
         }
       });
       
-      // Método 2: Clic en el ícono de la llave
-      const secretTrigger = document.getElementById('secret-trigger');
-      if(secretTrigger) {
-        secretTrigger.addEventListener('click', () => {
-            console.log('Acceso secreto por clic activado!');
-            window.location.href = URL_SECRETA;
-        });
+      function appendMessage(text, sender) {
+        const messageWrapper = document.createElement('div');
+        const icon = document.createElement('div');
+        const bubble = document.createElement('div');
+
+        messageWrapper.className = `flex items-start gap-3 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+        icon.className = 'w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center flex-shrink-0';
+        bubble.className = `chat-bubble ${sender}`;
+        
+        if (sender === 'user') {
+            icon.innerHTML = '<i class="fas fa-user text-gray-400"></i>';
+            bubble.textContent = text;
+            messageWrapper.append(bubble, icon);
+        } else {
+            icon.innerHTML = '<i class="fas fa-robot text-blue-400"></i>';
+            bubble.textContent = text;
+            messageWrapper.append(icon, bubble);
+        }
+        
+        chatLog.appendChild(messageWrapper);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+      
+      function showTypingIndicator() {
+        const typingWrapper = document.createElement('div');
+        typingWrapper.id = 'typing-indicator';
+        typingWrapper.className = 'flex items-start gap-3 justify-start';
+        typingWrapper.innerHTML = `
+            <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center"><i class="fas fa-robot text-blue-400"></i></div>
+            <div class="chat-bubble ai typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        `;
+        chatLog.appendChild(typingWrapper);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+
+      function removeTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+      }
+
+      async function getAIResponse(prompt) {
+          chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+          
+          const payload = {
+            contents: chatHistory,
+            generationConfig: {
+              temperature: 0.7,
+              topK: 1,
+              topP: 1,
+              maxOutputTokens: 2048,
+            },
+          };
+
+          const apiKey = ""; // La API key se gestiona automáticamente en el entorno de Canvas
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+          
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+
+          const result = await response.json();
+          
+          if (result.candidates && result.candidates[0]?.content?.parts[0]) {
+            const aiText = result.candidates[0].content.parts[0].text;
+            chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+            return aiText;
+          } else {
+            console.warn('No content received from AI:', result);
+            return 'No he podido procesar esa solicitud. ¿Podrías reformular tu pregunta?';
+          }
       }
     });
   </script>
