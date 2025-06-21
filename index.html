@@ -3,52 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Juan Fernández — Portfolio Innovador & Blog</title>
+  <title>Juan Fernández — Portfolio & Blog</title>
   <meta name="description" content="Juan Fernández — Vendor Lead en Lyft, creador de soluciones IA con visión de futuro y autor de una bitácora personal sobre tecnología, IA y cultura.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     /* --------------------------------------------------- */
-    /* VARIABLES DE DISEÑO Y TEMAS */
+    /* VARIABLES DE DISEÑO Y TEMAS - ESTILO APPLE */
     /* --------------------------------------------------- */
     :root {
-      --accent-blue: #0A84FF;
-      --accent-blue-rgb: 10, 132, 255;
+      --accent-blue: #0071E3;
+      --accent-blue-rgb: 0, 113, 227;
+
       /* Modo oscuro (predeterminado) */
-      --text-primary: rgba(255, 255, 255, 0.98);
-      --text-secondary: rgba(255, 255, 255, 0.75);
-      --text-tertiary: rgba(255, 255, 255, 0.55);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(245, 245, 247, 0.75);
+      --text-tertiary: rgba(245, 245, 247, 0.55);
       --bg-main: #000000;
-      --bg-elevated: rgba(18, 18, 18, 0.65);
-      --bg-elevated-hover: rgba(29, 29, 31, 0.85);
-      --border-subtle: rgba(255, 255, 255, 0.18);
+      --bg-elevated: #1d1d1f;
+      --bg-elevated-hover: #2c2c2e;
+      --border-subtle: rgba(255, 255, 255, 0.15);
       --border-strong: rgba(255, 255, 255, 0.3);
-      --shadow-soft: 0 5px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
-      --shadow-medium: 0 15px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12);
+      --shadow-soft: 0 8px 32px rgba(0,0,0,0.5);
+      --shadow-medium: 0 16px 48px rgba(0,0,0,0.6);
+
       --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
       --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
       --transition-duration: 0.5s;
-      --name-glow-start: #E0BBE4;
-      --name-glow-middle: #957DAD;
-      --name-glow-end: #D291BC;
+
+      /* Paleta para gradiente del nombre */
+      --grad-1: #ff8d00;
+      --grad-2: #ff456c;
+      --grad-3: #e70054;
+      --grad-4: #8d00e0;
+      --grad-5: #0050ff;
     }
-    /* Modo claro */
+
+    /* Modo claro (Revisado al estilo Apple) */
     :root.light-mode {
-      --text-primary: #1a1a1a;
-      --text-secondary: #444444;
-      --text-tertiary: #666666;
-      --bg-main: #FDFDFD;
-      --bg-elevated: rgba(255, 255, 255, 0.85);
-      --bg-elevated-hover: rgba(238, 238, 238, 0.95);
-      --border-subtle: rgba(0, 0, 0, 0.1);
-      --border-strong: rgba(0, 0, 0, 0.18);
-      --shadow-soft: 0 2px 10px rgba(0,0,0,0.08), inset 0 1px 0 rgba(0,0,0,0.02);
-      --shadow-medium: 0 8px 25px rgba(0,0,0,0.12), inset 0 1px 0 rgba(0,0,0,0.04);
-      --name-glow-start: #81D4FA;
-      --name-glow-middle: #4FC3F7;
-      --name-glow-end: #29B6F6;
+      --text-primary: #1d1d1f;
+      --text-secondary: #4f4f52;
+      --text-tertiary: #8a8a8e;
+      --bg-main: #f5f5f7; /* Blanco roto de Apple */
+      --bg-elevated: #ffffff;
+      --bg-elevated-hover: #ffffff;
+      --border-subtle: #d2d2d7;
+      --border-strong: #c7c7c7;
+      /* Sombras sutiles y difusas */
+      --shadow-soft: 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-medium: 0 12px 24px rgba(0,0,0,0.08);
     }
     /* --------------------------------------------------- */
     /* RESET Y ESTILOS BASE */
@@ -61,37 +66,37 @@
     html {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       scroll-behavior: smooth;
-      font-size: clamp(14px, 2vw, 16px);
+      font-size: clamp(15px, 2vw, 17px);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
     body {
       background: var(--bg-main);
       color: var(--text-primary);
-      line-height: 1.7;
+      line-height: 1.65;
       padding-top: 80px;
       overflow-x: hidden;
       transition: background-color 0.4s var(--ease-in-out-cubic),
                   color 0.4s var(--ease-in-out-cubic);
     }
     /* --------------------------------------------------- */
-    /* NAVEGACIÓN MEJORADA */
+    /* NAVEGACIÓN */
     /* --------------------------------------------------- */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(var(--bg-elevated-rgb, 29, 29, 31), 0.7);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid var(--border-subtle);
       padding: 1rem 2rem;
       z-index: 1000;
-      transition: all 0.3s var(--ease-in-out-cubic);
+      transition: background-color 0.3s var(--ease-in-out-cubic), border-color 0.3s var(--ease-in-out-cubic);
     }
-    .light-mode nav {
-      background: rgba(255, 255, 255, 0.85);
+    :root.light-mode nav {
+       --bg-elevated-rgb: 255, 255, 255;
     }
     nav ul {
       list-style: none;
@@ -105,33 +110,22 @@
       color: var(--text-secondary);
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       padding: 0.5rem 1rem;
       border-radius: 8px;
       transition: all 0.3s var(--ease-in-out-cubic);
       position: relative;
     }
-    nav a:hover,
-    nav a.active {
+    nav a:hover {
       color: var(--accent-blue);
       background: rgba(var(--accent-blue-rgb), 0.1);
     }
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--accent-blue);
-      transition: all 0.3s var(--ease-in-out-cubic);
-      transform: translateX(-50%);
-    }
-    nav a.active::after {
-      width: 80%;
+    nav a.active {
+      color: var(--text-primary);
+      font-weight: 600;
     }
     /* --------------------------------------------------- */
-    /* THEME SWITCHER MEJORADO */
+    /* THEME SWITCHER */
     /* --------------------------------------------------- */
     .theme-switcher {
       position: fixed;
@@ -146,486 +140,265 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.3s var(--ease-in-out-cubic);
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      box-shadow: var(--shadow-soft);
     }
     .theme-toggle__label:hover {
       transform: scale(1.1);
-      border-color: var(--accent-blue);
+      border-color: var(--border-strong);
     }
     .theme-toggle__icon {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      color: var(--text-secondary);
       transition: all 0.3s var(--ease-in-out-cubic);
     }
-    .theme-toggle__icon--dark {
-      color: var(--text-secondary);
-    }
-    .theme-toggle__icon--light {
-      color: #fbbf24;
-      opacity: 0;
-      position: absolute;
-    }
-    .theme-toggle__input:checked + .theme-toggle__label .theme-toggle__icon--dark {
-      opacity: 0;
-    }
-    .theme-toggle__input:checked + .theme-toggle__label .theme-toggle__icon--light {
-      opacity: 1;
-    }
+    .theme-toggle__input:checked + .theme-toggle__label .theme-toggle__icon--dark { opacity: 0; }
+    .theme-toggle__input:not(:checked) + .theme-toggle__label .theme-toggle__icon--light { opacity: 0; }
+    
     /* --------------------------------------------------- */
     /* LAYOUT GENERAL */
     /* --------------------------------------------------- */
     .container {
-      width: clamp(320px, 90%, 1100px);
+      width: clamp(320px, 92%, 1100px);
       margin: 0 auto;
-      padding: 4rem 1rem;
+      padding: 6rem 1rem;
     }
     .animate-on-scroll {
       opacity: 0;
-      transform: translateY(30px) scale(0.98);
-      filter: blur(3px);
-      transition: opacity var(--transition-duration) var(--ease-out-quint),
-                  transform var(--transition-duration) var(--ease-out-quint),
-                  filter var(--transition-duration) var(--ease-out-quint),
-                  background-color 0.4s var(--ease-in-out-cubic),
-                  color 0.4s var(--ease-in-out-cubic),
-                  border-color 0.4s var(--ease-in-out-cubic),
-                  box-shadow 0.4s var(--ease-in-out-cubic),
-                  backdrop-filter 0.4s var(--ease-in-out-cubic);
-      transition-delay: 0.1s;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--ease-out-quint),
+                  transform 0.8s var(--ease-out-quint);
     }
     .animate-on-scroll.visible {
       opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0);
+      transform: translateY(0);
     }
-    header.animate-on-scroll {
-       transition-delay: 0s;
-     }
+    
     /* --------------------------------------------------- */
-    /* HEADER MEJORADO */
+    /* HEADER CON ANIMACIÓN TIPO APPLE INTELLIGENCE */
     /* --------------------------------------------------- */
     header {
       text-align: center;
-      padding: 8rem 1rem 4rem;
-      min-height: 70vh;
+      padding: 10rem 1rem 6rem;
+      min-height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
     header h1 {
-      font-size: clamp(3.5rem, 8vw, 6.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-size: clamp(3.5rem, 10vw, 7.5rem);
+      font-weight: 800; /* Más bold, estilo Apple */
+      letter-spacing: -0.04em;
       margin-bottom: 1.5rem;
-      line-height: 1.1;
-      position: relative;
-      z-index: 1;
+      line-height: 1.05;
       background: linear-gradient(90deg,
-        var(--name-glow-start) 0%,
-        var(--name-glow-middle) 33%,
-        var(--name-glow-end) 66%,
-        var(--name-glow-start) 100%
+        var(--grad-1), var(--grad-2), var(--grad-3),
+        var(--grad-4), var(--grad-5), var(--grad-1)
       );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-size: 400% auto;
-      text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7),
-                   0 0 30px rgba(var(--accent-blue-rgb), 0.5);
-      animation: super-flash-in 2s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-                 relaxed-text-gradient 12s linear infinite alternate 2s;
+      background-size: 300% 300%;
+      animation:
+        super-flash-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        apple-intelligence-gradient 15s linear infinite alternate 1.5s;
     }
+
+    @keyframes apple-intelligence-gradient {
+      0% { background-position: 0% center; }
+      100% { background-position: 100% center; }
+    }
+
     @keyframes super-flash-in {
       0% {
         opacity: 0;
-        transform: translateY(40px) scale(0.9);
-        filter: blur(10px) brightness(300%);
-        text-shadow: 0 0 60px rgba(255, 255, 255, 1),
-                     0 0 120px rgba(var(--accent-blue-rgb), 0.8);
-      }
-      20% {
-        opacity: 1;
-        transform: translateY(-5px) scale(1.02);
-        filter: blur(0) brightness(150%);
-        text-shadow: 0 0 40px rgba(255, 255, 255, 0.8),
-                     0 0 80px rgba(var(--accent-blue-rgb), 0.6);
-      }
-      40% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0) brightness(100%);
-        text-shadow: 0 0 20px rgba(var(--accent-blue-rgb), 0.7),
-                     0 0 40px rgba(var(--accent-blue-rgb), 0.5);
+        transform: translateY(50px) scale(0.9);
+        filter: blur(10px);
       }
       100% {
         opacity: 1;
         transform: translateY(0) scale(1);
-        filter: blur(0) brightness(100%);
-        text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7),
-                     0 0 30px rgba(var(--accent-blue-rgb), 0.5);
-      }
-    }
-    @keyframes relaxed-text-gradient {
-      0% {
-        background-position: 0% center;
-        text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7), 0 0 30px rgba(var(--accent-blue-rgb), 0.5);
-      }
-      50% {
-        background-position: 100% center;
-        text-shadow: 0 0 20px rgba(var(--accent-blue-rgb), 0.8), 0 0 40px rgba(var(--accent-blue-rgb), 0.6);
-      }
-      100% {
-        background-position: 0% center;
-        text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7), 0 0 30px rgba(var(--accent-blue-rgb), 0.5);
+        filter: blur(0);
       }
     }
     header p {
-      font-size: clamp(1.2rem, 4vw, 1.7rem);
+      font-size: clamp(1.2rem, 3vw, 1.75rem);
       color: var(--text-secondary);
-      margin-top: 1rem;
-      font-weight: 300;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      font-weight: 400;
+      max-width: 750px;
+      margin: 1rem auto 0;
+      line-height: 1.4;
     }
     /* --------------------------------------------------- */
-    /* SECCIONES Y TÍTULOS */
+    /* SECCIONES Y TÍTULOS - ESTILO APPLE */
     /* --------------------------------------------------- */
     section {
-      margin-bottom: 5rem;
+      margin-bottom: 4rem;
       scroll-margin-top: 100px;
     }
-    section:last-of-type {
-      margin-bottom: 0;
-    }
     .section-title {
-      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
       font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-      margin-bottom: 3rem;
-      position: relative;
+      letter-spacing: -0.03em;
       text-align: center;
+      margin-bottom: 1rem;
     }
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 4px;
-      background: var(--accent-blue);
-      margin: 1.2rem auto 0;
-      border-radius: 2px;
-      animation: pulse-glow 2s ease-in-out infinite alternate;
-    }
-    @keyframes pulse-glow {
-      0% { box-shadow: 0 0 5px rgba(var(--accent-blue-rgb), 0.5); }
-      100% { box-shadow: 0 0 20px rgba(var(--accent-blue-rgb), 0.8); }
+    .section-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--text-secondary);
+      font-weight: 400;
+      max-width: 700px;
+      text-align: center;
+      margin: 0 auto 4rem auto;
+      line-height: 1.5;
     }
     /* --------------------------------------------------- */
-    /* GRID Y TARJETAS MEJORADAS */
+    /* GRID Y TARJETAS */
     /* --------------------------------------------------- */
     .grid {
       display: grid;
-      gap: 2.5rem;
-      margin-top: 2rem;
+      gap: 3rem; /* Más espacio */
     }
     .two-cols {
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    }
-    @media (min-width: 768px) {
-      .grid.two-cols {
-        gap: 3rem;
-      }
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     }
     .card {
       background: var(--bg-elevated);
       padding: 2.5rem;
-      border-radius: 20px;
-      border: 1px solid var(--border-subtle);
+      border-radius: 24px; /* Más redondeado */
       box-shadow: var(--shadow-soft);
-      transition: all 0.4s var(--ease-out-quint);
-      backdrop-filter: blur(15px) saturate(180%);
-      -webkit-backdrop-filter: blur(15px) saturate(180%);
-      position: relative;
-      overflow: hidden;
-      will-change: transform;
+      transition: transform 0.4s var(--ease-out-quint),
+                  box-shadow 0.4s var(--ease-out-quint),
+                  background-color 0.4s var(--ease-in-out-cubic);
+      will-change: transform, box-shadow;
     }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%),
-                                   rgba(255,255,255,0.1) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s var(--ease-out-quint);
-      pointer-events: none;
-      transform: scale(0.9);
-    }
-    .card:hover::before {
-      opacity: 1;
-      transform: scale(1);
+    .light-mode .card {
+      border: 1px solid #e5e5e5;
     }
     .card:hover {
-      transform: translateY(-12px) scale(1.02);
+      transform: translateY(-10px);
       box-shadow: var(--shadow-medium);
       background: var(--bg-elevated-hover);
-      border-color: rgba(var(--accent-blue-rgb), 0.7);
     }
     .card h3 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .card h3 i {
-      color: var(--accent-blue);
-      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
     }
     .card .project-meta {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-tertiary);
       margin-bottom: 1.2rem;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .card .project-meta i {
-      color: var(--accent-blue);
-      font-size: 1rem;
     }
     .card p {
       color: var(--text-secondary);
       font-size: 1.05rem;
       margin-bottom: 1.5rem;
-      line-height: 1.6;
     }
     .card .project-details {
-      list-style: none;
-      padding: 0;
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 1.2rem;
+        list-style: none;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        font-size: 0.95rem;
+        border-top: 1px solid var(--border-subtle);
     }
     .card .project-details li {
-      margin-bottom: 0.8rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-    .card .project-details li::before {
-      content: '•';
-      color: var(--accent-blue);
-      font-weight: bold;
-      font-size: 1.2rem;
-      line-height: 1;
-      margin-top: 0.1rem;
+        margin-bottom: 0.8rem;
+        color: var(--text-secondary);
     }
     .card .project-details strong {
-      color: var(--text-primary);
-      font-weight: 600;
+        color: var(--text-primary);
+        font-weight: 500;
     }
     .card .project-details a {
       color: var(--accent-blue);
       text-decoration: none;
       font-weight: 500;
-      transition: all 0.2s var(--ease-in-out-cubic);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
+      transition: opacity 0.2s ease;
     }
-    .card .project-details a:hover {
-      opacity: 0.85;
-      text-decoration: underline;
-      transform: translateX(2px);
-    }
+    .card .project-details a:hover { opacity: 0.7; }
+
     /* --------------------------------------------------- */
-    /* BLOG MEJORADO */
+    /* BLOG */
     /* --------------------------------------------------- */
-    .blog-post-list {
-      display: grid;
-      gap: 2.5rem;
-    }
     .blog-post-item {
       background: var(--bg-elevated);
       padding: 2.5rem;
-      border-radius: 20px;
-      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
       box-shadow: var(--shadow-soft);
-      transition: all 0.4s var(--ease-out-quint);
-      backdrop-filter: blur(15px) saturate(180%);
-      -webkit-backdrop-filter: blur(15px) saturate(180%);
-      position: relative;
-      overflow: hidden;
+      transition: transform 0.4s var(--ease-out-quint), box-shadow 0.4s var(--ease-out-quint);
+      text-decoration: none;
+      display: block;
+      color: inherit;
     }
-    .blog-post-item::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%),
-                                   rgba(255,255,255,0.1) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s var(--ease-out-quint);
-      pointer-events: none;
-      transform: scale(0.9);
-    }
-    .blog-post-item:hover::before {
-      opacity: 1;
-      transform: scale(1);
+     .light-mode .blog-post-item {
+      border: 1px solid #e5e5e5;
     }
     .blog-post-item:hover {
       transform: translateY(-10px);
       box-shadow: var(--shadow-medium);
-      background: var(--bg-elevated-hover);
-      border-color: rgba(var(--accent-blue-rgb), 0.7);
     }
     .blog-post-item h3 {
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 1rem;
       line-height: 1.3;
     }
-    .blog-post-item h3 a {
-      text-decoration: none;
-      color: inherit;
-      transition: color 0.3s var(--ease-in-out-cubic);
-    }
-    .blog-post-item h3 a:hover {
-      color: var(--accent-blue);
-    }
-    .blog-post-meta {
+    .blog-post-item .blog-post-meta {
       font-size: 0.95rem;
       color: var(--text-tertiary);
       margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
     }
-    .blog-post-meta .date {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .blog-post-meta .date i {
-      color: var(--text-tertiary);
-    }
-    .blog-post-meta .category-tag {
-      display: inline-flex;
-      align-items: center;
-      background-color: rgba(var(--accent-blue-rgb), 0.18);
-      color: var(--accent-blue);
-      padding: 0.4rem 0.9rem;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 0.85rem;
-    }
-    .blog-post-meta .category-tag i {
-      margin-right: 0.4rem;
-      font-size: 0.75rem;
-    }
-    .blog-post-excerpt {
+    .blog-post-item .blog-post-excerpt {
       font-size: 1.05rem;
       color: var(--text-secondary);
-      margin-bottom: 1.8rem;
-      line-height: 1.6;
     }
-    .read-more-link {
-      display: inline-flex;
-      align-items: center;
-      color: var(--accent-blue);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s var(--ease-in-out-cubic);
+    .blog-post-item .read-more-link {
+        display: inline-block;
+        color: var(--accent-blue);
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        transition: transform 0.2s ease;
     }
-    .read-more-link:hover {
-      opacity: 0.85;
-      text-decoration: underline;
-      transform: translateX(4px);
+    .blog-post-item:hover .read-more-link {
+        transform: translateX(5px);
     }
-    .read-more-link::after {
-      content: ' →';
-      margin-left: 0.5rem;
-      transition: transform 0.2s var(--ease-in-out-cubic);
-    }
-    .read-more-link:hover::after {
-      transform: translateX(4px);
-    }
+
     /* --------------------------------------------------- */
-    /* BOTONES CTA MEJORADOS */
+    /* BOTONES CTA ESTILO APPLE */
     /* --------------------------------------------------- */
     .cta-button {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
+      gap: 0.75rem;
       background-color: var(--accent-blue);
       color: #fff;
-      padding: 1.2rem 2.5rem;
+      padding: 0.9rem 1.8rem;
       text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1.05rem;
-      transition: all 0.3s var(--ease-in-out-cubic);
-      margin: 0.75rem;
+      border-radius: 999px; /* Botón píldora */
+      font-weight: 500;
+      font-size: 1rem;
       border: 1px solid transparent;
-      box-shadow: 0 8px 25px rgba(var(--accent-blue-rgb), 0.35);
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    .cta-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(255,255,255,0.15) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease-out;
-      z-index: -1;
-    }
-    .cta-button:hover::before {
-      opacity: 1;
+      transition: background-color 0.3s ease;
     }
     .cta-button:hover {
-      background-color: color-mix(in srgb, var(--accent-blue) 80%, #fff 20%);
-      transform: translateY(-6px) scale(1.05);
-      box-shadow: 0 12px 30px rgba(var(--accent-blue-rgb), 0.45);
+      background-color: #0077ED;
     }
     .cta-button.secondary {
-      background-color: rgba(var(--accent-blue-rgb), 0.22);
+      background-color: var(--bg-elevated);
       color: var(--accent-blue);
-      border: 1px solid rgba(var(--accent-blue-rgb), 0.4);
-      box-shadow: none;
+      border: 1px solid var(--accent-blue);
     }
-    .cta-button.secondary:hover {
-      background-color: rgba(var(--accent-blue-rgb), 0.3);
-      transform: translateY(-6px) scale(1.05);
-      color: var(--accent-blue);
-      border-color: rgba(var(--accent-blue-rgb), 0.6);
+     .cta-button.secondary:hover {
+      background-color: rgba(var(--accent-blue-rgb), 0.1);
     }
     .contact-links-container {
       text-align: center;
@@ -635,99 +408,42 @@
       justify-content: center;
       gap: 1rem;
     }
-    .qr-code-container {
-      text-align: center;
-      margin-top: 4rem;
-      padding: 2.5rem;
-      background-color: var(--bg-elevated);
-      border-radius: 20px;
-      border: 1px solid var(--border-subtle);
-      max-width: 380px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(15px) saturate(180%);
-      -webkit-backdrop-filter: blur(15px) saturate(180%);
-    }
-    .qr-code-container p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-    .qr-code-container img {
-      width: 200px;
-      height: 200px;
-      border-radius: 12px;
-      border: 3px solid var(--border-strong);
-      background-color: white;
-      padding: 8px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
     /* --------------------------------------------------- */
-    /* FOOTER MEJORADO */
+    /* FOOTER */
     /* --------------------------------------------------- */
     footer {
       text-align: center;
-      padding: 4rem 1rem 3rem;
-      font-size: 0.95rem;
+      padding: 5rem 1rem 3rem;
+      font-size: 0.9rem;
       color: var(--text-tertiary);
       border-top: 1px solid var(--border-subtle);
       margin-top: 6rem;
     }
-    .social-links {
-      margin-bottom: 2rem;
-    }
+    .social-links { margin-bottom: 2rem; }
     .social-links a {
-      color: var(--text-secondary);
-      font-size: 1.8rem;
-      margin: 0 1rem;
-      transition: all 0.3s var(--ease-in-out-cubic);
-      display: inline-block;
+      color: var(--text-tertiary);
+      font-size: 1.5rem;
+      margin: 0 0.75rem;
+      transition: all 0.3s ease;
     }
     .social-links a:hover {
-      color: var(--accent-blue);
-      transform: translateY(-4px) scale(1.2);
+      color: var(--text-secondary);
+      transform: scale(1.1);
     }
+    
     /* --------------------------------------------------- */
-    /* RESPONSIVE DESIGN MEJORADO */
+    /* RESPONSIVE */
     /* --------------------------------------------------- */
     @media (max-width: 767px) {
-      .theme-switcher {
-        top: 1rem;
-        right: 1rem;
-      }
-      .theme-toggle__label {
-        width: 45px;
-        height: 45px;
-      }
-      nav {
-        padding: 0.8rem 1rem;
-      }
-      nav ul {
-        gap: 0.5rem;
-      }
-      nav a {
-        font-size: 0.85rem;
-        padding: 0.4rem 0.6rem;
-      }
-      header {
-        padding: 6rem 1rem 3rem;
-      }
-      .card, .blog-post-item {
-        padding: 2rem;
-      }
-      .card h3, .blog-post-item h3 {
-        font-size: 1.5rem;
-      }
-      .cta-button {
-        padding: 1rem 2rem;
-        font-size: 1rem;
-        width: 100%;
-        justify-content: center;
-      }
-      .contact-links-container {
-        gap: 0.5rem;
-      }
+      .theme-switcher { top: 1rem; right: 1rem; }
+      nav { padding: 0.8rem 1rem; }
+      nav ul { gap: 1rem; }
+      nav a { padding: 0.4rem 0.5rem; }
+      header { padding: 6rem 1rem 4rem; }
+      .container { padding: 4rem 1rem; }
+      .card, .blog-post-item { padding: 1.8rem; }
+      .cta-button { width: 100%; padding: 1rem 2rem; }
+      .contact-links-container { gap: 0.75rem; }
     }
   </style>
 </head>
@@ -750,100 +466,84 @@
     </label>
   </div>
 
-  <header class="animate-on-scroll">
-    <h1>Juan Fernández</h1>
-    <p>Vendor Lead en Lyft. Creo soluciones de IA con visión de futuro y escribo sobre tecnología, cultura y el arte de lo posible.</p>
+  <header>
+    <h1 class="animate-on-scroll">Juan Fernández</h1>
+    <p class="animate-on-scroll" style="transition-delay: 0.1s;">Innovación en la intersección de la IA y la experiencia humana.</p>
   </header>
 
   <main>
     <section id="proyectos" class="container">
-      <h2 class="section-title animate-on-scroll">Proyectos Destacados</h2>
+      <h2 class="section-title animate-on-scroll">Proyectos</h2>
+      <p class="section-subtitle animate-on-scroll">Una selección de trabajos que exploran nuevas fronteras en machine learning, automatización y diseño de productos inteligentes.</p>
+      
       <div class="grid two-cols">
-
         <div class="card animate-on-scroll" style="transition-delay: 0.2s;">
-          <h3><i class="fas fa-robot"></i>Centinela IA</h3>
-          <div class="project-meta"><i class="fas fa-cogs"></i>Análisis de Soporte</div>
+          <h3>Centinela IA</h3>
+          <p class="project-meta">Análisis Inteligente de Soporte</p>
           <p>Plataforma de IA que analiza y clasifica tickets de soporte en tiempo real usando NLP, reduciendo el tiempo de respuesta en un 40%.</p>
           <ul class="project-details">
-            <li><strong>Tecnología:</strong> <strong>Python, TensorFlow, Flask, Docker</strong></li>
-            <li><strong>Impacto:</strong> Optimización de flujos de trabajo y mejora en la satisfacción del cliente.</li>
-            <li><strong>Demo:</strong> <a href="#" target="_blank">Ver en vivo <i class="fas fa-external-link-alt"></i></a></li>
+            <li><strong>Tecnología:</strong> Python, TensorFlow, FastAPI, Docker</li>
+            <li><strong>Enlace:</strong> <a href="#" target="_blank">Ver estudio de caso</a></li>
           </ul>
         </div>
-
         <div class="card animate-on-scroll" style="transition-delay: 0.3s;">
-          <h3><i class="fas fa-chart-line"></i>QuantumLeap</h3>
-          <div class="project-meta"><i class="fas fa-bullseye"></i>Motor de Recomendación</div>
+          <h3>QuantumLeap</h3>
+          <p class="project-meta">Motor de Recomendación Personalizada</p>
           <p>Motor de personalización para e-commerce que aumenta la conversión un 18% mediante el uso de reinforcement learning.</p>
-          <ul class="project-details">
-            <li><strong>Tecnología:</strong> <strong>PyTorch, FastAPI, Kubernetes, Scikit-learn</strong></li>
-            <li><strong>Resultado:</strong> Aumento significativo del valor de vida del cliente (CLV).</li>
-            <li><strong>Código:</strong> <a href="#" target="_blank">Repositorio en GitHub <i class="fab fa-github"></i></a></li>
+           <ul class="project-details">
+            <li><strong>Tecnología:</strong> PyTorch, Kubernetes, Scikit-learn</li>
+            <li><strong>Código:</strong> <a href="#" target="_blank">Repositorio en GitHub</a></li>
           </ul>
         </div>
       </div>
     </section>
 
     <section id="blog" class="container">
-      <h2 class="section-title animate-on-scroll">Bitácora Personal</h2>
+      <h2 class="section-title animate-on-scroll">Bitácora</h2>
+      <p class="section-subtitle animate-on-scroll">Ideas, reflexiones y análisis sobre el futuro de la tecnología y su impacto en la cultura y los negocios.</p>
+      
       <div class="blog-post-list">
-
-        <article class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
-          <h3><a href="#">El Futuro es Híbrido: Humanos y IA en Sinergia Creativa</a></h3>
-          <div class="blog-post-meta">
-            <span class="date"><i class="fas fa-calendar-alt"></i>15 de Junio, 2025</span>
-            <span class="category-tag"><i class="fas fa-lightbulb"></i>Innovación</span>
-          </div>
-          <p class="blog-post-excerpt">Exploro cómo la colaboración entre la intuición humana y la precisión de la IA está desbloqueando nuevos horizontes en campos que van desde el arte hasta la ingeniería de software.</p>
-          <a href="#" class="read-more-link">Leer artículo completo</a>
-        </article>
-
-        <article class="blog-post-item animate-on-scroll" style="transition-delay: 0.3s;">
-          <h3><a href="#">Más Allá del Prompt: Comprendiendo el "Razonamiento" de los LLMs</a></h3>
-          <div class="blog-post-meta">
-            <span class="date"><i class="fas fa-calendar-alt"></i>28 de Mayo, 2025</span>
-            <span class="category-tag"><i class="fas fa-brain"></i>Inteligencia Artificial</span>
-          </div>
-          <p class="blog-post-excerpt">Un análisis profundo sobre las arquitecturas Transformer y las técnicas emergentes que permiten a los modelos de lenguaje realizar tareas complejas de razonamiento y planificación.</p>
-          <a href="#" class="read-more-link">Leer artículo completo</a>
-        </article>
+        <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.2s;">
+          <h3>El Futuro es Híbrido: Humanos y IA en Sinergia Creativa</h3>
+          <p class="blog-post-meta">15 de Junio, 2025 · Innovación</p>
+          <p class="blog-post-excerpt">Exploro cómo la colaboración entre la intuición humana y la precisión de la IA está desbloqueando nuevos horizontes...</p>
+          <span class="read-more-link">Leer más →</span>
+        </a>
+        <a href="#" class="blog-post-item animate-on-scroll" style="transition-delay: 0.3s;">
+          <h3>Más Allá del Prompt: Comprendiendo el "Razonamiento" de los LLMs</h3>
+          <p class="blog-post-meta">28 de Mayo, 2025 · Inteligencia Artificial</p>
+          <p class="blog-post-excerpt">Un análisis profundo sobre las arquitecturas Transformer y las técnicas emergentes que permiten a los modelos de lenguaje realizar tareas complejas...</p>
+          <span class="read-more-link">Leer más →</span>
+        </a>
       </div>
     </section>
 
     <section id="contacto" class="container">
       <h2 class="section-title animate-on-scroll">Hablemos</h2>
-      <p class="animate-on-scroll" style="text-align: center; max-width: 650px; margin: 0 auto 2rem; color: var(--text-secondary); font-size: 1.1rem;">
-        Siempre estoy abierto a discutir nuevas ideas, colaborar en proyectos innovadores o simplemente conectar con otras personas apasionadas por la tecnología.
-      </p>
+      <p class="section-subtitle animate-on-scroll">Estoy disponible para colaboraciones, consultoría o una simple charla sobre ideas que puedan cambiar el futuro. No dudes en contactarme.</p>
+      
       <div class="contact-links-container animate-on-scroll" style="transition-delay: 0.2s;">
         <a href="mailto:juan.fernandez.demo@email.com" class="cta-button">
-          <i class="fas fa-paper-plane"></i>Enviar un Email
+          <i class="fas fa-paper-plane"></i> Enviar un Email
         </a>
         <a href="#" class="cta-button secondary">
-          <i class="fas fa-calendar-check"></i>Agendar Reunión
+          <i class="fab fa-linkedin"></i> Conectar en LinkedIn
         </a>
-      </div>
-
-      <div class="qr-code-container animate-on-scroll" style="transition-delay: 0.3s;">
-        <p>O escanea el código para añadir mi contacto directamente a tu agenda.</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BEGIN:VCARD%0AVERSION:3.0%0AFN:Juan%20Fernandez%0AORG:Lyft%0ATITLE:Vendor%20Lead%0ATEL;TYPE=work,voice:(123)%20456-7890%0AEMAIL:juan.fernandez.demo@email.com%0AURL:https://www.linkedin.com/in/juanfernandez%0AEND:VCARD" alt="Código QR de Contacto">
       </div>
     </section>
   </main>
 
   <footer>
     <div class="social-links">
-      <a href="#" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
       <a href="#" aria-label="GitHub" target="_blank"><i class="fab fa-github"></i></a>
       <a href="#" aria-label="Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
       <a href="#" aria-label="Medium" target="_blank"><i class="fab fa-medium"></i></a>
     </div>
-    <p>&copy; 2025 Juan Fernández. Diseñado y construido con café y código.</p>
+    <p>Diseñado con inspiración en Cupertino. <br>&copy; 2025 Juan Fernández.</p>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-
       // --- MANEJO DEL CAMBIO DE TEMA ---
       const themeToggle = document.getElementById('theme-toggle');
       const docElement = document.documentElement;
@@ -864,34 +564,19 @@
         }
       });
 
-
       // --- ANIMACIONES AL DESPLAZAR (SCROLL) ---
       const animatedElements = document.querySelectorAll('.animate-on-scroll');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // Opcional: para que la animación ocurra solo una vez
           }
         });
       }, {
-        threshold: 0.1
+        threshold: 0.15
       });
-
       animatedElements.forEach(el => observer.observe(el));
-
-
-      // --- EFECTO DE BRILLO EN TARJETAS ---
-      const interactiveCards = document.querySelectorAll('.card, .blog-post-item');
-      interactiveCards.forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--shine-x', `${x}px`);
-          card.style.setProperty('--shine-y', `${y}px`);
-        });
-      });
-
 
       // --- SEGUIMIENTO DE SECCIÓN ACTIVA EN LA NAVEGACIÓN ---
       const sections = document.querySelectorAll('section');
@@ -908,11 +593,9 @@
           }
         });
       }, {
-        rootMargin: '-30% 0px -70% 0px' // Activa cuando la sección está en el centro vertical
+        rootMargin: '-40% 0px -60% 0px'
       });
-
       sections.forEach(section => navObserver.observe(section));
-
     });
   </script>
 
