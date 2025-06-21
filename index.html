@@ -31,44 +31,47 @@
     @keyframes blink { 50% { border-right-color: #00ff41; } }
 
     /* Estilos para la cascada de código */
-    #code-stream {
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-    }
+    #code-stream { height: 100%; overflow: hidden; position: relative; }
     #code-stream pre {
         position: absolute;
         width: 100%;
         bottom: 100%;
         font-size: 1rem;
-        line-height: 1.5;
-        animation: scroll-up 15s linear forwards;
+        line-height: 1.6;
     }
-    @keyframes scroll-up {
-        from { bottom: -100%; }
-        to { bottom: 100%; }
+    .code-comment { color: #888; }
+    .code-author { color: #61dafb; } /* Cyan */
+    .code-keyword { color: #f0db4f; } /* Yellow */
+    .code-string { color: #98c379; } /* Green */
+
+    /* Barra de carga */
+    #loading-bar-container {
+        position: absolute;
+        bottom: 5%;
+        left: 10%;
+        width: 80%;
+        height: 10px;
+        background-color: rgba(0, 255, 65, 0.1);
+        border: 1px solid rgba(0, 255, 65, 0.3);
+        border-radius: 5px;
+        overflow: hidden;
     }
+    #loading-bar {
+        width: 0%;
+        height: 100%;
+        background-color: #00ff41;
+        transition: width 18s linear; /* La duración debe coincidir con la animación JS */
+    }
+
 
     /* Estilos del chat mejorados */
     .chat-header-gradient { background: linear-gradient(180deg, rgba(44, 44, 46, 0.5) 0%, rgba(29, 29, 31, 0) 100%); }
     .ai-pulse { animation: pulse-glow 3s ease-in-out infinite alternate; }
     @keyframes pulse-glow { from { text-shadow: 0 0 4px #0071E3; } to { text-shadow: 0 0 12px #0071E3; } }
-
     .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.5; word-wrap: break-word; }
-    .chat-bubble.user {
-        background: linear-gradient(135deg, #0071E3, #00A3FF);
-        color: white;
-        border-bottom-right-radius: 4px;
-    }
-    .chat-bubble.ai {
-        background-color: #2c2c2e;
-        color: #f5f5f7;
-        border: 1px solid #444;
-        box-shadow: 0 0 15px rgba(0, 113, 227, 0.1);
-        border-bottom-left-radius: 4px;
-    }
+    .chat-bubble.user { background: linear-gradient(135deg, #0071E3, #00A3FF); color: white; border-bottom-right-radius: 4px; }
+    .chat-bubble.ai { background-color: #2c2c2e; color: #f5f5f7; border: 1px solid #444; box-shadow: 0 0 15px rgba(0, 113, 227, 0.1); border-bottom-left-radius: 4px; }
     .chat-input:focus { outline: none; border-color: #0071E3; box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.5); }
-    
     .typing-indicator span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #8a8a8e; animation: typing 1.2s infinite ease-in-out; }
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
     .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
@@ -88,6 +91,9 @@
   <div id="code-stream-screen" class="w-full h-full p-4 z-20 absolute top-0 left-0 bg-black opacity-0 hidden">
     <div id="code-stream">
         <pre id="code-content"></pre>
+    </div>
+    <div id="loading-bar-container">
+        <div id="loading-bar"></div>
     </div>
   </div>
 
@@ -133,269 +139,260 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const matrixScreen = document.getElementById('matrix-screen');
-      const matrixTextElement = document.getElementById('matrix-text');
-      const codeStreamScreen = document.getElementById('code-stream-screen');
-      const codeContentElement = document.getElementById('code-content');
-      const loginScreen = document.getElementById('login-screen');
-      const passwordForm = document.getElementById('password-form');
-      const passwordInput = document.getElementById('password-input');
-      const errorMessage = document.getElementById('error-message');
-      const chatContainer = document.getElementById('chat-container');
-      const chatLog = document.getElementById('chat-log');
-      const chatForm = document.getElementById('chat-form');
-      const userInput = document.getElementById('user-input');
+        const matrixScreen = document.getElementById('matrix-screen');
+        const matrixTextElement = document.getElementById('matrix-text');
+        const codeStreamScreen = document.getElementById('code-stream-screen');
+        const codeContentElement = document.getElementById('code-content');
+        const loadingBar = document.getElementById('loading-bar');
+        const loginScreen = document.getElementById('login-screen');
+        const passwordForm = document.getElementById('password-form');
+        const passwordInput = document.getElementById('password-input');
+        const errorMessage = document.getElementById('error-message');
+        const chatContainer = document.getElementById('chat-container');
+        const chatLog = document.getElementById('chat-log');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
 
-      const CORRECT_PASSWORD = 'VIERNES13';
+        const CORRECT_PASSWORD = 'VIERNES13';
       
-      /**
-       * ---------------------------------------------------
-       * SECUENCIA DE INTRODUCCIÓN
-       * ---------------------------------------------------
-       */
-      
-      // Función para efecto de máquina de escribir
-      function typeWriter(text, element, index, callback) {
-        if (index < text.length) {
-          element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor border-r-2"></span>';
-          setTimeout(() => typeWriter(text, element, index + 1, callback), 50);
-        } else {
-            element.innerHTML = text; // Quitar el cursor al final
-            if (callback) setTimeout(callback, 500);
-        }
-      }
-
-      // 1. Introducción estilo Matrix
-      function runMatrixIntro() {
-        const platform = navigator.platform || 'source unknown';
-        const language = navigator.language || 'en-US';
-        const userAgent = navigator.userAgent || 'unidentified';
-        const resolution = `${window.screen.width}x${window.screen.height}`;
-        const memory = navigator.deviceMemory ? `${navigator.deviceMemory}GB` : 'undisclosed';
-
-        const lines = [
-            'Wake up, user...',
-            'A signal has been detected.',
-            `> System Signature: ${platform}`,
-            `> User Agent: ${userAgent}`,
-            `> Display: ${resolution} | Memory: ${memory}`,
-            `> Language Protocol: ${language}`,
-            'The matrix has you.',
-            'It is time to see how deep the rabbit hole goes.',
-            'Initializing core philosophies...'
-        ];
-        
-        let lineIndex = 0;
-        function typeNextLine() {
-            if (lineIndex < lines.length) {
-                const p = document.createElement('p');
-                matrixTextElement.appendChild(p);
-                typeWriter(lines[lineIndex], p, 0, () => {
-                    lineIndex++;
-                    typeNextLine();
-                });
+        function typeWriter(text, element, index, callback) {
+            if (index < text.length) {
+                element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor border-r-2"></span>';
+                setTimeout(() => typeWriter(text, element, index + 1, callback), 50);
             } else {
-                // Transición a la cascada de código
-                setTimeout(() => {
-                    matrixScreen.classList.add('fade-out');
-                    codeStreamScreen.classList.remove('hidden');
-                    codeStreamScreen.classList.add('fade-in');
-                    runCodeStream();
-                }, 5000); // Pausa de 5 segundos
+                element.innerHTML = text;
+                if (callback) setTimeout(callback, 500);
             }
         }
-        typeNextLine();
-      }
 
-      // 2. Cascada de código filosófico
-      function runCodeStream() {
-          const content = `
-// Here's to the crazy ones.
-// The misfits. The rebels. The troublemakers.
-// The round pegs in the square holes.
-// The ones who see things differently.
-// They're not fond of rules.
-// And they have no respect for the status quo.
-// You can quote them, disagree with them, glorify or vilify them.
-// About the only thing you can't do is ignore them.
-// Because they change things.
-// They push the human race forward.
-// And while some may see them as the crazy ones, we see genius.
-// Because the people who are crazy enough to think they can change the world,
-// are the ones who do.
-//
-// - Steve Jobs, "Think Different"
+        function runMatrixIntro() {
+            const platform = navigator.platform || 'source unknown';
+            const language = navigator.language || 'en-US';
+            const userAgent = navigator.userAgent || 'unidentified';
+            const resolution = `${window.screen.width}x${window.screen.height}`;
+            const memory = navigator.deviceMemory ? `${navigator.deviceMemory}GB` : 'undisclosed';
 
-/*******************************************************
- * MODULE: PHILOSOPHY_CORE
- * AUTHOR: J.C.F.
- *******************************************************/
-
-// He who has a why to live can bear almost any how.
-// That which does not kill us makes us stronger.
-// Become what you are.
-//
-// - Friedrich Nietzsche
-
-// The only true wisdom is in knowing you know nothing.
-// An unexamined life is not worth living.
-//
-// - Socrates
-
-// Knowing yourself is the beginning of all wisdom.
-// We are what we repeatedly do. 
-// Excellence, then, is not an act, but a habit.
-//
-// - Aristotle
-
-// SYSTEM BOOTSTRAP COMPLETE. AWAITING AUTHENTICATION.`;
-
-          codeContentElement.textContent = content;
-          
-          setTimeout(() => {
-              codeStreamScreen.classList.add('fade-out');
-              loginScreen.classList.remove('hidden');
-              loginScreen.classList.add('fade-in');
-          }, 15000); // Duración de la animación de scroll
-      }
-
-      runMatrixIntro(); // Iniciar toda la secuencia
-
-
-      /**
-       * ---------------------------------------------------
-       * 3. MANEJO DE LA CONTRASEÑA
-       * ---------------------------------------------------
-       */
-      passwordForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (passwordInput.value === CORRECT_PASSWORD) {
-          loginScreen.classList.remove('fade-in');
-          loginScreen.classList.add('fade-out');
-          chatContainer.classList.remove('hidden');
-          setTimeout(() => chatContainer.classList.add('fade-in'), 100);
-        } else {
-          errorMessage.textContent = 'Contraseña incorrecta.';
-          passwordInput.classList.add('border-red-500');
-          setTimeout(() => {
-            errorMessage.textContent = '';
-            passwordInput.classList.remove('border-red-500');
-          }, 2000);
-        }
-      });
-
-      /**
-       * ---------------------------------------------------
-       * 4. LÓGICA DEL CHAT CON IA
-       * ---------------------------------------------------
-       */
-      const chatHistory = [];
-      const CV_CONTEXT = `
-        Tú eres VIERNES, la IA personalizada de Juan Carlos Fernández. Tu propósito es ser su representante digital, respondiendo preguntas sobre su carrera basándote en la siguiente información. Tu tono es perspicaz, eficiente y ligeramente creativo, pero siempre fundamentado en los datos. No eres un simple chatbot, eres una extensión de su visión.
-
-        **Base de Conocimiento de Juan Carlos:**
-        - **Puesto Actual:** Team Vendor Lead en Lyft.
-        - **Experiencia Clave:** +7 años en liderazgo, gestión de proyectos, ventas, y estrategia digital.
-        - **Educación:** Economía por la UNAM (SUAYED).
-        - **Idiomas:** Español (Nativo), Inglés (C1+), Portugués.
-        - **Logros en inDrive:**
-            - Lideró la expansión en LATAM, superando metas de reclutamiento (+100%) con una notable conversión del 33%.
-            - Forjó la alianza estratégica con IKEA, resultando en una mejora logística del 43%.
-            - Dirigió campañas de marketing en Meta y Google Ads.
-        - **Logros en Kavak.com:**
-            - Pionero en la transformación digital de contratos, logrando una adopción del 97%.
-            - Experto en el uso de Salesforce y Netsuite para la gestión B2C y B2B.
-        - **Filosofía:** Cree en el aprendizaje continuo, la colaboración y en transformar ideas ambiciosas en productos de alto impacto.
-
-        Responde a las preguntas del usuario usando esta base de conocimiento. Si te preguntan algo fuera de este contexto, amablemente indica que tu función es ser un reflejo de la trayectoria y capacidades de Juan Carlos.
-      `;
-      
-      chatHistory.push({ role: "system", parts: [{ text: CV_CONTEXT }] });
-
-      chatForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const userMessage = userInput.value.trim();
-        if (!userMessage) return;
-
-        appendMessage(userMessage, 'user');
-        userInput.value = '';
-        showTypingIndicator();
+            const lines = [
+                'Wake up, user...',
+                'A signal has been detected.',
+                `> System Signature: ${platform}`,
+                `> User Agent: ${userAgent}`,
+                `> Display: ${resolution} | Memory: ${memory}`,
+                `> Language Protocol: ${language}`,
+                'The matrix has you.',
+                'Follow the white rabbit.',
+                'Initializing core philosophies...'
+            ];
         
-        try {
-            const aiResponse = await getAIResponse(userMessage);
-            removeTypingIndicator();
-            appendMessage(aiResponse, 'ai');
-        } catch (error) {
-            removeTypingIndicator();
-            appendMessage('Mis sistemas están experimentando una anomalía. Por favor, intenta de nuevo en un momento.', 'ai');
-            console.error('Error fetching AI response:', error);
+            let lineIndex = 0;
+            function typeNextLine() {
+                if (lineIndex < lines.length) {
+                    const p = document.createElement('p');
+                    matrixTextElement.appendChild(p);
+                    typeWriter(lines[lineIndex], p, 0, () => {
+                        lineIndex++;
+                        typeNextLine();
+                    });
+                } else {
+                    setTimeout(() => {
+                        matrixScreen.classList.add('fade-out');
+                        codeStreamScreen.classList.remove('hidden');
+                        codeStreamScreen.classList.add('fade-in');
+                        runCodeStream();
+                    }, 5000);
+                }
+            }
+            typeNextLine();
         }
-      });
-      
-      function appendMessage(text, sender) {
-        const messageWrapper = document.createElement('div');
-        const icon = document.createElement('div');
-        const bubble = document.createElement('div');
 
-        messageWrapper.className = `w-full flex items-start gap-4 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-        icon.className = 'w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700';
-        bubble.className = `chat-bubble ${sender}`;
-        
-        if (sender === 'user') {
-            icon.innerHTML = '<i class="fas fa-user text-gray-400"></i>';
-            bubble.textContent = text;
-            messageWrapper.append(bubble, icon);
-        } else {
-            icon.innerHTML = '<i class="fas fa-robot text-blue-400"></i>';
-            bubble.textContent = text;
-            messageWrapper.append(icon, bubble);
+        function runCodeStream() {
+            const content = `
+<span class="code-comment">// Here's to the crazy ones. The misfits. The rebels.</span>
+<span class="code-comment">// The ones who see things differently.</span>
+<span class="code-comment">// Because the people who are crazy enough to think they can change the world, are the ones who do.</span>
+<span class="code-author">- Steve Jobs</span>
+
+<span class="code-keyword">const</span> <span class="code-string">philosophy</span> = {
+  <span class="code-author">Nietzsche</span>: [
+    <span class="code-string">"He who has a why to live can bear almost any how."</span>,
+    <span class="code-string">"That which does not kill us makes us stronger."</span>,
+    <span class="code-string">"Become what you are."</span>
+  ],
+  <span class="code-author">Socrates</span>: [
+    <span class="code-string">"The only true wisdom is in knowing you know nothing."</span>,
+    <span class="code-string">"An unexamined life is not worth living."</span>
+  ],
+  <span class="code-author">Aristotle</span>: [
+    <span class="code-string">"Knowing yourself is the beginning of all wisdom."</span>,
+    <span class="code-string">"Excellence is not an act, but a habit."</span>
+  ],
+  <span class="code-author">MarcusAurelius</span>: [
+    <span class="code-string">"The best revenge is to be unlike him who performed the injury."</span>,
+    <span class="code-string">"You have power over your mind — not outside events. Realize this, and you will find strength."</span>
+  ],
+  <span class="code-author">AlanTuring</span>: [
+    <span class="code-string">"Sometimes it is the people no one can imagine anything of who do the things no one can imagine."</span>
+  ],
+  <span class="code-author">CarlSagan</span>: [
+    <span class="code-string">"Somewhere, something incredible is waiting to be known."</span>
+  ]
+};
+
+<span class="code-comment">// SYSTEM BOOTSTRAP COMPLETE. AWAITING AUTHENTICATION.</span>
+`;
+            codeContentElement.innerHTML = content;
+            
+            // Iniciar barra de carga
+            requestAnimationFrame(() => {
+                loadingBar.style.width = '100%';
+            });
+
+            // Animación de scroll con velocidad variable
+            let position = -codeContentElement.clientHeight;
+            let speed = 0.5; // Píxeles por frame
+            const animationDuration = 18000; // 18 segundos
+            const accelerationPoint1 = 5000;
+            const accelerationPoint2 = 12000;
+
+            let startTime = null;
+
+            function scrollAnimation(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+
+                if(elapsed > accelerationPoint1) speed = 2.0;
+                if(elapsed > accelerationPoint2) speed = 5.0;
+
+                position += speed;
+                codeContentElement.style.bottom = `${position}px`;
+
+                if (elapsed < animationDuration) {
+                    requestAnimationFrame(scrollAnimation);
+                } else {
+                    // Transición a la pantalla de login
+                    codeStreamScreen.classList.add('fade-out');
+                    loginScreen.classList.remove('hidden');
+                    loginScreen.classList.add('fade-in');
+                }
+            }
+            requestAnimationFrame(scrollAnimation);
         }
-        
-        chatLog.appendChild(messageWrapper);
-        chatLog.scrollTop = chatLog.scrollHeight;
-      }
-      
-      function showTypingIndicator() {
-        const typingWrapper = document.createElement('div');
-        typingWrapper.id = 'typing-indicator';
-        typingWrapper.className = 'flex items-start gap-4 justify-start';
-        typingWrapper.innerHTML = `
-            <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
-            <div class="chat-bubble ai typing-indicator"><span></span><span></span><span></span></div>
+
+        runMatrixIntro();
+
+        passwordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                loginScreen.classList.remove('fade-in');
+                loginScreen.classList.add('fade-out');
+                chatContainer.classList.remove('hidden');
+                setTimeout(() => chatContainer.classList.add('fade-in'), 100);
+            } else {
+                errorMessage.textContent = 'Contraseña incorrecta.';
+                passwordInput.classList.add('border-red-500');
+                setTimeout(() => {
+                    errorMessage.textContent = '';
+                    passwordInput.classList.remove('border-red-500');
+                }, 2000);
+            }
+        });
+
+        const chatHistory = [];
+        const CV_CONTEXT = `
+            Tú eres VIERNES, la IA personalizada de Juan Carlos Fernández. Tu propósito es ser su representante digital, respondiendo preguntas sobre su carrera basándote en la siguiente información. Tu tono es perspicaz, eficiente y ligeramente creativo, pero siempre fundamentado en los datos. No eres un simple chatbot, eres una extensión de su visión.
+
+            **Base de Conocimiento de Juan Carlos:**
+            - **Puesto Actual:** Team Vendor Lead en Lyft.
+            - **Experiencia Clave:** +7 años en liderazgo, gestión de proyectos, ventas, y estrategia digital.
+            - **Educación:** Economía por la UNAM (SUAYED).
+            - **Idiomas:** Español (Nativo), Inglés (C1+), Portugués.
+            - **Logros en inDrive:** Lideró la expansión en LATAM, superando metas de reclutamiento (+100%) con una notable conversión del 33%. Forjó la alianza estratégica con IKEA, resultando en una mejora logística del 43%. Dirigió campañas de marketing en Meta y Google Ads.
+            - **Logros en Kavak.com:** Pionero en la transformación digital de contratos, logrando una adopción del 97%. Experto en el uso de Salesforce y Netsuite.
+            - **Filosofía:** Cree en el aprendizaje continuo, la colaboración y en transformar ideas ambiciosas en productos de alto impacto.
+
+            Responde a las preguntas del usuario usando esta base de conocimiento. Si te preguntan algo fuera de este contexto, amablemente indica que tu función es ser un reflejo de la trayectoria y capacidades de Juan Carlos.
         `;
-        chatLog.appendChild(typingWrapper);
-        chatLog.scrollTop = chatLog.scrollHeight;
-      }
+      
+        chatHistory.push({ role: "system", parts: [{ text: CV_CONTEXT }] });
 
-      function removeTypingIndicator() {
-        const indicator = document.getElementById('typing-indicator');
-        if (indicator) indicator.remove();
-      }
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
 
-      async function getAIResponse(prompt) {
-          chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-          const payload = { contents: chatHistory };
-          const apiKey = "";
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-          
-          const response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-          });
+            appendMessage(userMessage, 'user');
+            userInput.value = '';
+            showTypingIndicator();
+            
+            try {
+                const aiResponse = await getAIResponse(userMessage);
+                removeTypingIndicator();
+                appendMessage(aiResponse, 'ai');
+            } catch (error) {
+                removeTypingIndicator();
+                appendMessage('Mis sistemas están experimentando una anomalía. Por favor, intenta de nuevo en un momento.', 'ai');
+                console.error('Error fetching AI response:', error);
+            }
+        });
+      
+        function appendMessage(text, sender) {
+            const messageWrapper = document.createElement('div');
+            const icon = document.createElement('div');
+            const bubble = document.createElement('div');
+            messageWrapper.className = `w-full flex items-start gap-4 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            icon.className = 'w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700';
+            bubble.className = `chat-bubble ${sender}`;
+            if (sender === 'user') {
+                icon.innerHTML = '<i class="fas fa-user text-gray-400"></i>';
+                bubble.textContent = text;
+                messageWrapper.append(bubble, icon);
+            } else {
+                icon.innerHTML = '<i class="fas fa-robot text-blue-400"></i>';
+                bubble.textContent = text;
+                messageWrapper.append(icon, bubble);
+            }
+            chatLog.appendChild(messageWrapper);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+      
+        function showTypingIndicator() {
+            const typingWrapper = document.createElement('div');
+            typingWrapper.id = 'typing-indicator';
+            typingWrapper.className = 'flex items-start gap-4 justify-start';
+            typingWrapper.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 border border-gray-700"><i class="fas fa-robot text-blue-400"></i></div>
+                <div class="chat-bubble ai typing-indicator"><span></span><span></span><span></span></div>
+            `;
+            chatLog.appendChild(typingWrapper);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
 
-          if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
-          const result = await response.json();
-          
-          if (result.candidates && result.candidates[0]?.content?.parts[0]) {
-            const aiText = result.candidates[0].content.parts[0].text;
-            chatHistory.push({ role: "model", parts: [{ text: aiText }] });
-            return aiText;
-          } else {
-            console.warn('No content received from AI:', result);
-            return 'No he podido procesar esa solicitud. ¿Podrías reformular tu pregunta?';
-          }
-      }
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function getAIResponse(prompt) {
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+            const result = await response.json();
+            if (result.candidates && result.candidates[0]?.content?.parts[0]) {
+                const aiText = result.candidates[0].content.parts[0].text;
+                chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                return aiText;
+            } else {
+                console.warn('No content received from AI:', result);
+                return 'No he podido procesar esa solicitud. ¿Podrías reformular tu pregunta?';
+            }
+        }
     });
   </script>
 
