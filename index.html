@@ -7,164 +7,592 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    :root {
+      --matrix-green: #00ff41;
+      --cyber-blue: #00d4ff;
+      --glitch-pink: #ff0080;
+      --glitch-cyan: #00ffff;
+      --dark-bg: #0a0a0a;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: #000;
       color: #f5f5f7;
       overflow: hidden;
     }
-    .fade-in { animation: fadeIn 1s ease-in-out forwards; }
-    .fade-out { animation: fadeOut 1s ease-in-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; display: none; } }
 
-    /* Estilos para la intro "Matrix" y "Glitch" */
-    #matrix-screen, #glitch-screen {
-        font-family: 'Roboto Mono', monospace;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        background: #000;
-    }
-    #matrix-screen { z-index: 40; }
-    #glitch-screen { z-index: 30; }
-
-    #matrix-text { white-space: pre-wrap; color: #00ff41;}
-    .blinking-cursor { animation: blink 1s step-end infinite; }
-    @keyframes blink { 50% { border-right-color: #00ff41; } }
-
-    #glitch-container { padding: 1rem; word-wrap: break-word; white-space: pre-wrap; font-size: 0.8rem; line-height: 1.4; opacity: 0.7; }
-    .glitch-char { display: inline-block; animation: glitch-anim 1.5s infinite; }
-    @keyframes glitch-anim {
-        0%, 100% { text-shadow: none; opacity: 1; }
-        25% { text-shadow: -2px 0 #ff00c1, 2px 0 #00fff3; opacity: 0.8; }
-        50% { text-shadow: 2px 0 #ff00c1, -2px 0 #00fff3; opacity: 1; }
-        75% { text-shadow: -1px 0 #ff00c1, 1px 0 #00fff3; opacity: 0.8; }
-    }
-    .color-1 { color: #ff00c1; } /* Magenta */
-    .color-2 { color: #00fff3; } /* Cyan */
-    .color-3 { color: #f0db4f; } /* Yellow */
+    /* Transiciones mejoradas */
+    .fade-in { animation: fadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+    .fade-out { animation: fadeOut 1.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+    .slide-up { animation: slideUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     
-    #loading-bar-container { position: absolute; bottom: 5%; left: 10%; width: 80%; height: 4px; background-color: rgba(0, 255, 65, 0.1); border: 1px solid rgba(0, 255, 65, 0.3); border-radius: 5px; overflow: hidden; }
-    #loading-bar { width: 0%; height: 100%; background-color: #00ff41; transition: width 8s linear; }
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(20px) scale(0.95); } 
+      to { opacity: 1; transform: translateY(0) scale(1); } 
+    }
+    @keyframes fadeOut { 
+      from { opacity: 1; transform: scale(1); } 
+      to { opacity: 0; transform: scale(0.9); } 
+    }
+    @keyframes slideUp { 
+      from { opacity: 0; transform: translateY(50px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
 
-    /* Estilos del chat MEJORADOS */
+    /* Efectos Matrix mejorados */
+    #matrix-screen {
+      font-family: 'Fira Code', monospace;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #001a00 0%, #000000 70%);
+      z-index: 50;
+    }
+
+    .matrix-rain {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .matrix-column {
+      position: absolute;
+      top: -100%;
+      color: var(--matrix-green);
+      font-size: 14px;
+      line-height: 1.2;
+      animation: matrix-fall 3s linear infinite;
+      text-shadow: 0 0 5px var(--matrix-green);
+    }
+
+    @keyframes matrix-fall {
+      to { top: 100vh; }
+    }
+
+    #matrix-text { 
+      white-space: pre-wrap; 
+      color: var(--matrix-green);
+      text-shadow: 0 0 10px var(--matrix-green);
+      font-size: clamp(0.8rem, 2vw, 1.2rem);
+      position: relative;
+      z-index: 10;
+    }
+    
+    .blinking-cursor { 
+      animation: blink 1s step-end infinite; 
+      border-right: 2px solid var(--matrix-green);
+    }
+    @keyframes blink { 
+      50% { border-right-color: transparent; } 
+    }
+
+    /* Efectos Glitch ultra mejorados */
+    #glitch-screen {
+      font-family: 'Fira Code', monospace;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(45deg, #000000, #1a001a, #001a1a, #000000);
+      background-size: 400% 400%;
+      animation: bg-shift 5s ease infinite;
+      z-index: 40;
+    }
+
+    @keyframes bg-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    #glitch-container { 
+      padding: 2rem; 
+      word-wrap: break-word; 
+      white-space: pre-wrap; 
+      font-size: clamp(0.7rem, 1.5vw, 1rem);
+      line-height: 1.6; 
+      opacity: 0.9;
+      position: relative;
+      z-index: 2;
+    }
+
+    .glitch-char { 
+      display: inline-block; 
+      animation: glitch-intense 0.1s infinite linear;
+    }
+
+    @keyframes glitch-intense {
+      0% { 
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+      }
+      10% { 
+        transform: translate(-2px, 2px);
+        filter: hue-rotate(90deg);
+      }
+      20% { 
+        transform: translate(-1px, -1px);
+        filter: hue-rotate(180deg);
+      }
+      30% { 
+        transform: translate(1px, 2px);
+        filter: hue-rotate(270deg);
+      }
+      40% { 
+        transform: translate(1px, -1px);
+        filter: hue-rotate(360deg);
+      }
+      50% { 
+        transform: translate(-1px, 2px);
+        filter: hue-rotate(90deg);
+      }
+      60% { 
+        transform: translate(-1px, 1px);
+        filter: hue-rotate(180deg);
+      }
+      70% { 
+        transform: translate(1px, 1px);
+        filter: hue-rotate(270deg);
+      }
+      80% { 
+        transform: translate(1px, -1px);
+        filter: hue-rotate(45deg);
+      }
+      90% { 
+        transform: translate(-1px, -1px);
+        filter: hue-rotate(135deg);
+      }
+      100% { 
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+      }
+    }
+
+    .color-1 { color: var(--glitch-pink); text-shadow: 0 0 10px var(--glitch-pink); }
+    .color-2 { color: var(--glitch-cyan); text-shadow: 0 0 10px var(--glitch-cyan); }
+    .color-3 { color: #f0db4f; text-shadow: 0 0 10px #f0db4f; }
+    .color-4 { color: #ff6b6b; text-shadow: 0 0 10px #ff6b6b; }
+
+    /* Barra de carga futurista */
+    #loading-bar-container { 
+      position: absolute; 
+      bottom: 8%; 
+      left: 10%; 
+      width: 80%; 
+      height: 8px; 
+      background: linear-gradient(90deg, rgba(0,255,65,0.1), rgba(0,212,255,0.1));
+      border: 2px solid rgba(0,255,65,0.3); 
+      border-radius: 10px; 
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,255,65,0.2);
+    }
+
+    #loading-bar { 
+      width: 0%; 
+      height: 100%; 
+      background: linear-gradient(90deg, var(--matrix-green), var(--cyber-blue));
+      transition: width 8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 0 15px rgba(0,255,65,0.6);
+      position: relative;
+    }
+
+    #loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, white, transparent);
+      animation: loading-shine 2s infinite;
+    }
+
+    @keyframes loading-shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Pantalla de login mejorada */
+    #login-screen {
+      background: radial-gradient(ellipse at center, #001122 0%, #000000 70%);
+    }
+
+    .ai-pulse {
+      animation: ai-pulse 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes ai-pulse {
+      from { 
+        opacity: 0.7; 
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px #007bff);
+      }
+      to { 
+        opacity: 1; 
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px #007bff);
+      }
+    }
+
+    /* Chat mejorado con efectos glassmorphism */
     #chat-screen {
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 25%, #16213e 50%, #0f3460 75%, #000000 100%);
+      background-size: 400% 400%;
+      animation: gradient-flow 15s ease infinite;
     }
-    .animated-bg {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #020024 0%, #090979 35%, #00d4ff 100%);
-        animation: gradient-animation 20s ease infinite;
-        background-size: 400% 400%;
-        z-index: 0;
-    }
-    @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    
-    .chat-window {
-        width: 90%;
-        max-width: 800px;
-        height: 90vh;
-        max-height: 900px;
-        background: rgba(10, 10, 10, 0.65);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 24px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-        z-index: 10;
-        animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-    #chat-log { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
-    #chat-log::-webkit-scrollbar { width: 6px; }
+    @keyframes gradient-flow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .chat-window {
+      width: 95%;
+      max-width: 900px;
+      height: 95vh;
+      max-height: 950px;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 2px solid rgba(0, 123, 255, 0.2);
+      border-radius: 28px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      animation: chat-entrance 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes chat-entrance { 
+      from { 
+        transform: scale(0.8) translateY(50px); 
+        opacity: 0; 
+      } 
+      to { 
+        transform: scale(1) translateY(0); 
+        opacity: 1; 
+      } 
+    }
+
+    /* Header del chat con efectos */
+    .chat-header {
+      background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 255, 255, 0.05));
+      border-bottom: 1px solid rgba(0, 123, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chat-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: header-shine 3s infinite;
+    }
+
+    @keyframes header-shine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    #chat-log { 
+      scrollbar-width: thin; 
+      scrollbar-color: rgba(0,123,255,0.3) transparent; 
+    }
+    #chat-log::-webkit-scrollbar { width: 8px; }
     #chat-log::-webkit-scrollbar-track { background: transparent; }
-    #chat-log::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+    #chat-log::-webkit-scrollbar-thumb { 
+      background: linear-gradient(180deg, rgba(0,123,255,0.3), rgba(0,255,255,0.3));
+      border-radius: 10px; 
+    }
     
-    .chat-bubble { max-width: 80%; padding: 12px 20px; border-radius: 18px; line-height: 1.6; animation: message-pop-in 0.3s ease-out; }
-    @keyframes message-pop-in { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    .chat-bubble.user { background: linear-gradient(135deg, #0061c2, #007bff); color: white; border-bottom-right-radius: 4px; }
-    .chat-bubble.ai { background-color: rgba(44, 44, 46, 0.8); color: #e5e5e5; border-left: 3px solid #007bff; border-bottom-left-radius: 4px; }
-    .chat-bubble.ai strong { color: #00A3FF; }
-    .chat-bubble.ai ul { list-style-type: disc; padding-left: 20px; }
+    .chat-bubble { 
+      max-width: 85%; 
+      padding: 16px 24px; 
+      border-radius: 20px; 
+      line-height: 1.7; 
+      animation: message-slide-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes message-slide-in { 
+      from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.9); 
+      } 
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      } 
+    }
+
+    .chat-bubble.user { 
+      background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+      color: white; 
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .chat-bubble.ai { 
+      background: linear-gradient(135deg, rgba(44, 44, 46, 0.9) 0%, rgba(30, 30, 35, 0.9) 100%);
+      color: #e5e5e5; 
+      border-left: 4px solid #007bff; 
+      border-bottom-left-radius: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .chat-bubble.ai strong { 
+      color: #00d4ff; 
+      text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+    }
+
+    .chat-bubble::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+      pointer-events: none;
+    }
     
-    .suggestion-chips { transition: opacity 0.5s ease; }
-    .suggestion-chip { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.2s ease; }
-    .suggestion-chip:hover { background-color: rgba(255,255,255,0.1); border-color: #007bff; }
+    /* Chips de sugerencias mejoradas */
+    .suggestion-chips { 
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
     
-    .typing-indicator span { background-color: #6c6c72; animation: typing 1.2s infinite ease-in-out; }
+    .suggestion-chip { 
+      background: linear-gradient(135deg, rgba(0,123,255,0.1), rgba(0,255,255,0.05));
+      border: 1px solid rgba(0,123,255,0.2);
+      cursor: pointer; 
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .suggestion-chip::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .suggestion-chip:hover::before {
+      left: 100%;
+    }
+    
+    .suggestion-chip:hover { 
+      background: linear-gradient(135deg, rgba(0,123,255,0.2), rgba(0,255,255,0.1));
+      border-color: #007bff;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 5px 15px rgba(0,123,255,0.2);
+    }
+    
+    /* Indicador de escritura mejorado */
+    .typing-indicator span { 
+      background: linear-gradient(45deg, #6c6c72, #007bff);
+      animation: typing-bounce 1.4s infinite ease-in-out;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      margin: 0 2px;
+    }
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
     .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typing { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
+    
+    @keyframes typing-bounce { 
+      0%, 80%, 100% { 
+        opacity: 0.3; 
+        transform: scale(0.8) translateY(0); 
+      } 
+      40% { 
+        opacity: 1; 
+        transform: scale(1.2) translateY(-10px); 
+      } 
+    }
+
+    /* Input mejorado */
+    #chat-form input {
+      background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(30,30,35,0.3));
+      border: 2px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    #chat-form input:focus {
+      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(30,30,35,0.4));
+      border-color: #007bff;
+      box-shadow: 0 0 20px rgba(0,123,255,0.2);
+    }
+
+    #send-button {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #send-button:hover {
+      background: linear-gradient(135deg, #0056b3, #007bff);
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 5px 20px rgba(0,123,255,0.4);
+    }
+
+    /* Efectos de partículas */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, rgba(0,123,255,0.8) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.7;
+      }
+      50% { 
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive mejorado */
+    @media (max-width: 768px) {
+      .chat-window {
+        width: 98%;
+        height: 98vh;
+        border-radius: 20px;
+      }
+      
+      .chat-bubble {
+        max-width: 90%;
+        padding: 12px 18px;
+      }
+      
+      #matrix-text {
+        font-size: 0.8rem;
+      }
+      
+      .matrix-column {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body class="w-screen h-screen">
 
   <div id="matrix-screen" class="w-full h-full flex items-center justify-center p-4">
-    <div class="w-full max-w-3xl">
-        <pre id="matrix-text" class="text-sm md:text-lg"></pre>
+    <div class="matrix-rain"></div>
+    <div class="w-full max-w-4xl relative z-10">
+        <pre id="matrix-text" class="text-center"></pre>
     </div>
   </div>
 
   <div id="glitch-screen" class="hidden opacity-0">
+      <div class="particles"></div>
       <div id="glitch-container"></div>
       <div id="loading-bar-container">
           <div id="loading-bar"></div>
       </div>
   </div>
 
-  <div id="login-screen" class="w-full h-full flex flex-col items-center justify-center p-4 z-10 absolute top-0 left-0 bg-black opacity-0 hidden">
-    <div class="text-center w-full max-w-md">
-      <i class="fas fa-shield-alt text-6xl text-blue-500 mb-6 ai-pulse"></i>
-      <h1 class="text-3xl md:text-4xl font-bold mb-2">Protocolo VIERNES</h1>
-      <p class="text-lg text-gray-400 mb-8">Acceso restringido. Por favor, identifíquese.</p>
-      <form id="password-form" class="w-full">
-        <input type="password" id="password-input" class="w-full bg-gray-900 border border-gray-700 text-white text-lg rounded-lg p-4 mb-4 text-center focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" placeholder="Contraseña">
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-lg transition-transform transform hover:scale-105">Desbloquear</button>
+  <div id="login-screen" class="w-full h-full flex flex-col items-center justify-center p-4 z-10 absolute top-0 left-0 opacity-0 hidden">
+    <div class="text-center w-full max-w-md slide-up">
+      <div class="relative mb-8">
+        <i class="fas fa-shield-alt text-7xl text-blue-500 ai-pulse"></i>
+        <div class="absolute -top-2 -right-2 w-4 h-4 bg-green-400 rounded-full animate-ping"></div>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+        Protocolo VIERNES
+      </h1>
+      <p class="text-xl text-gray-300 mb-10 font-light">Acceso restringido. Por favor, identifíquese.</p>
+      <form id="password-form" class="w-full space-y-6">
+        <div class="relative">
+          <input type="password" id="password-input" class="w-full bg-gradient-to-r from-gray-900 to-gray-800 border-2 border-gray-700 text-white text-xl rounded-2xl p-5 text-center focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300" placeholder="••••••••••">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 pointer-events-none" id="input-glow"></div>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-xl py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+          <i class="fas fa-unlock-alt mr-3"></i>Desbloquear Sistema
+        </button>
       </form>
-      <p id="error-message" class="text-red-500 mt-4 h-6"></p>
+      <p id="error-message" class="text-red-400 mt-6 h-6 font-medium"></p>
     </div>
   </div>
   
   <div id="chat-screen" class="w-full h-full opacity-0 hidden">
-    <div class="animated-bg"></div>
+    <div class="particles"></div>
     <div class="chat-window flex flex-col">
-        <header class="p-4 text-center border-b border-b-white/10 flex-shrink-0">
-          <h2 class="text-lg font-bold">VIERNES <i class="fas fa-circle text-blue-400 text-xs ai-pulse"></i></h2>
+        <header class="chat-header p-6 text-center flex-shrink-0 relative">
+          <div class="flex items-center justify-center gap-3">
+            <i class="fas fa-robot text-2xl text-blue-400 ai-pulse"></i>
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">VIERNES</h2>
+            <div class="flex items-center gap-1">
+              <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span class="text-xs text-green-400 font-medium">ONLINE</span>
+            </div>
+          </div>
+          <p class="text-sm text-gray-400 mt-2 font-light">Asistente Digital de Juan Carlos Fernández</p>
         </header>
         
-        <main id="chat-log" class="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
+        <main id="chat-log" class="flex-1 p-6 md:p-8 space-y-8 overflow-y-auto">
           <div class="flex items-start gap-4 justify-start">
-            <div class="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot text-blue-400"></i></div>
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+              <i class="fas fa-robot text-white text-lg"></i>
+            </div>
             <div class="chat-bubble ai">
-              <p>Acceso concedido. Soy Viernes. He analizado la trayectoria de Juan Carlos. ¿Qué información necesitas?</p>
+              <p><strong>Sistema activado.</strong> Soy Viernes, la IA personalizada de Juan Carlos Fernández. He analizado su trayectoria profesional completa. ¿Qué información específica necesitas sobre su experiencia?</p>
             </div>
           </div>
         </main>
 
-        <footer class="p-4 flex-shrink-0">
-            <div id="suggestion-chips-container" class="suggestion-chips flex flex-wrap justify-center gap-2 mb-4">
-                <div class="suggestion-chip text-xs py-1 px-3 rounded-full">Experiencia en inDrive</div>
-                <div class="suggestion-chip text-xs py-1 px-3 rounded-full">Habilidades clave</div>
-                <div class="suggestion-chip text-xs py-1 px-3 rounded-full">Proyecto con IKEA</div>
+        <footer class="p-6 flex-shrink-0">
+            <div id="suggestion-chips-container" class="suggestion-chips flex flex-wrap justify-center gap-3 mb-6">
+                <div class="suggestion-chip text-sm py-3 px-5 rounded-full font-medium">
+                  <i class="fas fa-briefcase mr-2"></i>Experiencia en inDrive
+                </div>
+                <div class="suggestion-chip text-sm py-3 px-5 rounded-full font-medium">
+                  <i class="fas fa-star mr-2"></i>Habilidades clave
+                </div>
+                <div class="suggestion-chip text-sm py-3 px-5 rounded-full font-medium">
+                  <i class="fas fa-handshake mr-2"></i>Proyecto con IKEA
+                </div>
             </div>
-            <form id="chat-form" class="flex items-center gap-3">
-                <input type="text" id="user-input" class="flex-1 bg-black/20 border border-white/10 text-white rounded-full py-3 px-5 focus:outline-none focus:border-blue-500 transition" placeholder="Interactúa con Viernes..." autocomplete="off">
-                <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all transform hover:scale-110 flex-shrink-0">
-                  <i class="fas fa-paper-plane"></i>
+            <form id="chat-form" class="flex items-center gap-4">
+                <div class="flex-1 relative">
+                  <input type="text" id="user-input" class="w-full rounded-full py-4 px-6 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300" placeholder="Pregunta algo sobre Juan Carlos..." autocomplete="off">
+                  <i class="fas fa-microphone absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer hover:text-blue-400 transition-colors"></i>
+                </div>
+                <button type="submit" id="send-button" class="rounded-full w-14 h-14 flex items-center justify-center transition-all duration-300 flex-shrink-0 shadow-lg">
+                  <i class="fas fa-paper-plane text-lg"></i>
                 </button>
             </form>
         </footer>
@@ -173,16 +601,16 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // ... (El resto del script de la versión anterior se mantiene aquí, pero se modificará el inicio)
-
         const matrixScreen = document.getElementById('matrix-screen');
         const matrixTextElement = document.getElementById('matrix-text');
+        const matrixRain = document.querySelector('.matrix-rain');
         const glitchScreen = document.getElementById('glitch-screen');
         const glitchContainer = document.getElementById('glitch-container');
         const loadingBar = document.getElementById('loading-bar');
         const loginScreen = document.getElementById('login-screen');
         const passwordForm = document.getElementById('password-form');
         const passwordInput = document.getElementById('password-input');
+        const inputGlow = document.getElementById('input-glow');
         const errorMessage = document.getElementById('error-message');
         const chatScreen = document.getElementById('chat-screen');
         const chatLog = document.getElementById('chat-log');
@@ -191,113 +619,240 @@
         const suggestionChipsContainer = document.getElementById('suggestion-chips-container');
         
         const CORRECT_PASSWORD = 'VIERNES13';
-      
+
+        // Crear lluvia Matrix
+        function createMatrixRain() {
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = i * 20 + 'px';
+                column.style.animationDelay = Math.random() * 2 + 's';
+                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                let columnText = '';
+                for (let j = 0; j < 20; j++) {
+                    columnText += chars[Math.floor(Math.random() * chars.length)] + '\n';
+                }
+                column.textContent = columnText;
+                matrixRain.appendChild(column);
+            }
+        }
+
+        // Crear partículas flotantes
+        function createParticles(container) {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+
         function typeWriter(text, element, index, callback) {
             if (index < text.length) {
-                element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor border-r-2 border-green-400"></span>';
-                setTimeout(() => typeWriter(text, element, index + 1, callback), 50);
+                element.innerHTML = text.substring(0, index + 1) + '<span class="blinking-cursor"></span>';
+                const speed = text[index] === '\n' ? 100 : Math.random() * 50 + 30;
+                setTimeout(() => typeWriter(text, element, index + 1, callback), speed);
             } else {
                 element.innerHTML = text;
-                if (callback) setTimeout(callback, 500);
+                if (callback) setTimeout(callback, 800);
             }
         }
 
         function runMatrixIntro() {
-            const platform = navigator.platform || 'source unknown';
+            createMatrixRain();
+            
+            const platform = navigator.platform || 'UNKNOWN_SYSTEM';
             const language = navigator.language || 'en-US';
-            const userAgent = navigator.userAgent || 'unidentified';
-            const lines = ['Wake up, user...',`> Connection established from: ${platform}`,`> Language Protocol: ${language}`,`> User Agent Signature: ${userAgent}`,'The matrix has you.','Follow the white rabbit.','Initializing core philosophies...'];
+            const userAgent = navigator.userAgent.substring(0, 50) + '...';
+            const timestamp = new Date().toISOString();
+            
+            const lines = [
+                '> SISTEMA INICIANDO...',
+                '> PROTOCOLO VIERNES ACTIVADO',
+                `> CONEXIÓN ESTABLECIDA DESDE: ${platform}`,
+                `> PROTOCOLO DE IDIOMA: ${language}`,
+                `> TIMESTAMP: ${timestamp}`,
+                `> AGENTE DE USUARIO: ${userAgent}`,
+                '',
+                'ADVERTENCIA: ACCESO RESTRINGIDO',
+                'Solo personal autorizado.',
+                'Preparando interfaz de autenticación...',
+                '',
+                'CARGANDO MÓDULOS DE SEGURIDAD...',
+                '[████████████████████████████████] 100%',
+                '',
+                'SISTEMA LISTO.'
+            ];
         
             let lineIndex = 0;
             function typeNextLine() {
                 if (lineIndex < lines.length) {
                     const p = document.createElement('p');
+                    p.style.marginBottom = '0.5rem';
                     matrixTextElement.appendChild(p);
-                    typeWriter(lines[lineIndex], p, 0, () => { lineIndex++; typeNextLine(); });
+                    typeWriter(lines[lineIndex], p, 0, () => { 
+                        lineIndex++; 
+                        setTimeout(typeNextLine, 200); 
+                    });
                 } else {
                     setTimeout(() => {
                         matrixScreen.classList.add('fade-out');
-                        glitchScreen.classList.remove('hidden', 'opacity-0');
-                        glitchScreen.classList.add('fade-in');
-                        runGlitchSequence();
-                    }, 2000);
+                        setTimeout(() => {
+                            glitchScreen.classList.remove('hidden', 'opacity-0');
+                            glitchScreen.classList.add('fade-in');
+                            runGlitchSequence();
+                        }, 600);
+                    }, 1500);
                 }
             }
             typeNextLine();
         }
 
         function runGlitchSequence() {
+            createParticles(glitchScreen.querySelector('.particles'));
+            
             const quotes = {
-                "S.J.": "Here's to the crazy ones... Because the people who are crazy enough to think they can change the world, are the ones who do.",
-                "Nietzsche": "He who has a why to live can bear almost any how. That which does not kill us makes us stronger.",
-                "Socrates": "An unexamined life is not worth living. The only true wisdom is in knowing you know nothing.",
-                "Aristotle": "Knowing yourself is the beginning of all wisdom. Excellence, then, is not an act, but a habit.",
-                "Socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ. ἓν οἶδα ὅτι οὐδὲν οἶδα.",
-                "Aristotle_gr": "τὸ γνῶθι σεαυτόν. ἡ δὲ ἀρετὴ ἕξις."
+                "jobs": "Here's to the crazy ones, the misfits, the rebels... Because the people who are crazy enough to think they can change the world, are the ones who do.",
+                "nietzsche": "He who has a why to live can bear almost any how. That which does not kill us makes us stronger.",
+                "socrates": "An unexamined life is not worth living. The only true wisdom is in knowing you know nothing.",
+                "aristotle": "Knowing yourself is the beginning of all wisdom. Excellence, then, is not an act, but a habit.",
+                "socrates_gr": "ὁ δὲ ἀνεξέταστος βίος οὐ βιωτὸς ἀνθρώπῳ. ἓν οἶδα ὅτι οὐδὲν οἶδα.",
+                "aristotle_gr": "τὸ γνῶθι σεαυτόν. ἡ δὲ ἀρετὴ ἕξις προαιρετική.",
+                "da_vinci": "Learning never exhausts the mind. Simplicity is the ultimate sophistication.",
+                "einstein": "Imagination is more important than knowledge. The important thing is not to stop questioning.",
+                "binary": "01001000 01100101 01101100 01101100 01101111 00100000 01010111 01101111 01110010 01101100 01100100"
             };
-            const fullText = `\n${quotes["S.J."]}\n${quotes["Nietzsche"]}\n${quotes["Socrates"]}\n${quotes["Aristotle"]}\n`;
-            const greekText = `\n${quotes["S.J."]}\n${quotes["Nietzsche"]}\n${quotes["Socrates_gr"]}\n${quotes["Aristotle_gr"]}\n`;
-            const glitchChars = '#*[]?%&@01$<>|';
-            const colors = ['color-1', 'color-2', 'color-3'];
+            
+            const fullText = `SISTEMA DE FILOSOFÍA ACTIVADO...\n\n${quotes.jobs}\n\n${quotes.nietzsche}\n\n${quotes.socrates}\n\n${quotes.aristotle}\n\n${quotes.da_vinci}\n\n${quotes.einstein}\n\n`;
+            const greekText = `MODO CLÁSICO ACTIVADO...\n\n${quotes.socrates_gr}\n\n${quotes.aristotle_gr}\n\n`;
+            const binaryText = `MODO BINARIO...\n\n${quotes.binary}\n\n`;
+            
+            const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?~`';
+            const specialChars = '█▓▒░▄▀▐▌▬▲►◄↕‼¶§▬↨↑↓→←∟↔▼';
+            const colors = ['color-1', 'color-2', 'color-3', 'color-4'];
 
             function distortText(text, level) {
-                return text.split('').map(char => {
+                return text.split('').map((char, index) => {
                     if (char.trim() === '') return char;
-                    if (Math.random() < level) {
+                    
+                    const shouldGlitch = Math.random() < level;
+                    if (shouldGlitch) {
                         const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                        const randomGlitch = glitchChars[Math.floor(Math.random() * glitchChars.length)];
-                        return `<span class="${randomColor} glitch-char">${Math.random() > 0.5 ? randomGlitch : char}</span>`;
+                        const useSpecial = Math.random() > 0.7;
+                        const glitchChar = useSpecial ? 
+                            specialChars[Math.floor(Math.random() * specialChars.length)] : 
+                            glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                        
+                        return `<span class="${randomColor} glitch-char" style="animation-delay: ${Math.random() * 0.5}s">${Math.random() > 0.3 ? glitchChar : char}</span>`;
                     }
                     return char;
                 }).join('');
             }
             
             let iteration = 0;
-            const maxIterations = 10;
-            let fullGlitchText = '';
-            requestAnimationFrame(() => { loadingBar.style.width = '100%'; });
+            const maxIterations = 12;
+            let accumulatedText = '';
+            
+            // Iniciar barra de carga
+            requestAnimationFrame(() => { 
+                loadingBar.style.width = '100%'; 
+            });
             
             function updateGlitch() {
-                if(iteration >= maxIterations) {
+                if (iteration >= maxIterations) {
                     setTimeout(() => {
                         glitchScreen.classList.add('fade-out');
-                        loginScreen.classList.remove('hidden', 'opacity-0');
-                        loginScreen.classList.add('fade-in');
+                        setTimeout(() => {
+                            loginScreen.classList.remove('hidden', 'opacity-0');
+                            loginScreen.classList.add('fade-in');
+                            passwordInput.focus();
+                        }, 600);
                     }, 1000);
                     return;
                 }
                 
                 iteration++;
-                const distortionLevel = iteration / maxIterations;
-                const currentText = iteration > 7 ? greekText : fullText;
-                fullGlitchText += currentText;
-                const maxChars = 20000; 
-                if(fullGlitchText.length > maxChars) {
-                    fullGlitchText = fullGlitchText.substring(fullGlitchText.length - maxChars);
+                const progress = iteration / maxIterations;
+                
+                // Cambiar contenido según progreso
+                let currentText;
+                if (progress < 0.3) {
+                    currentText = fullText;
+                } else if (progress < 0.7) {
+                    currentText = greekText;
+                } else {
+                    currentText = binaryText;
                 }
-                glitchContainer.innerHTML = distortText(fullGlitchText, distortionLevel);
-                let timeout = 800 - (iteration * 60);
+                
+                // Acumular texto para efecto de overload
+                accumulatedText += currentText;
+                const maxChars = 15000;
+                if (accumulatedText.length > maxChars) {
+                    accumulatedText = accumulatedText.substring(accumulatedText.length - maxChars);
+                }
+                
+                const distortionLevel = Math.min(progress * 1.2, 0.8);
+                glitchContainer.innerHTML = distortText(accumulatedText, distortionLevel);
+                
+                // Velocidad aumenta con el tiempo
+                const timeout = Math.max(100, 1000 - (iteration * 80));
                 setTimeout(updateGlitch, timeout);
             }
+            
             updateGlitch();
         }
 
+        // Efectos del input de contraseña
+        passwordInput.addEventListener('focus', () => {
+            inputGlow.style.opacity = '1';
+        });
+        
+        passwordInput.addEventListener('blur', () => {
+            inputGlow.style.opacity = '0';
+        });
+
+        // Inicio de la secuencia
         runMatrixIntro();
 
+        // Manejo del formulario de contraseña
         passwordForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            if (passwordInput.value === CORRECT_PASSWORD) {
+            const password = passwordInput.value;
+            
+            if (password === CORRECT_PASSWORD) {
                 loginScreen.classList.remove('fade-in');
                 loginScreen.classList.add('fade-out');
-                chatScreen.classList.remove('hidden', 'opacity-0');
-                chatScreen.classList.add('fade-in');
+                setTimeout(() => {
+                    chatScreen.classList.remove('hidden', 'opacity-0');
+                    chatScreen.classList.add('fade-in');
+                    createParticles(chatScreen.querySelector('.particles'));
+                    userInput.focus();
+                }, 600);
             } else {
-                errorMessage.textContent = 'Contraseña incorrecta.';
-                passwordInput.classList.add('border-red-500');
-                setTimeout(() => { errorMessage.textContent = ''; passwordInput.classList.remove('border-red-500'); }, 2000);
+                errorMessage.textContent = 'Acceso denegado. Contraseña incorrecta.';
+                passwordInput.classList.add('border-red-500', 'bg-red-900/20');
+                passwordInput.value = '';
+                
+                // Efecto de shake
+                passwordInput.style.animation = 'shake 0.5s ease-in-out';
+                
+                setTimeout(() => { 
+                    errorMessage.textContent = ''; 
+                    passwordInput.classList.remove('border-red-500', 'bg-red-900/20');
+                    passwordInput.style.animation = '';
+                }, 3000);
             }
         });
 
+        // Lógica del chat
         const chatHistory = [];
         const CV_CONTEXT = `
             Tú eres VIERNES, la IA personalizada de Juan Carlos Fernández. Tu propósito es ser su representante digital, respondiendo preguntas sobre su carrera. Tu tono es perspicaz, eficiente y ligeramente creativo, pero siempre fundamentado en los datos. Eres una extensión de su visión.
@@ -315,19 +870,22 @@
       
         chatHistory.push({ role: "system", parts: [{ text: CV_CONTEXT }] });
 
+        // Manejo de chips de sugerencias
         suggestionChipsContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('suggestion-chip')) {
-                const prompt = e.target.textContent;
+                const prompt = e.target.textContent.replace(/.*?\s/, ''); // Remover icono
                 userInput.value = prompt;
                 chatForm.requestSubmit();
             }
         });
         
+        // Manejo del formulario de chat
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const userMessage = userInput.value.trim();
             if (!userMessage) return;
 
+            // Ocultar chips de sugerencias
             if (suggestionChipsContainer.style.opacity !== '0') {
                 suggestionChipsContainer.style.opacity = '0';
                 setTimeout(() => suggestionChipsContainer.style.display = 'none', 500);
@@ -343,35 +901,39 @@
                 appendMessage(aiResponse, 'ai');
             } catch (error) {
                 removeTypingIndicator();
-                appendMessage('Mis sistemas están experimentando una anomalía. Por favor, intenta de nuevo en un momento.', 'ai');
+                appendMessage('Mis sistemas están experimentando interferencias. Reintentando conexión...', 'ai');
                 console.error('Error fetching AI response:', error);
             }
         });
       
         function parseMarkdown(text) {
             return text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negritas
-                .replace(/^\* (.*$)/gm, '<li>$1</li>') // Listas
-                .replace(/<\/li><li>/g, '</li>\n<li>') // Asegurar saltos de línea correctos entre elementos de lista
-                .replace(/((<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>'); // Envolver en <ul>
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^\* (.*$)/gm, '<li>$1</li>')
+                .replace(/<\/li><li>/g, '</li>\n<li>')
+                .replace(/((<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>');
         }
 
         function appendMessage(text, sender) {
             const messageWrapper = document.createElement('div');
             const icon = document.createElement('div');
             const bubble = document.createElement('div');
+            
             messageWrapper.className = `w-full flex items-start gap-4 ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-            icon.className = 'w-10 h-10 rounded-full bg-black/20 flex items-center justify-center flex-shrink-0';
             bubble.className = `chat-bubble ${sender}`;
+            
             if (sender === 'user') {
-                icon.innerHTML = '<i class="fas fa-user-circle text-gray-400 text-xl"></i>';
+                icon.className = 'w-12 h-12 rounded-full bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center flex-shrink-0 shadow-lg';
+                icon.innerHTML = '<i class="fas fa-user text-white text-lg"></i>';
                 bubble.textContent = text;
                 messageWrapper.append(bubble, icon);
             } else {
-                icon.innerHTML = '<i class="fas fa-robot text-blue-400"></i>';
+                icon.className = 'w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg';
+                icon.innerHTML = '<i class="fas fa-robot text-white text-lg"></i>';
                 bubble.innerHTML = parseMarkdown(text);
                 messageWrapper.append(icon, bubble);
             }
+            
             chatLog.appendChild(messageWrapper);
             chatLog.scrollTop = chatLog.scrollHeight;
         }
@@ -381,8 +943,15 @@
             typingWrapper.id = 'typing-indicator';
             typingWrapper.className = 'flex items-start gap-4 justify-start';
             typingWrapper.innerHTML = `
-                <div class="w-10 h-10 rounded-full bg-black/20 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot text-blue-400"></i></div>
-                <div class="chat-bubble ai flex items-center gap-2"><span class="typing-indicator"><span></span><span></span><span></span></span></div>
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <i class="fas fa-robot text-white text-lg"></i>
+                </div>
+                <div class="chat-bubble ai flex items-center gap-2">
+                    <div class="typing-indicator flex items-center gap-1">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="text-sm text-gray-400 ml-2">Procesando...</span>
+                </div>
             `;
             chatLog.appendChild(typingWrapper);
             chatLog.scrollTop = chatLog.scrollHeight;
@@ -396,10 +965,17 @@
         async function getAIResponse(prompt) {
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
             const payload = { contents: chatHistory };
-            const apiKey = "";
+            const apiKey = ""; // Agrega tu API key aquí
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            
+            const response = await fetch(apiUrl, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payload) 
+            });
+            
             if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+            
             const result = await response.json();
             if (result.candidates && result.candidates[0]?.content?.parts[0]) {
                 const aiText = result.candidates[0].content.parts[0].text;
@@ -407,9 +983,21 @@
                 return aiText;
             } else {
                 console.warn('No content received from AI:', result);
-                return 'No he podido procesar esa solicitud.';
+                return 'No he podido procesar esa solicitud. Por favor, reformula tu pregunta.';
             }
         }
+
+        // Agregar animación de shake para errores
+        const shakeKeyframes = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = shakeKeyframes;
+        document.head.appendChild(styleSheet);
     });
   </script>
 
