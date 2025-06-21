@@ -10,29 +10,62 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    /* --------------------------------------------------- */
+    /* VARIABLES DE DISEÑO Y TEMAS */
+    /* --------------------------------------------------- */
     :root {
       --accent-blue: #0A84FF; /* Azul Apple */
       --accent-blue-rgb: 10, 132, 255; /* Para uso en rgba */
-      
-      --text-primary: rgba(255, 255, 255, 0.95); /* Más opaco */
-      --text-secondary: rgba(255, 255, 255, 0.7); /* Ligeramente más opaco */
-      --text-tertiary: rgba(255, 255, 255, 0.5);
 
-      --bg-main: #000000;
-      --bg-elevated: rgba(18, 18, 18, 0.6); /* Más transparencia para efecto glass */
-      --bg-elevated-hover: rgba(29, 29, 31, 0.75); /* Más transparencia para efecto glass */
+      /* Variables para el modo oscuro (predeterminado) */
+      --text-primary: rgba(255, 255, 255, 0.98); /* Más vibrante */
+      --text-secondary: rgba(255, 255, 255, 0.75); /* Más vibrante */
+      --text-tertiary: rgba(255, 255, 255, 0.55);
 
-      --border-subtle: rgba(255, 255, 255, 0.15); /* Ligeramente más fuerte */
-      --border-strong: rgba(255, 255, 255, 0.25); /* Ligeramente más fuerte */
+      --bg-main: #000000; /* Fondo negro profundo */
+      --bg-elevated: rgba(18, 18, 18, 0.65); /* Translucidez para Liquid Glass */
+      --bg-elevated-hover: rgba(29, 29, 31, 0.85); /* Más opaco en hover para resalte */
 
-      --shadow-soft: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); /* Sombra más pronunciada con brillo interno */
-      --shadow-medium: 0 10px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+      --border-subtle: rgba(255, 255, 255, 0.18); /* Bordes de cristal más definidos */
+      --border-strong: rgba(255, 255, 255, 0.3); /* Bordes de cristal más fuertes */
+
+      --shadow-soft: 0 5px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08); /* Sombra más intensa + brillo interno */
+      --shadow-medium: 0 15px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12); /* Sombra más fuerte para elevación */
+      --shadow-glowing: 0 0 40px rgba(10, 132, 255, 0.4), 0 0 80px rgba(10, 132, 255, 0.2); /* Sombra para brillo del nombre */
+
 
       --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
       --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1);
-      --transition-duration: 0.5s; 
+      --transition-duration: 0.5s;
+
+      /* Brillos para el nombre */
+      --name-glow-start: #E0BBE4; /* Lila claro */
+      --name-glow-middle: #957DAD; /* Lila medio */
+      --name-glow-end: #D291BC; /* Rosa liláceo */
     }
 
+    /* Variables para el modo claro */
+    :root.light-mode {
+      --text-primary: #1a1a1a;
+      --text-secondary: #444444;
+      --text-tertiary: #666666;
+      --bg-main: #FDFDFD; /* Blanco casi puro */
+      --bg-elevated: rgba(255, 255, 255, 0.85); /* Menos opaco, más claro */
+      --bg-elevated-hover: rgba(238, 238, 238, 0.95); /* Menos opaco, más claro */
+      --border-subtle: rgba(0, 0, 0, 0.1);
+      --border-strong: rgba(0, 0, 0, 0.18);
+      --shadow-soft: 0 2px 10px rgba(0,0,0,0.08), inset 0 1px 0 rgba(0,0,0,0.02);
+      --shadow-medium: 0 8px 25px rgba(0,0,0,0.12), inset 0 1px 0 rgba(0,0,0,0.04);
+
+      /* Brillos para el nombre en modo claro */
+      --name-glow-start: #81D4FA; /* Azul claro */
+      --name-glow-middle: #4FC3F7; /* Azul medio */
+      --name-glow-end: #29B6F6; /* Azul brillante */
+    }
+
+    /* --------------------------------------------------- */
+    /* RESET Y ESTILOS BASE */
+    /* --------------------------------------------------- */
     * {
       margin: 0;
       padding: 0;
@@ -48,78 +81,41 @@
     }
 
     body {
-      background: var(--bg-main); /* Fondo negro */
+      background: var(--bg-main);
       color: var(--text-primary);
-      line-height: 1.7; 
+      line-height: 1.7;
       padding-top: 80px;
-      overflow-x: hidden; /* Prevenir scroll horizontal */
+      overflow-x: hidden;
+      /* Transiciones T-1000 like */
+      transition: background-color 0.4s var(--ease-in-out-cubic),
+                  color 0.4s var(--ease-in-out-cubic);
     }
 
-    /* Eliminado el gradiente de fondo */
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(18, 18, 18, 0.5); /* Más transparencia */
-      backdrop-filter: blur(20px) saturate(180%); /* Mayor desenfoque */
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem 1rem; /* Ajuste de padding */
-      z-index: 1000;
-      border-bottom: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-soft); /* Sombra para la barra de navegación */
-    }
-
-    nav a {
-      margin: 0 1.25rem; /* Menos margen para móvil */
-      color: var(--text-secondary); 
-      position: relative;
-      text-decoration: none;
-      font-weight: 500; 
-      transition: color 0.3s var(--ease-in-out-cubic);
-      padding: 0.25rem 0;
-    }
-
-    nav a:hover, nav a.active { 
-      color: var(--text-primary); 
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -6px; /* Bajamos la línea */
-      width: 0;
-      height: 2px;
-      background: var(--accent-blue);
-      opacity: 0;
-      transition: width 0.3s var(--ease-in-out-cubic), opacity 0.3s var(--ease-in-out-cubic);
-    }
-
-    nav a:hover::after, nav a.active::after {
-      width: 100%;
-      opacity: 1;
-    }
-    
+    /* --------------------------------------------------- */
+    /* LAYOUT GENERAL */
+    /* --------------------------------------------------- */
     .container {
-      width: clamp(320px, 90%, 1100px); 
+      width: clamp(320px, 90%, 1100px);
       margin: 0 auto;
-      padding: 4rem 1rem; 
+      padding: 4rem 1rem;
     }
 
+    /* Animación de entrada al scroll (base del Liquid Glass) */
     .animate-on-scroll {
       opacity: 0;
-      transform: translateY(30px) scale(0.98); 
+      transform: translateY(30px) scale(0.98);
       filter: blur(3px);
       transition: opacity var(--transition-duration) var(--ease-out-quint),
                   transform var(--transition-duration) var(--ease-out-quint),
-                  filter var(--transition-duration) var(--ease-out-quint);
-      transition-delay: 0.1s; 
+                  filter var(--transition-duration) var(--ease-out-quint),
+                  /* Propiedades para el cambio de modo T-1000 */
+                  background-color 0.4s var(--ease-in-out-cubic),
+                  color 0.4s var(--ease-in-out-cubic),
+                  border-color 0.4s var(--ease-in-out-cubic),
+                  box-shadow 0.4s var(--ease-in-out-cubic),
+                  backdrop-filter 0.4s var(--ease-in-out-cubic),
+                  -webkit-backdrop-filter 0.4s var(--ease-in-out-cubic);
+      transition-delay: 0.1s;
     }
 
     .animate-on-scroll.visible {
@@ -127,112 +123,175 @@
       transform: translateY(0) scale(1);
       filter: blur(0);
     }
-    
-    header.animate-on-scroll { transition-delay: 0s; } 
 
+    header.animate-on-scroll { transition-delay: 0s; }
+
+    /* --------------------------------------------------- */
+    /* HEADER / TÍTULO PRINCIPAL (SUPER DESTELLO) */
+    /* --------------------------------------------------- */
     header {
       text-align: center;
-      padding: 8rem 1rem 4rem; /* Más padding superior */
-      min-height: 70vh; /* Mayor altura */
+      padding: 8rem 1rem 4rem;
+      min-height: 70vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      position: relative; /* Para efectos de fondo */
-      overflow: hidden; /* Asegurar que el brillo no se desborde */
+      position: relative;
+      overflow: hidden;
     }
 
     header h1 {
-      font-size: clamp(3.5rem, 8vw, 6rem); /* Un poco más grande */
+      font-size: clamp(3.5rem, 8vw, 6.5rem); /* Un poco más grande */
       font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.03em; /* Más cerrado */
-      margin-bottom: 1.5rem; /* Más espacio */
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
       line-height: 1.1;
-      position: relative; /* Para el gradiente de texto */
-      /* Gradiente de texto más brillante y con más "movimiento" */
-      background: linear-gradient(90deg, #ADD8E6, #DDA0DD, #ADD8E6, #DDA0DD, #ADD8E6);
+      position: relative;
+      z-index: 1; /* Asegurar que esté sobre cualquier brillo de fondo */
+
+      /* Gradiente de texto más brillante y con más "movimiento" (estado relajado) */
+      background: linear-gradient(90deg,
+        var(--name-glow-start) 0%,
+        var(--name-glow-middle) 33%,
+        var(--name-glow-end) 66%,
+        var(--name-glow-start) 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-size: 300% auto; /* Más grande para el movimiento */
-      animation: text-gradient 10s linear infinite alternate; /* Más lento y continuo */
-      text-shadow: 0 0 10px rgba(173, 216, 230, 0.7); /* Brillo extra */
+      background-size: 400% auto; /* Aumentamos el tamaño para un movimiento más fluido y "líquido" */
+      text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7), /* Brillo sutil base */
+                   0 0 30px rgba(var(--accent-blue-rgb), 0.5); /* Halo más amplio */
+
+      /* Animaciones: Super destello inicial + brillo continuo */
+      animation:
+        super-flash-in 2s cubic-bezier(0.16, 1, 0.3, 1) forwards, /* El destello dramático */
+        relaxed-text-gradient 12s linear infinite alternate 2s; /* Brillo continuo y relajado después del destello */
     }
 
-    @keyframes text-gradient {
-      to {
-        background-position: 300% center; /* Más movimiento */
+    /* Keyframes para el SUPER DESTELLO INICIAL */
+    @keyframes super-flash-in {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+        filter: blur(10px) brightness(300%); /* Mucho más brillante y desenfocado */
+        text-shadow: 0 0 60px rgba(255, 255, 255, 1), /* Destello blanco intenso */
+                     0 0 120px rgba(var(--accent-blue-rgb), 0.8); /* Halo azul potente */
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.02); /* Pequeño "rebote" para mayor impacto */
+        filter: blur(0) brightness(150%); /* Aún brillante, pero enfocado */
+        text-shadow: 0 0 40px rgba(255, 255, 255, 0.8),
+                     0 0 80px rgba(var(--accent-blue-rgb), 0.6);
+      }
+      40% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0) brightness(100%);
+        text-shadow: 0 0 20px rgba(var(--accent-blue-rgb), 0.7),
+                     0 0 40px rgba(var(--accent-blue-rgb), 0.5);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0) brightness(100%);
+        text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7),
+                     0 0 30px rgba(var(--accent-blue-rgb), 0.5);
+      }
+    }
+
+    /* Keyframes para el estado RELAJADO y brillo continuo */
+    @keyframes relaxed-text-gradient {
+      0% {
+        background-position: 0% center;
+        text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7), 0 0 30px rgba(var(--accent-blue-rgb), 0.5);
+      }
+      50% {
+        background-position: 100% center; /* Movimiento a través del gradiente */
+        text-shadow: 0 0 20px rgba(var(--accent-blue-rgb), 0.8), 0 0 40px rgba(var(--accent-blue-rgb), 0.6); /* Brilla más en el medio del ciclo */
+      }
+      100% {
+        background-position: 0% center;
+        text-shadow: 0 0 15px rgba(var(--accent-blue-rgb), 0.7), 0 0 30px rgba(var(--accent-blue-rgb), 0.5);
       }
     }
 
     header p {
-      font-size: clamp(1.2rem, 4vw, 1.7rem); /* Un poco más grande */
+      font-size: clamp(1.2rem, 4vw, 1.7rem);
       color: var(--text-secondary);
       margin-top: 1rem;
-      font-weight: 300; 
-      max-width: 700px; /* Ancho máximo para mejor lectura */
+      font-weight: 300;
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
     }
 
+    /* --------------------------------------------------- */
+    /* SECCIONES Y TÍTULOS */
+    /* --------------------------------------------------- */
     section {
-      margin-bottom: 3.5rem; /* Más espacio entre secciones */
+      margin-bottom: 3.5rem;
     }
     section:last-of-type {
         margin-bottom: 0;
     }
 
     .section-title {
-      font-size: clamp(2.2rem, 6vw, 3.5rem); /* Un poco más grande */
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
       font-weight: 700;
       color: var(--text-primary);
       letter-spacing: -0.02em;
-      margin-bottom: 2.5rem; 
+      margin-bottom: 2.5rem;
       position: relative;
-      text-align: center; 
+      text-align: center;
     }
 
     .section-title::after {
       content: '';
       display: block;
-      width: 60px; /* Más ancho */
-      height: 4px; /* Más grueso */
+      width: 60px;
+      height: 4px;
       background: var(--accent-blue);
-      margin: 1.2rem auto 0; /* Más espacio */
-      border-radius: 2px; /* Bordes redondeados */
+      margin: 1.2rem auto 0;
+      border-radius: 2px;
     }
 
+    /* --------------------------------------------------- */
+    /* GRID Y TARJETAS (LIQUID GLASS INTENSIFICADO) */
+    /* --------------------------------------------------- */
     .grid {
       display: grid;
-      gap: 2.5rem; /* Mayor espacio */
+      gap: 2.5rem;
       margin-top: 2rem;
     }
 
     .two-cols {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajuste para pantallas más pequeñas */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
-    
+
     @media (min-width: 768px) {
         .grid.two-cols {
-            gap: 3rem; /* Mayor espacio en escritorio */
+            gap: 3rem;
         }
     }
 
     .card {
-      background: var(--bg-elevated);
-      padding: 2.2rem; /* Más padding */
-      border-radius: 16px; /* Más redondeado */
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.4s var(--ease-out-quint), 
+      background: var(--bg-elevated); /* Material dinámico: Translucidez base */
+      padding: 2.2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle); /* Bordes delicados y luminosos */
+      box-shadow: var(--shadow-soft); /* Sombras suaves y profundas + brillo interno */
+      transition: transform 0.4s var(--ease-out-quint),
                   box-shadow 0.4s var(--ease-out-quint),
                   background-color 0.4s var(--ease-out-quint),
                   border-color 0.4s var(--ease-out-quint);
-      backdrop-filter: blur(10px); /* Efecto glass */
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px) saturate(180%); /* ¡Más desenfoque y saturación para Liquid Glass! */
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
       position: relative;
-      overflow: hidden; /* Para el efecto de brillo */
+      overflow: hidden; /* Necesario para los pseudo-elementos de brillo */
     }
 
+    /* Destellos especulares que responden al desplazamiento (pseudo-elemento) */
     .card::before {
       content: '';
       position: absolute;
@@ -240,33 +299,36 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
+      background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255,255,255,0.08) 0%, transparent 60%); /* Más brillo */
       opacity: 0;
       transition: opacity 0.4s var(--ease-out-quint);
       pointer-events: none;
+      transform: scale(0.9); /* Tamaño base para la transición */
+      will-change: transform; /* Optimización */
     }
 
     .card:hover::before {
       opacity: 1;
+      transform: scale(1);
     }
 
     .card:hover {
-      transform: translateY(-10px) scale(1.02); /* Mayor elevación */
-      box-shadow: var(--shadow-medium);
-      background: var(--bg-elevated-hover);
-      border-color: rgba(var(--accent-blue-rgb), 0.6); /* Borde más brillante */
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: var(--shadow-medium); /* Sombra más fuerte al hover */
+      background: var(--bg-elevated-hover); /* Fondo más opaco al hover */
+      border-color: rgba(var(--accent-blue-rgb), 0.7); /* Borde más brillante al hover */
     }
 
     .card h3 {
-      font-size: 1.7rem; /* Un poco más grande */
+      font-size: 1.7rem;
       font-weight: 600;
-      color: var(--text-primary); 
-      margin-bottom: 0.75rem; /* Más espacio */
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
     }
-    
+
     .card .project-meta {
-      font-size: 0.95rem; /* Más grande */
-      color: var(--text-tertiary); 
+      font-size: 0.95rem;
+      color: var(--text-tertiary);
       margin-bottom: 1rem;
       font-weight: 500;
       display: flex;
@@ -281,27 +343,27 @@
 
     .card p {
       color: var(--text-secondary);
-      font-size: 1.05rem; /* Ligeramente más grande */
-      margin-bottom: 1.25rem; /* Más espacio */
+      font-size: 1.05rem;
+      margin-bottom: 1.25rem;
     }
-    
+
     .card .project-details {
         list-style: none;
         padding: 0;
-        margin-top: 1.5rem; /* Más espacio */
+        margin-top: 1.5rem;
         font-size: 0.95rem;
-        border-top: 1px solid rgba(255,255,255,0.08); /* Separador sutil */
+        border-top: 1px solid rgba(255,255,255,0.1); /* Separador de cristal más visible */
         padding-top: 1rem;
     }
     .card .project-details li {
-        margin-bottom: 0.6rem; /* Más espacio */
+        margin-bottom: 0.6rem;
         color: var(--text-secondary);
         display: flex;
         align-items: flex-start;
         gap: 0.5rem;
     }
     .card .project-details li::before {
-        content: '•'; /* Bullet point personalizado */
+        content: '•';
         color: var(--accent-blue);
         font-weight: bold;
         display: inline-block;
@@ -319,28 +381,28 @@
         transition: opacity 0.2s;
     }
     .card .project-details a:hover {
-        opacity: 0.85; /* Ligeramente más opaco */
+        opacity: 0.85;
         text-decoration: underline;
     }
 
-    /* Estilos para la sección de Blog */
+    /* Estilos para la sección de Blog (mismo tratamiento Liquid Glass) */
     .blog-post-list {
         display: grid;
-        gap: 2.5rem; 
+        gap: 2.5rem;
     }
 
     .blog-post-item {
-        background: var(--bg-elevated);
+        background: var(--bg-elevated); /* Material dinámico */
         padding: 2.2rem;
         border-radius: 16px;
-        border: 1px solid var(--border-subtle);
-        box-shadow: var(--shadow-soft);
-        transition: transform 0.4s var(--ease-out-quint), 
+        border: 1px solid var(--border-subtle); /* Bordes delicados y luminosos */
+        box-shadow: var(--shadow-soft); /* Sombras suaves y profundas + brillo interno */
+        transition: transform 0.4s var(--ease-out-quint),
                     box-shadow 0.4s var(--ease-out-quint),
                     background-color 0.4s var(--ease-out-quint),
                     border-color 0.4s var(--ease-out-quint);
-        backdrop-filter: blur(10px); /* Efecto glass */
-        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(12px) saturate(180%); /* ¡Más desenfoque y saturación para Liquid Glass! */
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
         position: relative;
         overflow: hidden;
     }
@@ -352,25 +414,28 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
+      background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255,255,255,0.08) 0%, transparent 60%); /* Más brillo */
       opacity: 0;
       transition: opacity 0.4s var(--ease-out-quint);
       pointer-events: none;
+      transform: scale(0.9);
+      will-change: transform;
     }
 
     .blog-post-item:hover::before {
       opacity: 1;
+      transform: scale(1);
     }
 
     .blog-post-item:hover {
         transform: translateY(-8px);
         box-shadow: var(--shadow-medium);
         background: var(--bg-elevated-hover);
-        border-color: rgba(var(--accent-blue-rgb), 0.5);
+        border-color: rgba(var(--accent-blue-rgb), 0.7);
     }
 
-    .blog-post-item h3 { 
-        font-size: 1.85rem; /* Más grande */
+    .blog-post-item h3 {
+        font-size: 1.85rem;
         font-weight: 600;
         color: var(--text-primary);
         margin-bottom: 0.75rem;
@@ -393,12 +458,12 @@
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
-        flex-wrap: wrap; 
-        gap: 0.75rem; /* Espacio entre elementos meta */
+        flex-wrap: wrap;
+        gap: 0.75rem;
     }
 
     .blog-post-meta .date {
-        margin-right: 0; /* Eliminado margen extra */
+        margin-right: 0;
         display: flex;
         align-items: center;
         gap: 0.25rem;
@@ -408,16 +473,16 @@
     }
 
     .blog-post-meta .category-tag {
-        display: inline-flex; /* Para alinear con iconos si se añaden */
+        display: inline-flex;
         align-items: center;
-        background-color: rgba(var(--accent-blue-rgb), 0.15); /* Más opaco */
+        background-color: rgba(var(--accent-blue-rgb), 0.18); /* Un poco más de presencia */
         color: var(--accent-blue);
-        padding: 0.3em 0.8em; /* Más padding */
-        border-radius: 20px; /* Más redondeado, tipo pastilla */
+        padding: 0.3em 0.8em;
+        border-radius: 20px;
         font-weight: 500;
-        font-size: 0.85rem; /* Un poco más grande */
-        margin-right: 0; 
-        margin-bottom: 0; 
+        font-size: 0.85rem;
+        margin-right: 0;
+        margin-bottom: 0;
     }
     .blog-post-meta .category-tag i {
       margin-right: 0.3em;
@@ -427,45 +492,48 @@
     .blog-post-excerpt {
         font-size: 1.05rem;
         color: var(--text-secondary);
-        margin-bottom: 1.5rem; /* Más espacio */
+        margin-bottom: 1.5rem;
         line-height: 1.6;
     }
 
     .read-more-link {
-        display: inline-flex; 
+        display: inline-flex;
         align-items: center;
         color: var(--accent-blue);
         text-decoration: none;
-        font-weight: 600; 
-        font-size: 1rem; /* Un poco más grande */
+        font-weight: 600;
+        font-size: 1rem;
         transition: opacity 0.2s, transform 0.2s;
     }
     .read-more-link:hover {
         opacity: 0.85;
         text-decoration: underline;
     }
-    .read-more-link::after { 
+    .read-more-link::after {
         content: ' →';
-        margin-left: 0.35em; /* Más espacio */
+        margin-left: 0.35em;
         transition: transform 0.2s var(--ease-in-out-cubic);
     }
     .read-more-link:hover::after {
-        transform: translateX(4px); /* Mayor desplazamiento */
+        transform: translateX(4px);
     }
 
+    /* --------------------------------------------------- */
+    /* BOTONES CTA (JERARQUÍA CLARA) */
+    /* --------------------------------------------------- */
     .cta-button {
       display: inline-block;
       background-color: var(--accent-blue);
-      color: #fff; 
-      padding: 1rem 2.2rem; /* Más padding */
+      color: #fff;
+      padding: 1rem 2.2rem;
       text-decoration: none;
-      border-radius: 10px; /* Más redondeado */
+      border-radius: 10px;
       font-weight: 600;
-      font-size: 1.05rem; /* Más grande */
+      font-size: 1.05rem;
       transition: background-color 0.3s var(--ease-in-out-cubic), transform 0.2s var(--ease-in-out-cubic), box-shadow 0.3s var(--ease-in-out-cubic);
-      margin: 0.75rem 0.75rem; /* Margen uniforme */
-      border: 1px solid transparent; 
-      box-shadow: 0 5px 15px rgba(var(--accent-blue-rgb), 0.3); /* Sombra más fuerte */
+      margin: 0.75rem 0.75rem;
+      border: 1px solid transparent;
+      box-shadow: 0 5px 15px rgba(var(--accent-blue-rgb), 0.35); /* Sombra más fuerte */
       position: relative;
       overflow: hidden;
       z-index: 1;
@@ -478,7 +546,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+      background: linear-gradient(45deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(255,255,255,0.15) 100%); /* Brillo más intenso */
       opacity: 0;
       transition: opacity 0.3s ease-out;
       z-index: -1;
@@ -489,29 +557,29 @@
     }
 
     .cta-button:hover {
-      background-color: color-mix(in srgb, var(--accent-blue) 85%, #fff 15%); /* Color de hover más vibrante */
-      transform: translateY(-4px) scale(1.04); /* Mayor elevación y escala */
-      box-shadow: 0 8px 20px rgba(var(--accent-blue-rgb), 0.4);
+      background-color: color-mix(in srgb, var(--accent-blue) 80%, #fff 20%); /* Color de hover más vibrante */
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 8px 20px rgba(var(--accent-blue-rgb), 0.45); /* Sombra al hover más fuerte */
     }
 
     .cta-button.secondary {
-      background-color: rgba(var(--accent-blue-rgb), 0.18); /* Más opaco */
+      background-color: rgba(var(--accent-blue-rgb), 0.22); /* Botones ligeros que emergen */
       color: var(--accent-blue);
-      border: 1px solid rgba(var(--accent-blue-rgb), 0.3); /* Borde sutil */
+      border: 1px solid rgba(var(--accent-blue-rgb), 0.4); /* Bordes delicados */
       box-shadow: none;
     }
 
     .cta-button.secondary:hover {
-      background-color: rgba(var(--accent-blue-rgb), 0.25); /* Más opaco al hover */
+      background-color: rgba(var(--accent-blue-rgb), 0.3);
       transform: translateY(-4px) scale(1.04);
       color: var(--accent-blue);
-      border-color: rgba(var(--accent-blue-rgb), 0.4); 
+      border-color: rgba(var(--accent-blue-rgb), 0.5);
     }
-    
+
     .contact-links-container {
         text-align: center;
         margin-top: 2rem;
-        display: flex; /* Para centrar y espaciar botones */
+        display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 1rem;
@@ -519,79 +587,84 @@
 
     .qr-code-container {
         text-align: center;
-        margin-top: 4rem; /* Más espacio */
-        padding: 2rem; /* Más padding */
-        background-color: var(--bg-elevated); 
-        border-radius: 16px; /* Más redondeado */
-        border: 1px solid var(--border-subtle);
-        max-width: 350px; /* Ancho máximo para el contenedor del QR */
+        margin-top: 4rem;
+        padding: 2rem;
+        background-color: var(--bg-elevated); /* Material dinámico */
+        border-radius: 16px;
+        border: 1px solid var(--border-subtle); /* Bordes delicados y luminosos */
+        max-width: 350px;
         margin-left: auto;
         margin-right: auto;
-        box-shadow: var(--shadow-soft);
-        backdrop-filter: blur(10px); /* Efecto glass */
-        -webkit-backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-soft); /* Sombras suaves y profundas + brillo interno */
+        backdrop-filter: blur(12px) saturate(180%); /* ¡Más desenfoque y saturación para Liquid Glass! */
+        -webkit-backdrop-filter: blur(12px) saturate(180%);
     }
 
     .qr-code-container p {
         color: var(--text-secondary);
-        margin-bottom: 1.2rem; /* Más espacio */
+        margin-bottom: 1.2rem;
         font-size: 1rem;
     }
 
     .qr-code-container img {
-        width: 180px; /* Tamaño del QR */
+        width: 180px;
         height: 180px;
         border-radius: 10px;
-        border: 3px solid var(--border-strong); /* Borde más destacado */
-        background-color: white; 
-        padding: 6px; /* Pequeño padding si el QR no tiene borde blanco propio */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Sombra para el QR */
+        border: 3px solid var(--border-strong);
+        background-color: white;
+        padding: 6px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-
+    /* --------------------------------------------------- */
+    /* FOOTER */
+    /* --------------------------------------------------- */
     footer {
       text-align: center;
-      padding: 3.5rem 1rem 2.5rem; /* Más padding */
+      padding: 3.5rem 1rem 2.5rem;
       font-size: 0.95rem;
-      color: var(--text-tertiary); 
-      border-top: 1px solid var(--border-subtle);
-      margin-top: 5rem; /* Más margen superior */
+      color: var(--text-tertiary);
+      border-top: 1px solid var(--border-subtle); /* Bordes delicados y luminosos */
+      margin-top: 5rem;
     }
 
     .social-links {
-        margin-bottom: 1.8rem; 
+        margin-bottom: 1.8rem;
     }
 
     .social-links a {
         color: var(--text-secondary);
-        font-size: 1.7rem; /* Más grande */
-        margin: 0 0.9rem; /* Más margen */
+        font-size: 1.7rem;
+        margin: 0 0.9rem;
         transition: color 0.3s var(--ease-in-out-cubic), transform 0.3s var(--ease-in-out-cubic);
     }
     .social-links a:hover {
         color: var(--accent-blue);
-        transform: scale(1.15); /* Mayor escala */
+        transform: scale(1.15);
     }
 
+    /* --------------------------------------------------- */
+    /* RESPONSIVE DESIGN (MOBILE FIRST) */
+    /* --------------------------------------------------- */
     @media (max-width: 767px) {
       nav {
-        padding: 1rem 0.5rem; /* Más compacto en móvil */
+        padding: 1rem 0.5rem;
       }
       nav a {
-        margin: 0 0.75rem; /* Menos margen en móvil */
-        font-size: 0.9rem; /* Fuente más pequeña en móvil */
+        margin: 0 0.75rem;
+        font-size: 0.9rem;
       }
       header {
-        padding: 6rem 1rem 3rem; /* Menos padding en móvil */
+        padding: 6rem 1rem 3rem;
       }
       .card, .blog-post-item {
-        padding: 1.8rem; /* Menos padding en móvil */
+        padding: 1.8rem;
       }
       .card h3, .blog-post-item h3 {
-        font-size: 1.4rem; /* Más pequeño en móvil */
+        font-size: 1.4rem;
       }
       .cta-button {
-        padding: 0.8rem 1.8rem; /* Más compacto en móvil */
+        padding: 0.8rem 1.8rem;
         font-size: 0.95rem;
       }
       .qr-code-container {
@@ -602,11 +675,14 @@
         height: 140px;
       }
       .social-links a {
-        font-size: 1.3rem; /* Más pequeño en móvil */
+        font-size: 1.3rem;
         margin: 0 0.5rem;
       }
     }
 
+    /* --------------------------------------------------- */
+    /* ACCESIBILIDAD (PREFERS REDUCED MOTION) */
+    /* --------------------------------------------------- */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -623,6 +699,14 @@
   </style>
 </head>
 <body>
+  <div class="theme-switcher">
+    <input type="checkbox" id="themeToggle" class="theme-toggle__input">
+    <label for="themeToggle" class="theme-toggle__label">
+      <span aria-hidden="true" class="theme-toggle__icon theme-toggle__icon--dark"><i class="fas fa-moon"></i></span>
+      <span aria-hidden="true" class="theme-toggle__icon theme-toggle__icon--light"><i class="fas fa-sun"></i></span>
+    </label>
+  </div>
+
   <nav aria-label="Navegación principal">
     <a href="#about">Sobre mí</a>
     <a href="#work">Proyectos</a>
@@ -630,7 +714,7 @@
     <a href="#contact">Contacto</a>
   </nav>
 
-  <header id="home" class="container animate-on-scroll"> 
+  <header id="home" class="container animate-on-scroll">
     <h1>Juan Fernández</h1>
     <p>Liderazgo en Tecnología y Desarrollo de Soluciones con Inteligencia Artificial.</p>
   </header>
@@ -755,25 +839,61 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const animatedElements = document.querySelectorAll('.animate-on-scroll');
+      const themeToggleInput = document.getElementById('themeToggle');
+      const body = document.body;
 
+      // Función para establecer el modo
+      const setTheme = (theme) => {
+        if (theme === 'light') {
+          body.classList.add('light-mode');
+          localStorage.setItem('theme', 'light');
+          themeToggleInput.checked = true; // Asegurarse de que el switcher refleje el estado
+        } else {
+          body.classList.remove('light-mode');
+          localStorage.setItem('theme', 'dark');
+          themeToggleInput.checked = false; // Asegurarse de que el switcher refleje el estado
+        }
+      };
+
+      // Comprobar el tema guardado en localStorage al cargar la página
+      const savedTheme = localStorage.getItem('theme');
+      // Si no hay tema guardado o el guardado es "dark", establecer modo oscuro por defecto
+      if (!savedTheme || savedTheme === 'dark') {
+        setTheme('dark');
+      } else {
+        setTheme(savedTheme); // Cargar el tema guardado si es "light"
+      }
+
+      // Event listener para el switcher
+      themeToggleInput.addEventListener('change', () => {
+        if (themeToggleInput.checked) {
+          setTheme('light');
+        } else {
+          setTheme('dark');
+        }
+      });
+
+      // Animaciones al hacer scroll
       if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries, obs) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
-              // obs.unobserve(entry.target); // Descomenta para animar solo una vez 
+              // obs.unobserve(entry.target); // Descomenta para animar solo una vez
             } else {
               // entry.target.classList.remove('visible'); // Descomenta para revertir animación al salir
             }
           });
-        }, { threshold: 0.1 }); 
-        
+        }, { threshold: 0.1 });
+
         animatedElements.forEach(el => observer.observe(el));
       } else {
+        // Fallback para navegadores sin IntersectionObserver
         animatedElements.forEach(el => el.classList.add('visible'));
       }
 
-      const sections = document.querySelectorAll('main section[id], header[id]'); 
+      // Lógica para la navegación activa al hacer scroll
+      const sections = document.querySelectorAll('main section[id], header[id]');
       const navLinks = document.querySelectorAll('nav a');
       const navElement = document.querySelector('nav');
       const navHeight = navElement ? navElement.offsetHeight : 70;
@@ -781,18 +901,17 @@
 
       function updateActiveNav() {
         let current = '';
-        
+
         sections.forEach(section => {
           const sectionTop = section.offsetTop;
-          if (pageYOffset >= sectionTop - navHeight - 60) { 
+          if (pageYOffset >= sectionTop - navHeight - 60) {
             current = section.getAttribute('id');
           }
         });
-        
+
         if (!current && document.querySelector('header#home') && pageYOffset < sections[0].offsetTop - navHeight - 60) {
             current = 'home';
         }
-
 
         navLinks.forEach(link => {
           link.classList.remove('active');
@@ -802,9 +921,10 @@
           }
         });
       }
-      
+
       window.addEventListener('scroll', updateActiveNav);
-      
+
+      // Activar el enlace correcto al cargar la página o si hay hash
       if (window.location.hash) {
         const currentHash = window.location.hash.substring(1);
         navLinks.forEach(link => {
@@ -815,8 +935,28 @@
             }
         });
       } else {
-        updateActiveNav(); 
+        updateActiveNav();
       }
+
+      // Script para los destellos especulares reactivos al movimiento del mouse en las tarjetas
+      document.querySelectorAll('.card, .blog-post-item').forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+          const rect = item.getBoundingClientRect();
+          // Calcular la posición del mouse relativa al elemento (0-100%)
+          const x = (e.clientX - rect.left) / rect.width * 100;
+          const y = (e.clientY - rect.top) / rect.height * 100;
+
+          // Mapear la posición a un rango de desplazamiento para el pseudo-elemento
+          // Esto crea la ilusión de que el brillo se mueve con el mouse
+          item.style.setProperty('--shine-x', `${x}%`);
+          item.style.setProperty('--shine-y', `${y}%`);
+        });
+        item.addEventListener('mouseleave', () => {
+          // Resetear la posición del brillo al salir del elemento
+          item.style.setProperty('--shine-x', '50%');
+          item.style.setProperty('--shine-y', '50%');
+        });
+      });
     });
   </script>
 </body>
