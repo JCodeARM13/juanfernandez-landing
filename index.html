@@ -326,6 +326,10 @@
     /* --------------------------------------------------- */
     /* BLOG */
     /* --------------------------------------------------- */
+    .blog-post-list {
+      display: grid;
+      gap: 2rem;
+    }
     .blog-post-item {
       background: var(--bg-elevated);
       padding: 2.5rem;
@@ -372,7 +376,7 @@
     }
 
     /* --------------------------------------------------- */
-    /* BOTONES CTA ESTILO APPLE */
+    /* BOTONES CTA Y SECCIÓN CONTACTO */
     /* --------------------------------------------------- */
     .cta-button {
       display: inline-flex;
@@ -408,6 +412,30 @@
       justify-content: center;
       gap: 1rem;
     }
+    .qr-container {
+      background: var(--bg-elevated);
+      border-radius: 24px;
+      padding: 2.5rem;
+      margin: 4rem auto 0 auto;
+      max-width: 400px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+    .light-mode .qr-container {
+      border: 1px solid #e5e5e5;
+    }
+    .qr-container p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .qr-container img {
+      width: 200px;
+      height: 200px;
+      border-radius: 16px;
+      background-color: white;
+      padding: 10px;
+    }
     /* --------------------------------------------------- */
     /* FOOTER */
     /* --------------------------------------------------- */
@@ -441,13 +469,12 @@
       nav a { padding: 0.4rem 0.5rem; }
       header { padding: 6rem 1rem 4rem; }
       .container { padding: 4rem 1rem; }
-      .card, .blog-post-item { padding: 1.8rem; }
+      .card, .blog-post-item, .qr-container { padding: 1.8rem; }
       .cta-button { width: 100%; padding: 1rem 2rem; }
       .contact-links-container { gap: 0.75rem; }
     }
   </style>
 </head>
-
 <body>
 
   <nav>
@@ -520,18 +547,23 @@
 
     <section id="contacto" class="container">
       <h2 class="section-title animate-on-scroll">Hablemos</h2>
-      <p class="section-subtitle animate-on-scroll">Estoy disponible para colaboraciones, consultoría o una simple charla sobre ideas que puedan cambiar el futuro. No dudes en contactarme.</p>
+      <p class="section-subtitle animate-on-scroll">Estoy disponible para colaboraciones, consultoría o una simple charla sobre ideas que puedan cambiar el futuro. Contáctame por el medio que prefieras.</p>
       
       <div class="contact-links-container animate-on-scroll" style="transition-delay: 0.2s;">
         <a href="mailto:juan.fernandez.demo@email.com" class="cta-button">
           <i class="fas fa-paper-plane"></i> Enviar un Email
         </a>
-        <a href="#" class="cta-button secondary">
+        <a href="https://www.linkedin.com/in/juanfernandez" target="_blank" class="cta-button secondary">
           <i class="fab fa-linkedin"></i> Conectar en LinkedIn
         </a>
       </div>
+
+      <div class="qr-container animate-on-scroll" style="transition-delay: 0.3s;">
+        <p>O escanea el código para enviarme un WhatsApp directamente.</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwa.me%2F525548869123" alt="Código QR para chatear en WhatsApp">
+      </div>
     </section>
-  </main>
+    </main>
 
   <footer>
     <div class="social-links">
